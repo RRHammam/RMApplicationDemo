@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/lobbyFragment"
+        android:title="@string/lobby"
+        android:icon="@drawable/rmpolicypro" />
+
+    <item
+        android:id="@+id/userSettingsFragment"
+        android:title="@string/usersettings"
+        android:icon="@drawable/rm_technology"/>
+
+</menu>

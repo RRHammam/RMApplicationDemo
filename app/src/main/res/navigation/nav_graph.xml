@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.rmapplication.fragments.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_lobbyFragment"
+            app:destination="@id/lobbyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lobbyFragment"
+        android:name="com.example.rmapplication.fragments.LobbyFragment"
+        android:label="LobbyFragment" >
+        <action
+            android:id="@+id/action_lobbyFragment_to_corporateDirectoryFragment"
+            app:destination="@id/corporateDirectoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userSettingsFragment"
+        android:name="com.example.rmapplication.fragments.UserSettingsFragment"
+        android:label="UserSettingsFragment" />
+    <fragment
+        android:id="@+id/corporateDirectoryFragment"
+        android:name="com.example.rmapplication.fragments.CorporateDirectoryFragment"
+        android:label="CorporateDirectoryFragment" />
+</navigation>

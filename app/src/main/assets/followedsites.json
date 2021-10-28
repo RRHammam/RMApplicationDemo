@@ -1,0 +1,83 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites",
+  "value": [
+    {
+      "id": "robinsmorton.sharepoint.com,8763719b-ae4a-4f3a-a469-f2812ec4934e,efa6d7f0-23e9-419e-89ea-c1b2ad6e62a2",
+      "displayName": "HUB",
+      "webUrl": "https://robinsmorton.sharepoint.com/",
+      "sharepointIds": {
+        "siteId": "8763719b-ae4a-4f3a-a469-f2812ec4934e",
+        "siteUrl": "https://robinsmorton.sharepoint.com/",
+        "webId": "efa6d7f0-23e9-419e-89ea-c1b2ad6e62a2"
+      },
+      "siteCollection": {
+        "hostname": "robinsmorton.sharepoint.com"
+      }
+    },
+    {
+      "id": "robinsmorton.sharepoint.com,8763719b-ae4a-4f3a-a469-f2812ec4934e,6c1aed69-ca48-4759-88ae-805162a32512",
+      "displayName": "Job Request",
+      "webUrl": "https://robinsmorton.sharepoint.com/jobrequest",
+      "sharepointIds": {
+        "siteId": "8763719b-ae4a-4f3a-a469-f2812ec4934e",
+        "siteUrl": "https://robinsmorton.sharepoint.com/jobrequest",
+        "webId": "6c1aed69-ca48-4759-88ae-805162a32512"
+      },
+      "siteCollection": {
+        "hostname": "robinsmorton.sharepoint.com"
+      }
+    },
+    {
+      "id": "robinsmorton.sharepoint.com,8763719b-ae4a-4f3a-a469-f2812ec4934e,cb71e905-4aad-450c-8998-b9ab8441d830",
+      "displayName": "Preconstruction",
+      "webUrl": "https://robinsmorton.sharepoint.com/Preconstruction",
+      "sharepointIds": {
+        "siteId": "8763719b-ae4a-4f3a-a469-f2812ec4934e",
+        "siteUrl": "https://robinsmorton.sharepoint.com/Preconstruction",
+        "webId": "cb71e905-4aad-450c-8998-b9ab8441d830"
+      },
+      "siteCollection": {
+        "hostname": "robinsmorton.sharepoint.com"
+      }
+    },
+    {
+      "id": "robinsmorton.sharepoint.com,8763719b-ae4a-4f3a-a469-f2812ec4934e,1388f2a7-0350-40c0-8ce3-03f1cb5470f0",
+      "displayName": "Human Resources",
+      "webUrl": "https://robinsmorton.sharepoint.com/HumanResources",
+      "sharepointIds": {
+        "siteId": "8763719b-ae4a-4f3a-a469-f2812ec4934e",
+        "siteUrl": "https://robinsmorton.sharepoint.com/HumanResources",
+        "webId": "1388f2a7-0350-40c0-8ce3-03f1cb5470f0"
+      },
+      "siteCollection": {
+        "hostname": "robinsmorton.sharepoint.com"
+      }
+    },
+    {
+      "id": "robinsmorton.sharepoint.com,8763719b-ae4a-4f3a-a469-f2812ec4934e,90768f5f-312f-4051-be4a-c0b088ea523e",
+      "displayName": "Sustainability",
+      "webUrl": "https://robinsmorton.sharepoint.com/Sustainability",
+      "sharepointIds": {
+        "siteId": "8763719b-ae4a-4f3a-a469-f2812ec4934e",
+        "siteUrl": "https://robinsmorton.sharepoint.com/Sustainability",
+        "webId": "90768f5f-312f-4051-be4a-c0b088ea523e"
+      },
+      "siteCollection": {
+        "hostname": "robinsmorton.sharepoint.com"
+      }
+    },
+    {
+      "id": "robinsmorton.sharepoint.com,8763719b-ae4a-4f3a-a469-f2812ec4934e,85e41298-eba9-4c30-a9be-a31a8ae402ed",
+      "displayName": "Administration",
+      "webUrl": "https://robinsmorton.sharepoint.com/operations",
+      "sharepointIds": {
+        "siteId": "8763719b-ae4a-4f3a-a469-f2812ec4934e",
+        "siteUrl": "https://robinsmorton.sharepoint.com/operations",
+        "webId": "85e41298-eba9-4c30-a9be-a31a8ae402ed"
+      },
+      "siteCollection": {
+        "hostname": "robinsmorton.sharepoint.com"
+      }
+    }
+  ]
+}
