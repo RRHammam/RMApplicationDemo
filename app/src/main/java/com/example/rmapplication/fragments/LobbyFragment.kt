@@ -71,6 +71,10 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         Log.d(TAG, "onLobbyGridItemClickedEvent called ${lobbyGridItem?.fields?.Title}")
         if(lobbyGridItem?.fields?.Title?.trim() == "Corporate Directory"){
             findNavController().navigate(R.id.action_lobbyFragment_to_corporateDirectoryFragment)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == "Job Numbers") {
+            findNavController().navigate(R.id.action_lobbyFragment_to_jobRequestFragment)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.estimated_numbers)) {
+            findNavController().navigate(R.id.action_lobbyFragment_to_estimateNumbersFragment)
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.rmapplication.apiserviceprovider
 
 import com.google.gson.GsonBuilder
-import com.nimbusds.oauth2.sdk.token.Token
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object GraphApiServiceClient {
+object ApiServiceClient {
 
     private  val  baseUrl = "https://graph.microsoft.com/"
 
@@ -25,9 +24,9 @@ object GraphApiServiceClient {
         .baseUrl(baseUrl)
         .client(client)
         .build()
-        .create(GraphApiService::class.java)
+        .create(ApiService::class.java)
 
-    fun getGraphApiService(): GraphApiService {
+    fun getApiService(): ApiService {
         return apiService
     }
 }

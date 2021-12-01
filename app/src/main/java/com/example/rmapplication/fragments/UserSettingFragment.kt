@@ -23,7 +23,6 @@ class UserSettingsFragment : BaseFragment(), UserSettingsPageEventListener {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_user_settings, container, false)
         return with(binding) {
-            eventListener = this@UserSettingsFragment
             root
         }
     }

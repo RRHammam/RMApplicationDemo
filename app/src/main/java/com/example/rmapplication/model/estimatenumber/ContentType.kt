@@ -1,4 +1,4 @@
-package com.example.rmapplication.model.JobRequest
+package com.example.rmapplication.model.estimatenumber
 
 data class ContentType(
     val id: String,

@@ -119,6 +119,7 @@ class LoginViewModel (
             Log.e(TAG, "Client error authenticating", exception)
         } else {
             Log.e(TAG, "Unhandled exception authenticating", exception)
+            exception?.printStackTrace()
         }
         eventCommand.value = CMD_LOGIN_FAILURE
     }

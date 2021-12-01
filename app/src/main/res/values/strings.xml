@@ -6,4 +6,36 @@
     <string name="usersettings">UserSettings</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="job_request">Job Request</string>
+    <string name="rm">RM</string>
+    <string name="user_name">User name</string>
+    <string name="operations_manager_abcd_efgh">Operations Manager: Abcd Efgh</string>
+    <string name="date_03_11_2021">Date: 03/11/2021</string>
+    <string name="abcd_xyz">ABCD XYZ</string>
+    <string name="estimate_no_123456">Estimate No.: 123456</string>
+    <string name="status_pending">Status: Pending</string>
+    <string name="lead_estimator_abcd_efgh">Lead Estimator: Abcd Efgh</string>
+    <string name="department">Department</string>
+    <string name="estimated_numbers">Estimated Numbers</string>
+    <string name="send_email">Send email</string>
+    <string name="search_name">Search Name</string>
+    <string name="hub">HUB</string>
+    <string name="preconstruction">Preconstruction</string>
+    <string name="human_resource">Human Resources</string>
+    <string name="sustainability">Sustainability</string>
+    <string name="administration">Administration</string>
+    <string name="policies_and_procedure">Policies and Procedures</string>
+    <string name="job_numbers">Job Numbers</string>
+    <string name="training_schedule">Training Schedule</string>
+    <string name="hr_information">HR Information</string>
+    <string name="safety_information">Safety Information</string>
+    <string name="corporate_directory">Corporate Directory</string>
+    <string name="applications">Applications</string>
+    <string name="waste_management">Waste Management</string>
+    <string name="building_forward">Building Forward</string>
+
+    <string-array name="job_numbers">
+        <item>Job Number</item>
+        <item>Title</item>
+    </string-array>
 </resources>

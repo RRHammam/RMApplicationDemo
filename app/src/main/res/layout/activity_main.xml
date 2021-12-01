@@ -23,12 +23,12 @@
         android:id="@+id/bottom_navView"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="?android:attr/windowBackground"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/menu_bottom_nav"
+        android:visibility="gone"
         app:itemIconSize="60dp"
-        android:visibility="gone"/>
+        app:itemIconTint="@drawable/bottom_nav_menu_selector"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_bottom_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

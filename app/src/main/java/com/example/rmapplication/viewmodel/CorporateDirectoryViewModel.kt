@@ -3,12 +3,12 @@ package com.example.rmapplication.viewmodel
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
+import androidx.core.util.PatternsCompat
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.rmapplication.model.CorporateDirectoryResponse
 import com.example.rmapplication.model.CorporateUser
-import com.example.rmapplication.model.Item
 import com.example.rmapplication.repository.CorporateDirectoryRepository
 import com.example.rmapplication.util.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,9 +20,11 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     val TAG = "CorporateDirectoryViewModel"
 
     private val corporateDirectoryRepository = CorporateDirectoryRepository(app)
-    var corporateUsersListLiveData = MutableLiveData<List<CorporateUser>>()
+    var corporateUsersListLiveData = MutableLiveData<MutableList<CorporateUser>>()
+    var corporateUsersNextLinkListLiveData = MutableLiveData<MutableList<CorporateUser>>()
     var isLoading = ObservableBoolean(false)
     private val compositeDisposable = CompositeDisposable()
+    //var nextLink: String? = null
 
     fun getCorporateDirectoryList(){
         if (corporateUsersListLiveData.value.isNullOrEmpty()) {
@@ -31,14 +33,54 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
         corporateDirectoryRepository.getCorporateDirectoryList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ corporateDirectoryResponse ->
-                isLoading.set(false)
-                corporateUsersListLiveData.value = corporateDirectoryResponse.value
+                corporateUsersListLiveData.value = filterCorporateUsersList(corporateDirectoryResponse)
+                if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
+                    getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
+                } else {
+                    isLoading.set(false)
+                }
             }, {
                 isLoading.set(false)
                 Toast.makeText(getApplication(), "Error getting Corporate directory list", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
-
             })?.let { compositeDisposable.add(it) }
+    }
+
+    fun getCorporateDirectoryListUsingNextLink(nextLink: String) {
+        if (corporateUsersNextLinkListLiveData.value.isNullOrEmpty()) {
+            isLoading.set(true)
+        }
+        if (!nextLink.isNullOrEmpty()) {
+            corporateDirectoryRepository.getCorporateDirectoryListUsingNextLink(SessionManager.access_token, nextLink)
+                .observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribe({ corporateDirectoryResponse ->
+                    corporateUsersNextLinkListLiveData.value = filterCorporateUsersList(corporateDirectoryResponse)
+                    if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
+                        getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
+                    } else {
+                        isLoading.set(false)
+                        corporateUsersNextLinkListLiveData.value = mutableListOf()
+                    }
+                }, {
+                    isLoading.set(false)
+                    Toast.makeText(
+                        getApplication(),
+                        "Error getting next link Corporate directory list",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    it.message?.let { it1 -> Log.e(TAG, it1) }
+                })?.let { compositeDisposable.add(it) }
+        } else {
+            Toast.makeText(getApplication(), "End of the list.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun filterCorporateUsersList(corporateDirectoryResponse: CorporateDirectoryResponse): MutableList<CorporateUser> {
+        return corporateDirectoryResponse.value.filter { corporateUser ->
+            (!PatternsCompat.EMAIL_ADDRESS.matcher(corporateUser.displayName)
+                .matches() && !corporateUser.jobTitle.isNullOrEmpty())
+        }.toMutableList()
     }
 
     override fun onCleared() {

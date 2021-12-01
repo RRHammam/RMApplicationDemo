@@ -1,7 +1,9 @@
 package com.example.rmapplication.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +26,7 @@ import com.example.rmapplication.model.Item
 import com.example.rmapplication.model.Site
 import com.example.rmapplication.util.SessionManager
 
-class CorporateDirectoryAdapter(val context: Context, private val corporateDirectoryList: List<CorporateUser>) :
+class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList: MutableList<CorporateUser>) :
     RecyclerView.Adapter<CorporateDirectoryAdapter.CorporateUserItemHolder>() {
 
     private val TAG = "CorporateDirectoryAdapter"
@@ -38,6 +40,29 @@ class CorporateDirectoryAdapter(val context: Context, private val corporateDirec
         fun bindListItem(user: CorporateUser?) {
             binding.textViewCorporateUserName.text = user?.displayName
             binding.textViewCorporateUserDesignation.text = user?.jobTitle
+            if(!user?.mail.isNullOrEmpty()) {
+                binding.textViewCorporateUserEmail.text = user?.mail
+                binding.textViewCorporateUserEmail.setOnClickListener {
+                    val emailText = binding.textViewCorporateUserEmail.text.toString()
+                    val emailIntent = Intent(Intent.ACTION_SEND)
+                    emailIntent.type = "plain/text"
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailText))
+                    context.applicationContext.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)))
+                }
+            } else {
+                binding.textViewCorporateUserEmail.visibility = View.GONE
+            }
+
+            if(!user?.mobilePhone.isNullOrEmpty()) {
+                binding.textViewCorporateUserPhoneNumber.text = user?.mobilePhone
+                binding.textViewCorporateUserPhoneNumber.setOnClickListener {
+                    val callingIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", binding.textViewCorporateUserPhoneNumber.text.toString(), null))
+                    context.applicationContext.startActivity(callingIntent)
+                }
+            } else {
+                binding.textViewCorporateUserPhoneNumber.visibility = View.GONE
+            }
+
             val urlString = url1+user?.id+url2
             Log.d(TAG, "Profile image url - $urlString")
             LazyHeaders.Builder().addHeader("Authorization", "Bearer ${SessionManager.access_token}")
@@ -58,7 +83,7 @@ class CorporateDirectoryAdapter(val context: Context, private val corporateDirec
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        Log.d(TAG, "***Profile image load success ")
+                        Log.d(TAG, "Profile image load success ")
                         return false
                     }
 
@@ -91,7 +116,19 @@ class CorporateDirectoryAdapter(val context: Context, private val corporateDirec
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, "getItemCount() called - $corporateDirectoryList.size")
         return corporateDirectoryList.size
+    }
+
+    fun addDataInList(updatedList: MutableList<CorporateUser>){
+        corporateDirectoryList.addAll(updatedList)
+        notifyDataSetChanged()
+    }
+
+    fun clearAndUpdateList(updatedList: MutableList<CorporateUser>?) {
+        updatedList?.let {
+            corporateDirectoryList.clear()
+            corporateDirectoryList.addAll(it)
+            notifyDataSetChanged()
+        }
     }
 }

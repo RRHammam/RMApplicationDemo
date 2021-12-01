@@ -1,6 +1,7 @@
-package com.example.rmapplication.model.JobRequest
+package com.example.rmapplication.model.jobrequest
 
 import com.google.gson.annotations.SerializedName
+
 
 data class Fields(
     @SerializedName("@odata.etag")

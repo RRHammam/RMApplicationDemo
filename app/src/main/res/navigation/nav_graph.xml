@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_lobbyFragment_to_corporateDirectoryFragment"
             app:destination="@id/corporateDirectoryFragment" />
+        <action
+            android:id="@+id/action_lobbyFragment_to_jobRequestFragment"
+            app:destination="@id/jobRequestFragment" />
+        <action
+            android:id="@+id/action_lobbyFragment_to_estimateNumbersFragment"
+            app:destination="@id/estimateNumbersFragment" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -28,4 +34,12 @@
         android:id="@+id/corporateDirectoryFragment"
         android:name="com.example.rmapplication.fragments.CorporateDirectoryFragment"
         android:label="CorporateDirectoryFragment" />
+    <fragment
+        android:id="@+id/jobRequestFragment"
+        android:name="com.example.rmapplication.fragments.JobRequestFragment"
+        android:label="JobRequestFragment" />
+    <fragment
+        android:id="@+id/estimateNumbersFragment"
+        android:name="com.example.rmapplication.fragments.EstimateNumbersFragment"
+        android:label="EstimateNumbersFragment" />
 </navigation>

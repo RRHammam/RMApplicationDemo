@@ -1,4 +1,4 @@
-package com.example.rmapplication.model.JobRequest
+package com.example.rmapplication.model.jobrequest
 
 import com.google.gson.annotations.SerializedName
 

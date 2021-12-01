@@ -1,4 +1,4 @@
-package com.example.rmapplication.model.JobRequest
+package com.example.rmapplication.model.jobrequest
 
 data class Application(
     val displayName: String,
