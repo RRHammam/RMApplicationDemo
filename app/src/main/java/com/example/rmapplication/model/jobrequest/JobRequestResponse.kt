@@ -7,5 +7,5 @@ data class JobRequestResponse(
     val context: String,
     @SerializedName("@odata.nextLink")
     val nextLink: String,
-    val value: List<JobRequestValue>
+    val value: MutableList<JobRequestValue>
 )

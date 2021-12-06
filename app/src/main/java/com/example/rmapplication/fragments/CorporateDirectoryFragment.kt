@@ -1,6 +1,7 @@
 package com.example.rmapplication.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,13 @@ import com.example.rmapplication.adapter.CorporateDirectoryAdapter
 import com.example.rmapplication.databinding.FragmentCorporateDirectoryBinding
 import com.example.rmapplication.model.CorporateUser
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
+import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel.Companion.cmd_hide_loading_sign
+import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel.Companion.cmd_show_loading_sign
+import kotlinx.android.synthetic.main.fragment_job_request.view.*
+import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class CorporateDirectoryFragment : BaseFragment() {
+    val TAG = "CorporateDirectoryFragment"
     private lateinit var binding: FragmentCorporateDirectoryBinding
     private lateinit var viewModel: CorporateDirectoryViewModel
     private var adapter: CorporateDirectoryAdapter? = null
@@ -42,6 +48,7 @@ class CorporateDirectoryFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToCorporateDirectoryListLiveData()
         subscribeToCorporateDirectoryListNextLinkLiveData()
+        subscribeToEventCommands()
         init()
         viewModel.getCorporateDirectoryList()
         (activity as MainActivity).geBottomNavView()?.visibility = View.VISIBLE
@@ -66,7 +73,7 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     private fun setAdapter(it: MutableList<CorporateUser>) {
-        adapter = this.context?.let { it1 -> CorporateDirectoryAdapter(it1, it) }
+        adapter = this.requireContext().let { it1 -> CorporateDirectoryAdapter(it1, it) }
         binding.recyclerViewCorporateUsers.layoutManager =
             object : LinearLayoutManager(this.activity) {
                 override fun isAutoMeasureEnabled(): Boolean {
@@ -114,12 +121,25 @@ class CorporateDirectoryFragment : BaseFragment() {
         }
     }
 
+    fun subscribeToEventCommands() {
+        viewModel.eventCommand.observe(viewLifecycleOwner,{
+            when(it) {
+                cmd_show_loading_sign -> showProgressBar()
+
+                cmd_hide_loading_sign -> hideProgressBar()
+            }
+        })
+    }
+
     fun showProgressBar() {
-        binding.progressBar.visibility = View.VISIBLE
+        Log.d(TAG, "***showProgressBar()")
         binding.progressBar.bringToFront()
+        binding.progressBar.loading_spinner.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     fun hideProgressBar() {
+        Log.d(TAG, "***hideProgressBar()")
         binding.progressBar.visibility = View.GONE
     }
 

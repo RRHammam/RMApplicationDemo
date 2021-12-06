@@ -17,6 +17,14 @@
         android:layout_height="match_parent">
 
         <include
+            android:id="@+id/progressBar"
+            layout="@layout/item_loading_spinner"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include
             android:id="@+id/searchBar_corporateUserName"
             layout="@layout/search_bar_layout"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,15 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/_5dp"/>
-
-        <include
-            android:id="@+id/progressBar"
-            layout="@layout/item_loading_spinner"
-            app:setVisibilityAndBringToFront="@{viewModel.isLoading}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rmapplication.R
 import com.example.rmapplication.databinding.ItemEstimateNumberBinding
 import com.example.rmapplication.model.estimatenumber.Item
+import com.example.rmapplication.model.jobrequest.JobRequestValue
 
-class EstimateNumberAdapter(val context: Context, private val estimateNumberList: List<Item>) :
+class EstimateNumberAdapter(val context: Context, private val estimateNumberList: MutableList<Item>) :
     RecyclerView.Adapter<EstimateNumberAdapter.EstimateNumberItemHolder>() {
 
     private val TAG = "EstimateNumberAdapter"
@@ -49,4 +50,13 @@ class EstimateNumberAdapter(val context: Context, private val estimateNumberList
         Log.d(TAG, "getItemCount() called - $estimateNumberList.size")
         return estimateNumberList.size
     }
+
+    fun clearAndUpdateList(updatedList: MutableList<Item>?) {
+        updatedList?.let {
+            estimateNumberList.clear()
+            estimateNumberList.addAll(it)
+            notifyDataSetChanged()
+        }
+    }
 }
+

@@ -69,38 +69,7 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
             this.lobbyItem = lobbyItem
             binding.textViewGridItem.text = lobbyItem?.fields?.Title
             val buttonImageUrl = lobbyItem?.fields?.buttonimage?.let { getButtonImageUrl(it) }
-            Log.d(TAG, "***Button image url - $buttonImageUrl")
-            //Picasso.get().load(buttonImageUrl).resize(50, 50).into(binding.imageViewGridItem)
-            //Glide.with(binding.imageViewGridItem.context).load(GlideUrl(buttonImageUrl)).into(binding.imageViewGridItem)
-
-            /*Glide.with(context).load(GlideUrl(buttonImageUrl)).placeholder(R.drawable.rmlogo).listener(object : RequestListener<Drawable> {
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Log.d(TAG, "***Profile image load success ")
-                        return false
-                    }
-
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Log.d(TAG, "***Profile image load failed - " + e?.localizedMessage)
-                        return false
-                    }
-                })
-                .into(binding.imageViewGridItem)*/
-
-            //ImageUtil.loadImageFromUrl(buttonImageUrl, binding.imageViewGridItem)
             loadImageFromDisplayName(lobbyItem?.fields?.Title, context)
-
-
         }
 
         private fun loadImageFromDisplayName(displayName: String?, context: Context) {
@@ -161,7 +130,7 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                     .into(binding.imageViewGridItem)
             } else if (displayName?.trim() == context.resources.getString(R.string.building_forward)) {
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.buildingforward))
+                    .load(context.resources.getDrawable(R.drawable.ic_building_forward))
                     .apply(RequestOptions().override(50, 50))
                     .centerCrop()
                     .into(binding.imageViewGridItem)

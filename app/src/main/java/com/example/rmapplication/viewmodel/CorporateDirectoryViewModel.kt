@@ -11,6 +11,7 @@ import com.example.rmapplication.model.CorporateDirectoryResponse
 import com.example.rmapplication.model.CorporateUser
 import com.example.rmapplication.repository.CorporateDirectoryRepository
 import com.example.rmapplication.util.SessionManager
+import com.example.rmapplication.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,22 +25,25 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     var corporateUsersNextLinkListLiveData = MutableLiveData<MutableList<CorporateUser>>()
     var isLoading = ObservableBoolean(false)
     private val compositeDisposable = CompositeDisposable()
-    //var nextLink: String? = null
+    var eventCommand = SingleLiveEvent<Int>()
 
-    fun getCorporateDirectoryList(){
-        if (corporateUsersListLiveData.value.isNullOrEmpty()) {
-            isLoading.set(true)
-        }
-        corporateDirectoryRepository.getCorporateDirectoryList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
+    fun getCorporateDirectoryList() {
+        showLoading()
+        isLoading.set(true)
+        corporateDirectoryRepository.getCorporateDirectoryList(SessionManager.access_token)
+            .observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ corporateDirectoryResponse ->
-                corporateUsersListLiveData.value = filterCorporateUsersList(corporateDirectoryResponse)
+                corporateUsersListLiveData.value =
+                    filterCorporateUsersList(corporateDirectoryResponse)
                 if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
                     getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
                 } else {
+                    hideLoading()
                     isLoading.set(false)
                 }
             }, {
+                hideLoading()
                 isLoading.set(false)
                 Toast.makeText(getApplication(), "Error getting Corporate directory list", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
@@ -47,9 +51,6 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     }
 
     fun getCorporateDirectoryListUsingNextLink(nextLink: String) {
-        if (corporateUsersNextLinkListLiveData.value.isNullOrEmpty()) {
-            isLoading.set(true)
-        }
         if (!nextLink.isNullOrEmpty()) {
             corporateDirectoryRepository.getCorporateDirectoryListUsingNextLink(SessionManager.access_token, nextLink)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,16 +60,14 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
                     if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
                         getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
                     } else {
+                        hideLoading()
                         isLoading.set(false)
                         corporateUsersNextLinkListLiveData.value = mutableListOf()
                     }
                 }, {
+                    hideLoading()
                     isLoading.set(false)
-                    Toast.makeText(
-                        getApplication(),
-                        "Error getting next link Corporate directory list",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(getApplication(), "Error getting next link Corporate directory list", Toast.LENGTH_SHORT).show()
                     it.message?.let { it1 -> Log.e(TAG, it1) }
                 })?.let { compositeDisposable.add(it) }
         } else {
@@ -86,6 +85,20 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun showLoading(){
+        eventCommand.value = cmd_show_loading_sign
+    }
+
+    fun hideLoading(){
+        eventCommand.value = cmd_hide_loading_sign
+    }
+
+
+    companion object {
+        const val cmd_show_loading_sign = 0
+        const val cmd_hide_loading_sign = 1
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.rmapplication.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +17,10 @@ import com.example.rmapplication.adapter.JobRequestAdapter
 import com.example.rmapplication.databinding.FragmentJobRequestBinding
 import com.example.rmapplication.model.CorporateUser
 import com.example.rmapplication.model.jobrequest.JobRequestValue
+import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
 import com.example.rmapplication.viewmodel.JobRequestViewModel
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class JobRequestFragment: BaseFragment() {
     val TAG = "JobRequestFragment"
@@ -25,7 +28,7 @@ class JobRequestFragment: BaseFragment() {
     private lateinit var viewModel: JobRequestViewModel
     private var adapter: JobRequestAdapter? = null
     private var selectedItemForSearchType = ""
-    private var jobRequestList = mutableListOf<JobRequestValue>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +44,7 @@ class JobRequestFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToEventCommands()
         subscribeToCorporateDirectoryListLiveData()
         init()
         viewModel.getJobRequestList()
@@ -48,8 +52,7 @@ class JobRequestFragment: BaseFragment() {
 
     fun subscribeToCorporateDirectoryListLiveData() {
         viewModel.jobRequestListLiveData.observe(viewLifecycleOwner, {
-            jobRequestList.addAll(it)
-            setAdapter(jobRequestList)
+            setAdapter(it)
             setOnTextChangedForSearchBar()
         })
     }
@@ -74,11 +77,7 @@ class JobRequestFragment: BaseFragment() {
 
     fun setDropDownAdapter() {
         val arrayAdapter = this.activity?.applicationContext?.let {
-            ArrayAdapter(
-                it,
-                R.layout.dropdown_item,
-                resources.getStringArray(R.array.job_numbers)
-            )
+            ArrayAdapter(it, R.layout.dropdown_item,  R.id.textView, resources.getStringArray(R.array.job_numbers))
         }
         binding.autoCompleteTextViewJobNumber.setAdapter(arrayAdapter)
         binding.autoCompleteTextViewJobNumber.addTextChangedListener(object : TextWatcher {
@@ -102,7 +101,7 @@ class JobRequestFragment: BaseFragment() {
         val filteredList = mutableListOf<JobRequestValue>()
         val filterByList = resources.getStringArray(R.array.job_numbers)
         return if (query.isNotEmpty()) {
-            jobRequestList.forEach {
+            viewModel.mainJobRequestList.forEach {
                 if (selectedItemForSearchType.trim() == filterByList[0]) {
                     if (it.fields.Job_x0020_Number.trim().lowercase().contains(query)) {
                         filteredList.add(it)
@@ -115,7 +114,7 @@ class JobRequestFragment: BaseFragment() {
             }
             filteredList
         } else {
-            jobRequestList
+            viewModel.mainJobRequestList
         }
     }
 
@@ -133,6 +132,26 @@ class JobRequestFragment: BaseFragment() {
         } else {
             binding.searchBarJobNumber.imageViewClearSearchImage.visibility = View.GONE
         }
+    }
+
+    fun subscribeToEventCommands() {
+        viewModel.eventCommand.observe(viewLifecycleOwner,{
+            when(it) {
+                CorporateDirectoryViewModel.cmd_show_loading_sign -> showProgressBar()
+
+                CorporateDirectoryViewModel.cmd_hide_loading_sign -> hideProgressBar()
+            }
+        })
+    }
+
+    fun showProgressBar() {
+        binding.progressBar.bringToFront()
+        binding.progressBar.loading_spinner.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 

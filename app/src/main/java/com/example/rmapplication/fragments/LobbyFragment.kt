@@ -17,7 +17,9 @@ import com.example.rmapplication.activities.MainActivity
 import com.example.rmapplication.adapter.LobbyAdapter
 import com.example.rmapplication.databinding.FragmentLobbyBinding
 import com.example.rmapplication.model.Item
+import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
 import com.example.rmapplication.viewmodel.LobbyViewModel
+import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 import org.greenrobot.eventbus.Subscribe
 
 
@@ -47,6 +49,7 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToRmAppListLiveData()
+        subscribeToEventCommands()
         viewModel.getRmAppList()
         (activity as MainActivity).geBottomNavView()?.visibility = View.VISIBLE
     }
@@ -76,6 +79,28 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.estimated_numbers)) {
             findNavController().navigate(R.id.action_lobbyFragment_to_estimateNumbersFragment)
         }
+    }
+
+    fun subscribeToEventCommands() {
+        viewModel.eventCommand.observe(viewLifecycleOwner,{
+            when(it) {
+                CorporateDirectoryViewModel.cmd_show_loading_sign -> showProgressBar()
+
+                CorporateDirectoryViewModel.cmd_hide_loading_sign -> hideProgressBar()
+            }
+        })
+    }
+
+    fun showProgressBar() {
+        Log.d(TAG, "***showProgressBar()")
+        binding.progressBar.bringToFront()
+        binding.progressBar.loading_spinner.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        Log.d(TAG, "***hideProgressBar()")
+        binding.progressBar.visibility = View.GONE
     }
 }
 

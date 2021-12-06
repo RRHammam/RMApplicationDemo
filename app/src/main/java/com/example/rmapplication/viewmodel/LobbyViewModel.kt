@@ -23,8 +23,8 @@ class LobbyViewModel (
     val TAG = "LobbyViewModel"
 
     companion object{
-        const val CMD_SUCCESS = 0
-        const val CMD_FAILURE = 1
+        const val cmd_show_loading_sign = 0
+        const val cmd_hide_loading_sign = 1
     }
 
     private val lobbyRepository = LobbyRepository(app)
@@ -51,17 +51,15 @@ class LobbyViewModel (
     }
 
     fun getRmAppList() {
-        if (rmAppListLiveData.value.isNullOrEmpty()) {
-            isLoading.set(true)
-        }
+        showLoading()
         lobbyRepository.getRmAppList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ rmAppListResponse ->
-                isLoading.set(false)
                 rmAppListLiveData.value = orderList(rmAppListResponse.items)
                 //rmAppListLiveData.value = reOrderList(rmAppListResponse.items)
+                hideLoading()
             }, {
-                isLoading.set(false)
+                hideLoading()
                 Toast.makeText(getApplication(), "Error getting RM app list", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
 
@@ -130,5 +128,13 @@ class LobbyViewModel (
 
     fun <T> mutableListWithCapacity(capacity: Int): MutableList<T> =
         ArrayList(capacity)
+
+    fun showLoading(){
+        eventCommand.value = cmd_show_loading_sign
+    }
+
+    fun hideLoading(){
+        eventCommand.value = cmd_hide_loading_sign
+    }
 
 }

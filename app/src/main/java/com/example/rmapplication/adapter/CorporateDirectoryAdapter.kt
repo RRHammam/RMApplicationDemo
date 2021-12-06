@@ -47,7 +47,7 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
                     val emailIntent = Intent(Intent.ACTION_SEND)
                     emailIntent.type = "plain/text"
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailText))
-                    context.applicationContext.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)))
+                    context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)))
                 }
             } else {
                 binding.textViewCorporateUserEmail.visibility = View.GONE
@@ -57,7 +57,7 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
                 binding.textViewCorporateUserPhoneNumber.text = user?.mobilePhone
                 binding.textViewCorporateUserPhoneNumber.setOnClickListener {
                     val callingIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", binding.textViewCorporateUserPhoneNumber.text.toString(), null))
-                    context.applicationContext.startActivity(callingIntent)
+                    context.startActivity(callingIntent)
                 }
             } else {
                 binding.textViewCorporateUserPhoneNumber.visibility = View.GONE

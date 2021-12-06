@@ -38,4 +38,9 @@
         <item>Job Number</item>
         <item>Title</item>
     </string-array>
+
+    <string-array name="estimate_numbers">
+        <item>Estimate Number</item>
+        <item>Title</item>
+    </string-array>
 </resources>
