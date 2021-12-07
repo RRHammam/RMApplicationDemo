@@ -1,5 +1,7 @@
 package com.example.rmapplication.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import com.example.rmapplication.LobbyItemSelectedEvent
 import com.example.rmapplication.R
 import com.example.rmapplication.activities.MainActivity
 import com.example.rmapplication.adapter.LobbyAdapter
+import com.example.rmapplication.constants.Constants
 import com.example.rmapplication.databinding.FragmentLobbyBinding
 import com.example.rmapplication.model.Item
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
@@ -71,14 +74,25 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
     }
 
     override fun onLobbyGridItemClickedEvent(lobbyGridItem: Item?) {
-        Log.d(TAG, "onLobbyGridItemClickedEvent called ${lobbyGridItem?.fields?.Title}")
         if(lobbyGridItem?.fields?.Title?.trim() == "Corporate Directory"){
             findNavController().navigate(R.id.action_lobbyFragment_to_corporateDirectoryFragment)
         } else if(lobbyGridItem?.fields?.Title?.trim() == "Job Numbers") {
             findNavController().navigate(R.id.action_lobbyFragment_to_jobRequestFragment)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.estimated_numbers)) {
             findNavController().navigate(R.id.action_lobbyFragment_to_estimateNumbersFragment)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.sustainability)) {
+            openBrowser(Constants.SUSTAINABILITY)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.waste_management)) {
+            openBrowser(Constants.WASTE_MANAGEMENT)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.building_forward)) {
+            openBrowser(Constants.BUILDING_FORWARD)
         }
+    }
+
+    private fun openBrowser(link : String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        this.activity?.let { activity -> browserIntent.resolveActivity(activity.packageManager) }
+            ?.let { startActivity(browserIntent) }
     }
 
     fun subscribeToEventCommands() {
