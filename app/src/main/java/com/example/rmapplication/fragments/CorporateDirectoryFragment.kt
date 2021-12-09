@@ -17,7 +17,6 @@ import com.example.rmapplication.model.CorporateUser
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel.Companion.cmd_hide_loading_sign
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel.Companion.cmd_show_loading_sign
-import kotlinx.android.synthetic.main.fragment_job_request.view.*
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class CorporateDirectoryFragment : BaseFragment() {
@@ -51,7 +50,7 @@ class CorporateDirectoryFragment : BaseFragment() {
         subscribeToEventCommands()
         init()
         viewModel.getCorporateDirectoryList()
-        (activity as MainActivity).geBottomNavView()?.visibility = View.VISIBLE
+        (activity as MainActivity).getBottomNavView()?.visibility = View.VISIBLE
     }
 
     private fun subscribeToCorporateDirectoryListLiveData() {

@@ -28,7 +28,7 @@ class MainActivity : BaseActivity() {
 
     }
 
-    public fun geBottomNavView(): BottomNavigationView? {
+    public fun getBottomNavView(): BottomNavigationView? {
         return bottom_navView
     }
 

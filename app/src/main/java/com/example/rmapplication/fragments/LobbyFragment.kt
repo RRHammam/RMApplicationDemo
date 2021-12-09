@@ -4,16 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.rmapplication.LobbyItemSelectedEvent
 import com.example.rmapplication.R
 import com.example.rmapplication.activities.MainActivity
 import com.example.rmapplication.adapter.LobbyAdapter
@@ -23,7 +19,6 @@ import com.example.rmapplication.model.Item
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
 import com.example.rmapplication.viewmodel.LobbyViewModel
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
-import org.greenrobot.eventbus.Subscribe
 
 
 class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
@@ -54,7 +49,7 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         subscribeToRmAppListLiveData()
         subscribeToEventCommands()
         viewModel.getRmAppList()
-        (activity as MainActivity).geBottomNavView()?.visibility = View.VISIBLE
+        (activity as MainActivity).getBottomNavView()?.visibility = View.VISIBLE
     }
 
     fun subscribeToDirectoryListLiveData() {

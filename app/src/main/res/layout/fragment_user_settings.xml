@@ -9,14 +9,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/imageView_back_button"
             android:layout_width="40dp"
             android:layout_height="56dp"
-            android:layout_margin="3dp"
-            android:src="@drawable/rm_sustainability"
+            android:src="@drawable/ic_back_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -30,9 +30,12 @@
             android:textStyle="bold"
             android:gravity="center"
             android:paddingHorizontal="40dp"
+            android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageView_back_button"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="40dp"
+            android:background="@color/white"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="80dp"
@@ -53,6 +56,7 @@
             app:layout_constraintBottom_toBottomOf="@id/circleImageView_user"
             android:visibility="gone"
             android:text="@string/rm"
+            android:textColor="@color/black"
             android:textSize="40sp"/>
 
         <TextView
@@ -61,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/user_name"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

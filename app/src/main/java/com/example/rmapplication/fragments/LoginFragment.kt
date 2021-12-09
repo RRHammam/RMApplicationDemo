@@ -33,7 +33,7 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToEventCommands()
-        (activity as MainActivity).geBottomNavView()?.visibility = View.GONE
+        (activity as MainActivity).getBottomNavView()?.visibility = View.GONE
     }
 
     override fun onResume() {
