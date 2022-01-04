@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_lobbyFragment_to_estimateNumbersFragment"
             app:destination="@id/estimateNumbersFragment" />
+        <action
+            android:id="@+id/action_lobbyFragment_to_applicationsFragment"
+            app:destination="@id/applicationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -42,4 +45,8 @@
         android:id="@+id/estimateNumbersFragment"
         android:name="com.example.rmapplication.fragments.EstimateNumbersFragment"
         android:label="EstimateNumbersFragment" />
+    <fragment
+        android:id="@+id/applicationsFragment"
+        android:name="com.example.rmapplication.fragments.ApplicationsFragment"
+        android:label="ApplicationsFragment" />
 </navigation>

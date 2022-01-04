@@ -4,17 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class Item(
     @SerializedName("@odata.etag")
-    val etag: String,
-    val contentType: ContentType,
-    val createdBy: CreatedBy,
-    val createdDateTime: String,
-    val eTag: String,
-    val fields: Fields,
+    val etag: String? = null,
+    val contentType: ContentType? = null,
+    val createdBy: CreatedBy? = null,
+    val createdDateTime: String? = null,
+    val eTag: String? = null,
+    val fields: Fields? = null,
     @SerializedName("fields@odata.context")
-    val fieldsUrl: String,
-    val id: String,
-    val lastModifiedBy: LastModifiedBy,
-    val lastModifiedDateTime: String,
-    val parentReference: ParentReference,
-    val webUrl: String
+    val fieldsUrl: String? = null,
+    val id: String? = null,
+    val lastModifiedBy: LastModifiedBy? = null,
+    val lastModifiedDateTime: String? = null,
+    val parentReference: ParentReference? = null,
+    val webUrl: String? = null
 )

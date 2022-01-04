@@ -87,6 +87,8 @@ class EstimateNumbersFragment: BaseFragment() {
                 selectedItemForSearchType = char.toString()
                 binding.textInputLayoutEstimateNumber.endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
                 binding.searchBarEstimateNumberr.constraintLayoutParentSearchBarLayout.visibility = View.VISIBLE
+                binding.autoCompleteTextViewEstimateNumber.clearFocus()
+                binding.searchBarEstimateNumberr.constraintLayoutParentSearchBarLayout.requestFocus()
             }
 
             override fun afterTextChanged(p0: Editable?) {

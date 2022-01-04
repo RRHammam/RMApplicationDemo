@@ -75,39 +75,39 @@ class LobbyViewModel (
         val reOrderedList = mutableListOf<Item>()
         reOrderedList.addAll(list)
         list.forEach {
-            if(it.fields.AppOrder == 1) {
+            if(it.fields?.AppOrder == 1) {
                 reOrderedList.remove(it)
                 reOrderedList.add(0, it)
-            } else if(it.fields.AppOrder == 2) {
+            } else if(it.fields?.AppOrder == 2) {
                 reOrderedList.remove(it)
                 reOrderedList.add(1, it)
-            } else if(it.fields.AppOrder == 3) {
+            } else if(it.fields?.AppOrder == 3) {
                 reOrderedList.remove(it)
                 reOrderedList.add(2, it)
-            } else if(it.fields.AppOrder == 4) {
+            } else if(it.fields?.AppOrder == 4) {
                 reOrderedList.remove(it)
                 reOrderedList.add(3, it)
-            } else if(it.fields.AppOrder == 5) {
+            } else if(it.fields?.AppOrder == 5) {
                 reOrderedList.remove(it)
                 reOrderedList.add(4, it)
-            } else if(it.fields.AppOrder == 6) {
+            } else if(it.fields?.AppOrder == 6) {
                 reOrderedList.remove(it)
                 reOrderedList.add(5, it)
-            } else if(it.fields.AppOrder == 7) {
+            } else if(it.fields?.AppOrder == 7) {
                 reOrderedList.remove(it)
                 reOrderedList.add(6, it)
-            } else if(it.fields.AppOrder == 8) {
-                reOrderedList.remove(it)
-                reOrderedList.add(7, it)
-            } else if(it.fields.AppOrder == 9) {
-                reOrderedList.remove(it)
-                reOrderedList.add(8, it)
-            } else if(it.fields.AppOrder == 10) {
-                reOrderedList.remove(it)
-                reOrderedList.add(9, it)
-            } else if(it.fields.AppOrder == 11) {
+            } else if(it.fields?.AppOrder == 8) {
                 reOrderedList.remove(it)
                 reOrderedList.add(10, it)
+            } else if(it.fields?.AppOrder == 9) {
+                reOrderedList.remove(it)
+                reOrderedList.add(8, it)
+            } else if(it.fields?.AppOrder == 10) {
+                reOrderedList.remove(it)
+                reOrderedList.add(9, it)
+            } else if(it.fields?.AppOrder == 11) {
+                reOrderedList.remove(it)
+                reOrderedList.add(7, it)
             }
         }
         return reOrderedList
@@ -120,7 +120,7 @@ class LobbyViewModel (
         index: Int
     ) {
         list.forEach {
-            if (it.fields.Title.trim() == title) {
+            if (it.fields?.Title?.trim() == title) {
                 reOrderedList.add(index, it)
             }
         }

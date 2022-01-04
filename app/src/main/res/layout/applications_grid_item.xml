@@ -32,13 +32,13 @@
                 android:layout_gravity="center"
                 android:maxWidth="50dp"
                 android:maxHeight="50dp"
-                android:src="@drawable/ic_building_forward"
+                android:src="@android:drawable/ic_menu_gallery"
                 app:layout_constraintBottom_toTopOf="@+id/textView_grid_item"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"/>
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
                 android:id="@+id/textView_grid_item"

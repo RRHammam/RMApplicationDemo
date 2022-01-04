@@ -42,22 +42,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:background="@drawable/button_border"
                 android:onClick="@{(view) -> eventListener.onLoginClicked()}"
-                android:text="Login"
+                android:text="@string/login"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                android:textSize="@dimen/_16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView_rmLogo"
                 app:layout_constraintVertical_bias="0.24"
+                app:strokeColor="@color/black"
+                app:strokeWidth="@dimen/_1dp"
+                app:cornerRadius="@dimen/_12dp"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

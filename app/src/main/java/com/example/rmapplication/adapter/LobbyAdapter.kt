@@ -1,32 +1,21 @@
 package com.example.rmapplication.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.example.rmapplication.R
 import com.example.rmapplication.databinding.GridItemBinding
 import com.example.rmapplication.fragments.LobbyFragmentEventListener
 import com.example.rmapplication.model.ButtonImage
 import com.example.rmapplication.model.Item
-import com.example.rmapplication.util.ImageUtil
-import com.example.rmapplication.util.SessionManager
 import com.google.gson.Gson
-import com.squareup.picasso.Picasso
 import org.json.JSONTokener
 
 class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListener: LobbyFragmentEventListener) :
@@ -53,7 +42,6 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
         return viewHolder.itemView
     }
 
-
     inner class LobbyItemHolder(val binding: GridItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -67,72 +55,86 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
 
         fun bindGridItem(lobbyItem: Item?, context: Context) {
             this.lobbyItem = lobbyItem
-            binding.textViewGridItem.text = lobbyItem?.fields?.Title
             val buttonImageUrl = lobbyItem?.fields?.buttonimage?.let { getButtonImageUrl(it) }
-            loadImageFromDisplayName(lobbyItem?.fields?.Title, context)
+            setItemDetails(lobbyItem?.fields?.Title, context)
         }
 
-        private fun loadImageFromDisplayName(displayName: String?, context: Context) {
-            if (displayName?.trim() == "HUB") {
-                Glide.with(context).load(context.resources.getDrawable(R.drawable.rminfotech))
+        private fun setItemDetails(displayName: String?, context: Context) {
+            if (displayName?.trim() == context.getString(R.string.hub)) {
+                binding.textViewGridItem.text = lobbyItem?.fields?.Title
+                Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.rminfotech))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Job Request") {
-                Glide.with(context).load(context.resources.getDrawable(R.drawable.ic_jobnumbers))
+            } else if (displayName?.trim() == context.getString(R.string.job_request)) {
+                binding.textViewGridItem.text = context.getString(R.string.job_numbers_text)
+                Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.ic_jobnumbers))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Preconstruction") {
-                Glide.with(context).load(context.resources.getDrawable(R.drawable.rmiconsafety))
+            } else if (displayName?.trim() == context.getString(R.string.preconstruction)) {
+                binding.textViewGridItem.text = lobbyItem?.fields?.Title
+                Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.rmiconsafety))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Human Resources") {
+            } else if (displayName?.trim() == context.getString(R.string.human_resources)) {
+                binding.textViewGridItem.text = context.getString(R.string.human_resources_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rm_learning_culture))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rm_learning_culture))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Sustainability") {
+            } else if (displayName?.trim() == context.getString(R.string.sustainability)) {
+                binding.textViewGridItem.text = lobbyItem?.fields?.Title
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rm_sustainability))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rm_sustainability))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Administration") {
+            } else if (displayName?.trim() == context.getString(R.string.administration)) {
+                binding.textViewGridItem.text = lobbyItem?.fields?.Title
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rminfotech))
+                    .load(ContextCompat.getDrawable(context, R.drawable.rminfotech))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Policies and Procedures") {
-                Glide.with(context).load(context.resources.getDrawable(R.drawable.rmpolicypro))
+            } else if (displayName?.trim() == context.getString(R.string.policies_and_procedures)) {
+                binding.textViewGridItem.text = context.getString(R.string.policies_and_procedures_text)
+                Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.rmpolicypro))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Job Numbers") {
-                Glide.with(context).load(context.resources.getDrawable(R.drawable.rmworkforce))
+            } else if (displayName?.trim() == context.getString(R.string.job_numbers)) {
+                binding.textViewGridItem.text = context.getString(R.string.job_numbers_text)
+                Glide.with(context).load(ContextCompat.getDrawable(context,R.drawable.rmworkforce))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Estimated Numbers") {
+            } else if (displayName?.trim() == context.getString(R.string.estimated_numbers)) {
+                binding.textViewGridItem.text = context.getString(R.string.estimated_numbers_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rmbudget))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rmbudget))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Training Schedule") {
+            } else if (displayName?.trim() == context.getString(R.string.training_schedule)) {
+                binding.textViewGridItem.text = context.getString(R.string.training_schedule_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rmschedule))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rmschedule))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "HR Information") {
+            } else if (displayName?.trim() == context.getString(R.string.hr_information)) {
+                binding.textViewGridItem.text = context.getString(R.string.time_entry_paystubs)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rmcollab))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rmcollab))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Safety Information") {
+            } else if (displayName?.trim() == context.getString(R.string.safety_information)) {
+                binding.textViewGridItem.text = context.getString(R.string.safety_information_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rmiconsafety))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rmiconsafety))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Corporate Directory") {
+            } else if (displayName?.trim() == context.getString(R.string.corporate_directory)) {
+                binding.textViewGridItem.text = context.getString(R.string.corporate_directory_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rmgov))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rmgov))
                     .into(binding.imageViewGridItem)
-            } else if (displayName?.trim() == "Applications") {
+            } else if (displayName?.trim() == context.getString(R.string.applications)) {
+                binding.textViewGridItem.text = lobbyItem?.fields?.Title
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.rminfotech))
+                    .load(ContextCompat.getDrawable( context, R.drawable.rminfotech))
                     .into(binding.imageViewGridItem)
             } else if (displayName?.trim() == context.resources.getString(R.string.waste_management)) {
+                binding.textViewGridItem.text = context.getString(R.string.waste_management_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.wastemanagement))
+                    .load(ContextCompat.getDrawable( context, R.drawable.wastemanagement))
                     .into(binding.imageViewGridItem)
             } else if (displayName?.trim() == context.resources.getString(R.string.building_forward)) {
+                binding.textViewGridItem.text = context.getString(R.string.building_forward_text)
                 Glide.with(context)
-                    .load(context.resources.getDrawable(R.drawable.ic_building_forward))
-                    .apply(RequestOptions().override(50, 50))
-                    .centerCrop()
+                    .load(ContextCompat.getDrawable( context, R.drawable.ic_building_forward))
+                    .apply(RequestOptions().override(220, 220))
                     .into(binding.imageViewGridItem)
             }
         }

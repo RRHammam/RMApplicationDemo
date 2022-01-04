@@ -69,9 +69,9 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
     }
 
     override fun onLobbyGridItemClickedEvent(lobbyGridItem: Item?) {
-        if(lobbyGridItem?.fields?.Title?.trim() == "Corporate Directory"){
+        if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.corporate_directory)){
             findNavController().navigate(R.id.action_lobbyFragment_to_corporateDirectoryFragment)
-        } else if(lobbyGridItem?.fields?.Title?.trim() == "Job Numbers") {
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.job_numbers)) {
             findNavController().navigate(R.id.action_lobbyFragment_to_jobRequestFragment)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.estimated_numbers)) {
             findNavController().navigate(R.id.action_lobbyFragment_to_estimateNumbersFragment)
@@ -81,6 +81,12 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
             openBrowser(Constants.WASTE_MANAGEMENT)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.building_forward)) {
             openBrowser(Constants.BUILDING_FORWARD)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.hr_information)) {
+            openBrowser(Constants.HR_INFORMATION)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.safety_information)) {
+            openBrowser(Constants.SAFETY_INFORMATION)
+        } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.applications)) {
+            findNavController().navigate(R.id.action_lobbyFragment_to_applicationsFragment)
         }
     }
 
