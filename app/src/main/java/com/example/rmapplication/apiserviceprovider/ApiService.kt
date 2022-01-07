@@ -27,4 +27,7 @@ interface ApiService {
 
     @GET("v1.0/sites/8763719b-ae4a-4f3a-a469-f2812ec4934e/sites/6c1aed69-ca48-4759-88ae-805162a32512/lists/1537664d-c92b-4441-b3dd-a0432c4a536c/items?expand=columns,items(expand=fields)")
     fun getEstimateNumber(@Header("Authorization") token: String): Observable<EstimateNumberResponse>
+
+    @GET("v1.0/sites/root/lists/2ad98e52-cf1c-4240-ac4d-839d3d41728d/?expand=items")
+    fun getAppList(@Header("Authorization") token: String): Observable<EstimateNumberResponse>
 }

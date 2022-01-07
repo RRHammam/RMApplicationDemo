@@ -76,15 +76,15 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.estimated_numbers)) {
             findNavController().navigate(R.id.action_lobbyFragment_to_estimateNumbersFragment)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.sustainability)) {
-            openBrowser(Constants.SUSTAINABILITY)
+            openBrowser(Constants.SUSTAINABILITY_LINK)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.waste_management)) {
-            openBrowser(Constants.WASTE_MANAGEMENT)
+            openBrowser(Constants.WASTE_MANAGEMENT_LINK)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.building_forward)) {
-            openBrowser(Constants.BUILDING_FORWARD)
+            openBrowser(Constants.BUILDING_FORWARD_LINK)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.hr_information)) {
-            openBrowser(Constants.HR_INFORMATION)
+            openBrowser(Constants.HR_INFORMATION_LINK)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.safety_information)) {
-            openBrowser(Constants.SAFETY_INFORMATION)
+            openBrowser(Constants.SAFETY_INFORMATION_LINK)
         } else if(lobbyGridItem?.fields?.Title?.trim() == getString(R.string.applications)) {
             findNavController().navigate(R.id.action_lobbyFragment_to_applicationsFragment)
         }

@@ -60,13 +60,65 @@ class ApplicationsAdapter(private val ctx: Context, private var applicationsList
 
         fun bindGridItem(application: String?, context: Context) {
             this.appName = application
-            setItemDetails(application, context)
+            application?.let { setItemDetails(it, context) }
         }
 
-        private fun setItemDetails(displayName: String?, context: Context) {
+        private fun setItemDetails(displayName: String, context: Context) {
             binding.textViewGridItem.text = displayName
-            Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.rminfotech))
-                .into(binding.imageViewGridItem)
+            setImage(displayName)
+        }
+
+        private fun setImage(appName: String){
+            when (appName) {
+                ctx.resources.getString(R.string.ers_construction_products) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_ers))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.hh2) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_hh2))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.egnyte) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_egnyte))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.procore) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_procore))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.delta_dental) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_delta_dental))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.ring_central) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_ring_central))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.starleaf) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_starleaf))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.authy) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_authy))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.sap_concur) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_sap_concur))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.rm_ambassify) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_rm_ambassify))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.fidelity_netbenefits) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_fidelity_net))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.alabam_blue) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_alabama_blue))
+                        .into(binding.imageViewGridItem)
+                }
+            }
         }
     }
 }
