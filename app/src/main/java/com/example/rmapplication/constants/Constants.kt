@@ -19,7 +19,7 @@ object Constants {
     const val DELTA_DENTA_LINKL = "https://play.google.com/store/apps/details?id=com.ddpa.mobileapp"
     const val STARLEAF_LINK = "https://play.google.com/store/apps/details?id=com.starleaf.breeze2"
     const val RINGCENTRAL_LINK = "https://play.google.com/store/apps/details?id=com.glip.mobile"
-    const val ALABAMA_BLUE_LINK = "https://play.google.com/store/apps/details?id=org.bcbsal.mobile   "
+    const val ALABAMA_BLUE_LINK = "https://play.google.com/store/apps/details?id=org.bcbsal.mobile"
     const val RM_AMBASSIFY_LINK = "https://play.google.com/store/apps/details?id=com.ambassify.app.robinsmorton"
     const val AUTHY_LINK = "https://play.google.com/store/apps/details?id=com.authy.authy"
     const val SAP_CONCUR_LINK = "https://play.google.com/store/apps/details?id=com.concur.breeze"

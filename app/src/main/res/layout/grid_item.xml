@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:maxWidth="50dp"
                 android:maxHeight="50dp"
-                android:src="@drawable/ic_building_forward"
+                android:src="@drawable/ic_bf_icon"
                 app:layout_constraintBottom_toTopOf="@+id/textView_grid_item"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

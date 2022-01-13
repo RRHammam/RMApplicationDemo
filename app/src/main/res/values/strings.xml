@@ -80,11 +80,11 @@
     </string-array>
 
     <string-array name="shopping_applications">
-        <item>ERS Construction Products</item>
+        <item>Ers Construction</item>
     </string-array>
 
     <string-array name="payroll_and_time_entry_applications">
-        <item>HH2 Remote Payroll</item>
+        <item>Remote Payroll</item>
     </string-array>
 
     <string-array name="data_storage_applications">
@@ -96,21 +96,21 @@
     </string-array>
 
     <string-array name="finance_applications">
-        <item>Fidelity NetBenifits</item>
+        <item>NetBenefits</item>
     </string-array>
 
     <string-array name="medical_applications">
-        <item>Delta Dental</item>
+        <item>Delta Dental Mobile App</item>
         <item>Alabama Blue</item>
     </string-array>
 
     <string-array name="communication_applications">
-        <item>Starleaf</item>
+        <item>StarLeaf</item>
         <item>RingCentral</item>
     </string-array>
 
     <string-array name="social_media_applications">
-        <item>R&amp;M Ambassify</item>
+        <item>R&amp; M Ambassadors</item>
     </string-array>
 
     <string-array name="authentication_applications">
@@ -122,30 +122,30 @@
     </string-array>
 
     <string-array name="all_apps">
-        <item>ERS Construction Products</item>
-        <item>HH2 Remote Payroll</item>
+        <item>Ers Construction</item>
+        <item>Remote Payroll</item>
         <item>Egnyte</item>
         <item>Procore</item>
-        <item>Fidelity NetBenifits</item>
-        <item>Delta Dental</item>
+        <item>NetBenefits</item>
+        <item>Delta Dental Mobile App</item>
         <item>Alabama Blue</item>
-        <item>Starleaf</item>
+        <item>StarLeaf</item>
         <item>RingCentral</item>
-        <item>R&amp;M Ambassify</item>
+        <item>R&amp; M Ambassadors</item>
         <item>Authy</item>
         <item>SAP Concur</item>
     </string-array>
 
-    <string name="ers_construction_products">ERS Construction Products</string>
-    <string name="hh2">HH2 Remote Payroll</string>
+    <string name="ers_construction_products">Ers Construction</string>
+    <string name="hh2">Remote Payroll</string>
     <string name="egnyte">Egnyte</string>
     <string name="procore">Procore</string>
-    <string name="fidelity_netbenefits">Fidelity NetBenifits</string>
-    <string name="delta_dental">Delta Dental</string>
+    <string name="fidelity_netbenefits">NetBenefits</string>
+    <string name="delta_dental">Delta Dental Mobile App</string>
     <string name="alabam_blue">Alabama Blue</string>
-    <string name="starleaf">Starleaf</string>
+    <string name="starleaf">StarLeaf</string>
     <string name="ring_central">RingCentral</string>
-    <string name="rm_ambassify">R&amp;M Ambassify</string>
+    <string name="rm_ambassify">R&amp; M Ambassadors</string>
     <string name="authy">Authy</string>
     <string name="sap_concur">SAP Concur</string>
 </resources>

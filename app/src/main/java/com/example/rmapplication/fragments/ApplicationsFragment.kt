@@ -1,12 +1,12 @@
 package com.example.rmapplication.fragments
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
+    private val TAG = "ApplicationsFragment"
     private lateinit var binding: FragmentApplicationsBinding
     private var adapter: ApplicationsAdapter? = null
     private var selectedItemForSearchType = ""
@@ -126,48 +127,56 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
     }
 
     override fun onApplicationClickedEvent(appName: String?) {
-        appName?.let { openApp(it) }
+        appName?.let { handleOnAppClickEvent(it) }
     }
 
-    private fun openApp(appName: String){
+    private fun handleOnAppClickEvent(appName: String){
         when (appName) {
             resources.getString(R.string.ers_construction_products) -> {
-                openApplicationOrLink(appName, Constants.ERS_CONSTRUCTION_PRODUCTS_LINK)
+                doOnAppClickAction(appName, Constants.ERS_CONSTRUCTION_PRODUCTS_LINK)
             }
             resources.getString(R.string.hh2) -> {
-                openApplicationOrLink(appName, Constants.HH2_REMOTE_PAYROLL_LINK)
+                doOnAppClickAction(appName, Constants.HH2_REMOTE_PAYROLL_LINK)
             }
             resources.getString(R.string.egnyte) -> {
-                openApplicationOrLink(appName, Constants.EGNYTE_LINK)
+                doOnAppClickAction(appName, Constants.EGNYTE_LINK)
             }
             resources.getString(R.string.procore) -> {
-                openApplicationOrLink(appName, Constants.PROCORE_LINK)
-                openBrowser(Constants.PROCORE_LINK)
+                doOnAppClickAction(appName, Constants.PROCORE_LINK)
             }
             resources.getString(R.string.delta_dental) -> {
-                openApplicationOrLink(appName, Constants.DELTA_DENTA_LINKL)
+                doOnAppClickAction(appName, Constants.DELTA_DENTA_LINKL)
             }
             resources.getString(R.string.ring_central) -> {
-                openApplicationOrLink(appName, Constants.RINGCENTRAL_LINK)
+                doOnAppClickAction(appName, Constants.RINGCENTRAL_LINK)
             }
             resources.getString(R.string.starleaf) -> {
-                openApplicationOrLink(appName, Constants.STARLEAF_LINK)
+                doOnAppClickAction(appName, Constants.STARLEAF_LINK)
             }
             resources.getString(R.string.authy) -> {
-                openApplicationOrLink(appName, Constants.AUTHY_LINK)
+                doOnAppClickAction(appName, Constants.AUTHY_LINK)
             }
             resources.getString(R.string.sap_concur) -> {
-                openApplicationOrLink(appName, Constants.SAP_CONCUR_LINK)
+                doOnAppClickAction(appName, Constants.SAP_CONCUR_LINK)
             }
             resources.getString(R.string.rm_ambassify) -> {
-                openApplicationOrLink(appName, Constants.RM_AMBASSIFY_LINK)
+                doOnAppClickAction(appName, Constants.RM_AMBASSIFY_LINK)
             }
             resources.getString(R.string.fidelity_netbenefits) -> {
-                openApplicationOrLink(appName, Constants.FIDELITY_NET_BENEFITS_LINK)
+                doOnAppClickAction(appName, Constants.FIDELITY_NET_BENEFITS_LINK)
             }
             resources.getString(R.string.alabam_blue) -> {
-                openApplicationOrLink(appName, Constants.ALABAMA_BLUE_LINK)
+                doOnAppClickAction(appName, Constants.ALABAMA_BLUE_LINK)
             }
+        }
+    }
+
+    private fun doOnAppClickAction(appName: String, link: String) {
+        val resolveInfo = getInstalledAppResolveInfo(appName)
+        if (resolveInfo != null) {
+            runApp(resolveInfo)
+        } else {
+            openBrowser(link)
         }
     }
 
@@ -177,25 +186,21 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
             ?.let { startActivity(browserIntent) }
     }
 
-    private fun openApplicationOrLink(appName: String, link : String) {
+    private fun getInstalledAppResolveInfo(appName: String): ResolveInfo? {
         val appIntent = Intent(Intent.ACTION_MAIN, null)
         appIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val packageManager = this.activity?.packageManager
         packageManager?.queryIntentActivities(appIntent, 0)?.forEach { resolveInfo ->
+            Log.d(TAG, "***Installed apps : ${resolveInfo.loadLabel(packageManager)}")
             if (resolveInfo.loadLabel(packageManager).equals(appName)) {
-                runApp(packageManager, resolveInfo)
-                return
+                return resolveInfo
             }
         }
-        openBrowser(link)
+        return null
     }
 
-    private fun runApp(
-        packageManager: PackageManager,
-        resolveInfo: ResolveInfo
-    ) {
-        val launchIntent =
-            packageManager.getLaunchIntentForPackage(resolveInfo.activityInfo.applicationInfo.packageName)
+    private fun runApp(resolveInfo: ResolveInfo) {
+        val launchIntent = this.activity?.packageManager?.getLaunchIntentForPackage(resolveInfo.activityInfo.applicationInfo.packageName)
         startActivity(launchIntent)
     }
 

@@ -133,13 +133,12 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
             } else if (displayName?.trim() == context.resources.getString(R.string.building_forward)) {
                 binding.textViewGridItem.text = context.getString(R.string.building_forward_text)
                 Glide.with(context)
-                    .load(ContextCompat.getDrawable( context, R.drawable.ic_building_forward))
-                    .apply(RequestOptions().override(220, 220))
+                    .load(ContextCompat.getDrawable( context, R.drawable.ic_bf_icon))
                     .into(binding.imageViewGridItem)
             }
         }
 
-        fun getButtonImageUrl(jsonStringWithEscapeChars: String): String? {
+        private fun getButtonImageUrl(jsonStringWithEscapeChars: String): String? {
             val jsonString = JSONTokener(jsonStringWithEscapeChars).nextValue().toString()
             val buttonImage: ButtonImage? = Gson().fromJson(jsonString, ButtonImage::class.java)
 
