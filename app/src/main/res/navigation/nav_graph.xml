@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_lobbyFragment_to_applicationsFragment"
             app:destination="@id/applicationsFragment" />
+        <action
+            android:id="@+id/action_lobbyFragment_to_policiesAndProceduresFragment"
+            app:destination="@id/policiesAndProceduresFragment" />
     </fragment>
     <fragment
         android:id="@+id/userSettingsFragment"
@@ -49,4 +52,8 @@
         android:id="@+id/applicationsFragment"
         android:name="com.example.rmapplication.fragments.ApplicationsFragment"
         android:label="ApplicationsFragment" />
+    <fragment
+        android:id="@+id/policiesAndProceduresFragment"
+        android:name="com.example.rmapplication.fragments.PoliciesAndProceduresFragment"
+        android:label="PoliciesAndProceduresFragment" />
 </navigation>

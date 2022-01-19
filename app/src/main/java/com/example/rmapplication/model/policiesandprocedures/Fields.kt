@@ -1,7 +1,10 @@
 package com.example.rmapplication.model.policiesandprocedures
 
+import com.google.gson.annotations.SerializedName
+
 data class Fields(
-    val @odata.etag: String,
+    @SerializedName("@odata.etag")
+    var eTag: String,
     val AuthorLookupId: String,
     val ContentType: String,
     val Created: String,

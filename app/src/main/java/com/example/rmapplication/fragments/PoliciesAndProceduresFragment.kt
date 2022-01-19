@@ -1,34 +1,25 @@
 package com.example.rmapplication.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rmapplication.R
-import com.example.rmapplication.adapter.JobRequestAdapter
-import com.example.rmapplication.databinding.FragmentJobRequestBinding
+import com.example.rmapplication.adapter.PoliciesAndProceduresAdapter
 import com.example.rmapplication.databinding.FragmentPoliciesProceduresBinding
-import com.example.rmapplication.model.CorporateUser
-import com.example.rmapplication.model.jobrequest.JobRequestValue
+import com.example.rmapplication.model.policiesandprocedures.PoliciesAndProceduresItem
 import com.example.rmapplication.viewmodel.CorporateDirectoryViewModel
-import com.example.rmapplication.viewmodel.JobRequestViewModel
 import com.example.rmapplication.viewmodel.PoliciesAndProceduresViewModel
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
-class PoliciesAndProceduresFragment: BaseFragment() {
+class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventListener {
     val TAG = "PoliciesAndProceduresFragment"
     private lateinit var binding: FragmentPoliciesProceduresBinding
     private lateinit var viewModel: PoliciesAndProceduresViewModel
-    private var adapter: JobRequestAdapter? = null
+    private var adapter: PoliciesAndProceduresAdapter? = null
     private var selectedItemForSearchType = ""
 
 
@@ -47,34 +38,23 @@ class PoliciesAndProceduresFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToEventCommands()
-        //subscribeToCorporateDirectoryListLiveData()
-        //init()
+        subscribeToPoliciesAndProceduresListLiveData()
         viewModel.getPoliciesAndProcedures()
     }
 
-    fun subscribeToCorporateDirectoryListLiveData() {
-        viewModel.jobRequestListLiveData.observe(viewLifecycleOwner, {
+    private fun subscribeToPoliciesAndProceduresListLiveData() {
+        viewModel.policiesAndProceduresListLiveData.observe(viewLifecycleOwner, {
+            setAdapter(viewModel.getRootElementsList())
         })
     }
 
-    /*private fun init() {
-        binding.searchBarJobNumber.imageViewClearSearchImage.setOnClickListener {
-            binding.searchBarJobNumber.editTextSearch.setText("")
-        }
-    }*/
-
-
-   /* private fun setAdapter(it: MutableList<JobRequestValue>) {
-        adapter = this.context?.let { it1 -> JobRequestAdapter(it1, it) }
-        binding.jobRequestList.layoutManager = LinearLayoutManager(this.activity)
-        binding.jobRequestList.adapter = adapter
-    }*/
-
-    override fun onResume() {
-        super.onResume()
+    private fun setAdapter(it: MutableList<PoliciesAndProceduresItem>) {
+        adapter = this.context?.let { it1 -> PoliciesAndProceduresAdapter(it1, it, this) }
+        binding.policiesAndProceduresList.layoutManager = LinearLayoutManager(this.activity)
+        binding.policiesAndProceduresList.adapter = adapter
     }
 
-    fun subscribeToEventCommands() {
+    private fun subscribeToEventCommands() {
         viewModel.eventCommand.observe(viewLifecycleOwner,{
             when(it) {
                 CorporateDirectoryViewModel.cmd_show_loading_sign -> showProgressBar()
@@ -94,5 +74,12 @@ class PoliciesAndProceduresFragment: BaseFragment() {
         binding.progressBar.visibility = View.GONE
     }
 
+    override fun onPoliciesAndProcedureItemClickedEvent(policiesAndProceduresItem: PoliciesAndProceduresItem?) {
+        val childElementsList = viewModel.getChildElementsList(policiesAndProceduresItem?.fields?.eTag)
+        adapter?.clearAndUpdateList(childElementsList)
+    }
+}
 
+interface PoliciesAndProcedureEventListener {
+    fun onPoliciesAndProcedureItemClickedEvent(policiesAndProceduresItem: PoliciesAndProceduresItem?)
 }

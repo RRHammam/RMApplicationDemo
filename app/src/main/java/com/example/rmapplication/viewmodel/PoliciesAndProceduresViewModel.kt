@@ -6,8 +6,7 @@ import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.rmapplication.model.jobrequest.JobRequestValue
-import com.example.rmapplication.model.policiesandprocedures.Item
+import com.example.rmapplication.model.policiesandprocedures.PoliciesAndProceduresItem
 import com.example.rmapplication.repository.PoliciesAndProceduresRepository
 import com.example.rmapplication.util.SessionManager
 import com.example.rmapplication.util.SingleLiveEvent
@@ -20,15 +19,15 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
     val TAG = "PoliciesAndProceduresViewModel"
 
     private val policiesAndProceduresRepository = PoliciesAndProceduresRepository(app)
-    var jobRequestListLiveData = MutableLiveData<MutableList<JobRequestValue>>()
+    var policiesAndProceduresListLiveData = MutableLiveData<MutableList<PoliciesAndProceduresItem>>()
     var isLoading = ObservableBoolean(false)
     private val compositeDisposable = CompositeDisposable()
     var eventCommand = SingleLiveEvent<Int>()
-    lateinit var policiesAndProcedures: MutableList<Item>
+    var policiesAndProcedures = mutableListOf<PoliciesAndProceduresItem>()
 
     fun getPoliciesAndProcedures(){
         showLoading()
-        if (jobRequestListLiveData.value.isNullOrEmpty()) {
+        if (policiesAndProceduresListLiveData.value.isNullOrEmpty()) {
             isLoading.set(true)
         }
         policiesAndProceduresRepository.getPoliciesAndProcedures(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
@@ -36,13 +35,14 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
             ?.subscribe({ policiesAndProceduresResponse ->
                 hideLoading()
                 isLoading.set(false)
-                policiesAndProcedures = policiesAndProceduresResponse.items
+                policiesAndProcedures.addAll(policiesAndProceduresResponse.items)
+                updateEtag()
+                policiesAndProceduresListLiveData.value = policiesAndProceduresResponse.items
             }, {
                 hideLoading()
                 isLoading.set(false)
                 Toast.makeText(getApplication(), "Error getting Policies and procedures", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
-
             })?.let { compositeDisposable.add(it) }
     }
 
@@ -51,14 +51,54 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
         compositeDisposable.clear()
     }
 
-    fun showLoading(){
+    private fun showLoading(){
         eventCommand.value = cmd_show_loading_sign
     }
 
-    fun hideLoading(){
+    private fun hideLoading(){
         eventCommand.value = cmd_hide_loading_sign
     }
 
+    private fun updateEtag() {
+        policiesAndProcedures.forEach {
+            it.fields.eTag = it.fields.eTag.replace("\"", "")
+            val stringEtag = it.fields.eTag.split(",")
+            it.fields.eTag = stringEtag[0]
+        }
+    }
+
+    private fun isRootElement(parentReferenceId: String): Boolean {
+        var count = 0
+        policiesAndProcedures.forEach {
+            if (it.fields.eTag != parentReferenceId) {
+                count++
+            }
+        }
+        if(policiesAndProcedures.size == count){
+            return true
+        }
+        return false
+    }
+
+    fun getRootElementsList(): MutableList<PoliciesAndProceduresItem> {
+        val rootElementsList = mutableListOf<PoliciesAndProceduresItem>()
+        policiesAndProcedures.forEach {
+            if(isRootElement(it.parentReference.id)){
+                rootElementsList.add(it)
+            }
+        }
+        return rootElementsList
+    }
+
+    fun getChildElementsList(parentEtag: String?): MutableList<PoliciesAndProceduresItem> {
+        val childElementsList = mutableListOf<PoliciesAndProceduresItem>()
+        policiesAndProcedures.forEach {
+            if (parentEtag ==  it.parentReference.id) {
+                childElementsList.add(it)
+            }
+        }
+        return childElementsList
+    }
 
     companion object {
         const val cmd_show_loading_sign = 0

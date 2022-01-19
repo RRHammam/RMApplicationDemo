@@ -4,7 +4,7 @@ import com.example.rmapplication.model.CreatedBy
 import com.example.rmapplication.model.LastModifiedBy
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class PoliciesAndProceduresItem(
     @SerializedName ("@odata.etag")
     val etag: String,
     val contentType: ContentType,

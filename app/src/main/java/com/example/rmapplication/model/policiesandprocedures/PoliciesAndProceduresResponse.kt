@@ -15,7 +15,7 @@ data class PoliciesAndProceduresResponse(
     val displayName: String,
     val eTag: String,
     val id: String,
-    val items: MutableList<Item>,
+    val items: MutableList<PoliciesAndProceduresItem>,
     @SerializedName("items@odata.context")
     val itemsContext: String,
     val lastModifiedBy: LastModifiedBy,
