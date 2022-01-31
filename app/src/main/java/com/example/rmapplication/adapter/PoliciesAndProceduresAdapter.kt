@@ -13,7 +13,7 @@ import com.example.rmapplication.model.policiesandprocedures.PoliciesAndProcedur
 
 class PoliciesAndProceduresAdapter(
     val context: Context,
-    private val policiesAndProceduresList: MutableList<PoliciesAndProceduresItem>,
+    val policiesAndProceduresList: MutableList<PoliciesAndProceduresItem>?,
     private val eventListener: PoliciesAndProcedureEventListener
 ) : RecyclerView.Adapter<PoliciesAndProceduresAdapter.PoliciesAndProceduresItemHolder>() {
 
@@ -34,8 +34,12 @@ class PoliciesAndProceduresAdapter(
         fun bindListItem(policiesAndProcedures: PoliciesAndProceduresItem?) {
             policiesAndProceduresItem = policiesAndProcedures
             val policiesAndProceduresDetails = policiesAndProcedures?.fields
-            (policiesAndProceduresDetails?.LinkFilename).also { binding.textViewListItem.text = it }
-
+            (policiesAndProceduresDetails?.LinkFilename?.trim()).also { binding.textViewListItem.text = it }
+            if(policiesAndProcedures?.fields?.ContentType == "Document"){
+                binding.textViewListItem.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mail, 0, 0,0)
+            } else {
+                binding.textViewListItem.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_call,0, 0,0)
+            }
         }
     }
 
@@ -50,29 +54,19 @@ class PoliciesAndProceduresAdapter(
     }
 
     override fun onBindViewHolder(holder: PoliciesAndProceduresItemHolder, position: Int) {
-        holder.bindListItem(policiesAndProceduresList[position])
+        holder.bindListItem(policiesAndProceduresList?.get(position))
     }
 
     override fun getItemCount(): Int {
         Log.d(TAG, "getItemCount() called - $policiesAndProceduresList.size")
-        return policiesAndProceduresList.size
+        return policiesAndProceduresList?.size ?: 0
     }
 
     fun clearAndUpdateList(updatedList: MutableList<PoliciesAndProceduresItem>?) {
         updatedList?.let {
-            policiesAndProceduresList.clear()
-            policiesAndProceduresList.addAll(it)
+            policiesAndProceduresList?.clear()
+            policiesAndProceduresList?.addAll(it)
             notifyDataSetChanged()
         }
     }
-
-    private fun isRootElement(parentReferenceId: String): Boolean {
-        policiesAndProceduresList.forEach {
-            if (it.fields.eTag == parentReferenceId) {
-                return true
-            }
-        }
-        return false
-    }
-
 }

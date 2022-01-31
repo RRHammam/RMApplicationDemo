@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 
 class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(app) {
 
-    val TAG = "PoliciesAndProceduresViewModel"
+    private val TAG = "PoliciesAndProceduresViewModel"
 
     private val policiesAndProceduresRepository = PoliciesAndProceduresRepository(app)
     var policiesAndProceduresListLiveData = MutableLiveData<MutableList<PoliciesAndProceduresItem>>()
@@ -24,6 +24,8 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
     private val compositeDisposable = CompositeDisposable()
     var eventCommand = SingleLiveEvent<Int>()
     var policiesAndProcedures = mutableListOf<PoliciesAndProceduresItem>()
+    var previousPageList = mutableListOf<PoliciesAndProceduresItem>()
+    var mapOfListByPageNumber = mutableMapOf<Int, MutableList<PoliciesAndProceduresItem>>()
 
     fun getPoliciesAndProcedures(){
         showLoading()
@@ -98,6 +100,27 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
             }
         }
         return childElementsList
+    }
+
+    fun isDocument(policiesAndProceduresItem: PoliciesAndProceduresItem?): Boolean{
+        if(policiesAndProceduresItem?.fields?.ContentType == "Document"){
+            return true
+        }
+        return false
+    }
+
+    fun filterDataFromList(query: String): MutableList<PoliciesAndProceduresItem>? {
+        val filteredList = mutableListOf<PoliciesAndProceduresItem>()
+        return if (query.isNotEmpty()) {
+            policiesAndProcedures.forEach {
+                if (it.fields.LinkFilename.trim().lowercase().contains(query)) {
+                    filteredList.add(it)
+                }
+            }
+            filteredList
+        } else {
+            getRootElementsList()
+        }
     }
 
     companion object {

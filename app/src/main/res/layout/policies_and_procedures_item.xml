@@ -27,14 +27,15 @@
                 android:id="@+id/textView_listItem"
                 android:layout_width="@dimen/_0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_3dp"
-                android:text="Policies And Procedures"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:drawableStart="@drawable/ic_bf_icon"
+                android:drawablePadding="@dimen/_10dp"
+                android:paddingVertical="@dimen/_5dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
