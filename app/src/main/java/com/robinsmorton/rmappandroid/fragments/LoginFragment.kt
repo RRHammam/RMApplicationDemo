@@ -1,10 +1,6 @@
 package com.robinsmorton.rmappandroid.fragments
 
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +13,6 @@ import com.robinsmorton.rmappandroid.databinding.FragmentLoginBinding
 import com.robinsmorton.rmappandroid.viewmodel.LoginViewModel
 import com.robinsmorton.rmappandroid.viewmodel.LoginViewModel.Companion.CMD_LOGIN_FAILURE
 import com.robinsmorton.rmappandroid.viewmodel.LoginViewModel.Companion.CMD_LOGIN_SUCCESS
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 
 class LoginFragment : BaseFragment(), LoginPageEventListener {
     private lateinit var binding: FragmentLoginBinding
@@ -75,24 +69,6 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
                 }
             }
         })
-    }
-
-    private fun generateHashKey() {
-        /*try {
-            val info: PackageInfo = activity.getPackageManager().getPackageInfo("com.apps.sonictonic", PackageManager.GET_SIGNATURES)
-            for (signature in info.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                Log.d(
-                    "KeyHash", "KeyHash:" + Base64.encodeToString(
-                        md.digest(),
-                        Base64.DEFAULT
-                    )
-                )
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-        } catch (e: NoSuchAlgorithmException) {
-        }*/
     }
 }
 
