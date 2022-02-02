@@ -9,11 +9,11 @@
 
         <variable
             name="eventListener"
-            type="com.example.rmapplication.fragments.LoginPageEventListener" />
+            type="com.robinsmorton.rmappandroid.fragments.LoginPageEventListener" />
 
         <variable
             name="viewmodel"
-            type="com.example.rmapplication.viewmodel.LoginViewModel" />
+            type="com.robinsmorton.rmappandroid.viewmodel.LoginViewModel" />
 
     </data>
 

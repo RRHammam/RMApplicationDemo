@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rmapplication">
+    package="com.robinsmorton.rmappandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,7 +14,7 @@
     </queries>
 
     <application
-        android:name=".MainApplication"
+        android:name="com.robinsmorton.rmappandroid.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_rmapp"
         android:label="@string/app_name"
@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.robinsmorton.rmappandroid.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.robinsmorton.rmappandroid.activities.MainActivity"
             android:exported="true" />
         <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
             <intent-filter>
@@ -41,8 +41,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="com.example.rmapplication"
-                    android:path="/DHylnA3md72WQgS6Ps9PpWQ0FuA="
+                    android:host="com.robinsmorton.rmappandroid"
+                    android:path="/qKUQKHfLZ8vKD+Wvvzn/OI9SY+0="
                     android:scheme="msauth" />
             </intent-filter>
         </activity>

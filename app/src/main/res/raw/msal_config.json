@@ -1,7 +1,7 @@
 {
 "client_id" : "e5083770-5f95-443c-b9e5-87856f923880",
 "authorization_user_agent" : "DEFAULT",
-"redirect_uri" : "msauth://com.example.rmapplication/DHylnA3md72WQgS6Ps9PpWQ0FuA%3D",
+"redirect_uri" : "msauth://com.robinsmorton.rmappandroid/qKUQKHfLZ8vKD%2BWvvzn%2FOI9SY%2B0%3D",
 "account_mode" : "SINGLE",
 "authorities" : [
 {

@@ -7,10 +7,24 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\rhammam\\AndroidStudioProjects\\RMApplicationClientDemo\\app\\keystore\\newKey.jks')
+            storePassword '123456'
+            keyAlias 'key'
+            keyPassword '123456'
+        }
+        release {
+            storeFile file('C:\\Users\\rhammam\\AndroidStudioProjects\\RMApplicationClientDemo\\app\\keystore\\newKey.jks')
+            storePassword '123456'
+            keyAlias 'key'
+            keyPassword '123456'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.rmapplication"
+        applicationId 'com.robinsmorton.rmappandroid'
         minSdk rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.sdkVersion
         versionCode 1
