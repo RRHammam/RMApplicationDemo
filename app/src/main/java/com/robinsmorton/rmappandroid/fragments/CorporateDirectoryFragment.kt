@@ -1,7 +1,6 @@
 package com.robinsmorton.rmappandroid.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,7 +82,7 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     private fun setOnTextChangedForSearchBar() {
-        binding.searchBarCorporateUserName.editTextSearch.doOnTextChanged { text, _, _, _ ->
+        binding.editTextSearch.doOnTextChanged { text, _, _, _ ->
             val query = text.toString().trim().lowercase()
             toggleClearTextImageView(query)
             adapter?.clearAndUpdateList(filterDataFromList(query))
@@ -91,9 +90,9 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     private fun init() {
-        binding.searchBarCorporateUserName.editTextSearch.hint = getString(R.string.search_name)
-        binding.searchBarCorporateUserName.imageViewClearSearchImage.setOnClickListener {
-            binding.searchBarCorporateUserName.editTextSearch.setText("")
+        binding.editTextSearch.hint = getString(R.string.search_name)
+        binding.imageViewClearSearchImage.setOnClickListener {
+            binding.editTextSearch.setText("")
         }
     }
 
@@ -114,13 +113,13 @@ class CorporateDirectoryFragment : BaseFragment() {
 
     private fun toggleClearTextImageView(query: String) {
         if (query.isNotEmpty()) {
-            binding.searchBarCorporateUserName.imageViewClearSearchImage.visibility = View.VISIBLE
+            binding.imageViewClearSearchImage.visibility = View.VISIBLE
         } else {
-            binding.searchBarCorporateUserName.imageViewClearSearchImage.visibility = View.GONE
+            binding.imageViewClearSearchImage.visibility = View.GONE
         }
     }
 
-    fun subscribeToEventCommands() {
+    private fun subscribeToEventCommands() {
         viewModel.eventCommand.observe(viewLifecycleOwner,{
             when(it) {
                 cmd_show_loading_sign -> showProgressBar()
@@ -130,15 +129,13 @@ class CorporateDirectoryFragment : BaseFragment() {
         })
     }
 
-    fun showProgressBar() {
-        Log.d(TAG, "***showProgressBar()")
+    private fun showProgressBar() {
         binding.progressBar.bringToFront()
         binding.progressBar.loading_spinner.visibility = View.VISIBLE
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
-        Log.d(TAG, "***hideProgressBar()")
+    private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
     }
 

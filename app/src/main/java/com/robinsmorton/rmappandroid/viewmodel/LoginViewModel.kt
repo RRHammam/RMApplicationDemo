@@ -64,7 +64,8 @@ class LoginViewModel (
             }
     }
 
-    fun doInteractiveSignIn(activity: Activity){
+    private fun doInteractiveSignIn(activity: Activity){
+        isLoading.set(true)
         loginRepository.doInteractiveSignIn(activity)
             .thenAccept { authenticationResult ->
                 handleSignInSuccess(authenticationResult)
@@ -80,16 +81,8 @@ class LoginViewModel (
         isLoading.set(false)
         currentAccessToken = authenticationResult.accessToken
         SessionManager.access_token = currentAccessToken
-        Log.d(TAG, String.format("Authentication successful - Access token: %s", currentAccessToken))
-        Log.d(TAG, String.format("Authentication successful - Token expires on: %s", authenticationResult.expiresOn))
-        for(scope in authenticationResult.scope){
-            Log.d(TAG, String.format("Authentication successful - Scope: %s", scope))
-        }
-        Log.d(TAG, String.format("Authentication successful - TenantId: %s", authenticationResult.tenantId))
-        Log.d(TAG, String.format("Authentication successful - AccountId: %s", authenticationResult.account.id))
-        Log.d(TAG, String.format("Authentication successful - Authority: %s", authenticationResult.account.authority))
-        getUser()
         eventCommand.value = CMD_LOGIN_SUCCESS
+        getUser()
     }
 
     private fun getUser() {
@@ -97,14 +90,15 @@ class LoginViewModel (
         loginRepository.getUserFromGraphApi()
             ?.thenAccept { user ->
                 isLoading.set(false)
-
                 Log.e(TAG, "User fetched successful - "+Gson().toJson(user))
                 currentUser = user
                 Constants.userDetails = user
+                //eventCommand.value = CMD_LOGIN_SUCCESS
             }
             ?.exceptionally { exception ->
                 isLoading.set(false)
                 Log.e(TAG, "Error getting /me", exception)
+                //eventCommand.value = CMD_LOGIN_FAILURE
                 null
             }
     }

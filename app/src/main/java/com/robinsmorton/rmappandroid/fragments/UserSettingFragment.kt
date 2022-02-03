@@ -31,8 +31,6 @@ class UserSettingsFragment : BaseFragment(), UserSettingsPageEventListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initialize()
-
-
     }
 
     private fun initialize() {
@@ -44,7 +42,6 @@ class UserSettingsFragment : BaseFragment(), UserSettingsPageEventListener{
             binding.textViewUserInitials.text = getUserInitials()
         }
         binding.imageViewBackButton.setOnClickListener {
-            //NavHostFragment.findNavController(this).navigateUp()
             (activity as MainActivity).getBottomNavView()?.selectedItemId = R.id.lobbyFragment
         }
         binding.buttonLogout.setOnClickListener {

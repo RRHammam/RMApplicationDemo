@@ -102,7 +102,7 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
             } else if (displayName?.trim() == context.getString(R.string.training_schedule)) {
                 binding.textViewGridItem.text = context.getString(R.string.training_schedule_text)
                 Glide.with(context)
-                    .load(ContextCompat.getDrawable( context, R.drawable.rmschedule))
+                    .load(ContextCompat.getDrawable( context, R.drawable.ic_underconstruction))
                     .into(binding.imageViewGridItem)
             } else if (displayName?.trim() == context.getString(R.string.hr_information)) {
                 binding.textViewGridItem.text = context.getString(R.string.time_entry_paystubs)

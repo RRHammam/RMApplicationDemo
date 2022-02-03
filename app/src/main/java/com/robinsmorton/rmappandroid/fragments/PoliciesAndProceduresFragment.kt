@@ -25,7 +25,6 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
     private lateinit var binding: FragmentPoliciesProceduresBinding
     private lateinit var viewModel: PoliciesAndProceduresViewModel
     private var adapter: PoliciesAndProceduresAdapter? = null
-    private var selectedItemForSearchType = ""
 
 
     override fun onCreateView(
@@ -43,8 +42,8 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
     }
 
     private fun setOnClickListener() {
-        binding.searchBarPoliciesAndProcedures.imageViewClearSearchImage.setOnClickListener {
-            binding.searchBarPoliciesAndProcedures.editTextSearch.setText("")
+        binding.imageViewClearSearchImage.setOnClickListener {
+            binding.editTextSearch.setText("")
         }
     }
 
@@ -139,7 +138,7 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
     }
 
     private fun setOnTextChangedForSearchBar() {
-        binding.searchBarPoliciesAndProcedures.editTextSearch.doOnTextChanged { text, _, _, _ ->
+        binding.editTextSearch.doOnTextChanged { text, _, _, _ ->
             val query = text.toString().trim().lowercase()
             toggleClearTextImageView(query)
             adapter?.clearAndUpdateList(viewModel.filterDataFromList(query))
@@ -148,9 +147,9 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
 
     private fun toggleClearTextImageView(query: String) {
         if (query.isNotEmpty()) {
-            binding.searchBarPoliciesAndProcedures.imageViewClearSearchImage.visibility = View.VISIBLE
+            binding.imageViewClearSearchImage.visibility = View.VISIBLE
         } else {
-            binding.searchBarPoliciesAndProcedures.imageViewClearSearchImage.visibility = View.GONE
+            binding.imageViewClearSearchImage.visibility = View.GONE
         }
     }
 
