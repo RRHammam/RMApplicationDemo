@@ -76,17 +76,8 @@ class AuthenticationHelper private constructor(val app: Application, val listene
         return future
     }
 
-    fun signOut() {
-        mPCA.signOut(object : SignOutCallback {
-            override fun onSignOut() {
-                Log.d("AUTHHELPER", "Signed out")
-            }
-
-            override fun onError(exception: MsalException) {
-                Log.d("AUTHHELPER", "MSAL error signing out", exception)
-            }
-
-        })
+    fun signOut(signOutCallback: SignOutCallback) {
+        mPCA.signOut(signOutCallback)
     }
 
     private fun getAuthenticationCallback(future: CompletableFuture<IAuthenticationResult>): AuthenticationCallback {

@@ -28,7 +28,9 @@ class GraphHelper private constructor(private val authProvider: AuthenticationHe
 
     fun getUser(): CompletableFuture<User>? {
         return this.mClient?.me()?.buildRequest()
-            ?.select("displayName,mail,mailboxSettings,userPrincipalName,photo")
             ?.async
     }
+
+    //select("displayName,mail,mailboxSettings,userPrincipalName,photo")
+    // ?.select("displayName, mail, photo")
 }

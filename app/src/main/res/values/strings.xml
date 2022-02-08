@@ -8,6 +8,7 @@
     <string name="logout">Logout</string>
     <string name="rm">RM</string>
     <string name="user_name">User name</string>
+    <string name="job_title">Job Title</string>
     <string name="operations_manager_abcd_efgh">Operations Manager: Abcd Efgh</string>
     <string name="date_03_11_2021">Date: 03/11/2021</string>
     <string name="abcd_xyz">ABCD XYZ</string>
@@ -148,4 +149,5 @@
     <string name="rm_ambassify">R&amp; M Ambassadors</string>
     <string name="authy">Authy</string>
     <string name="sap_concur">SAP Concur</string>
+    <string name="nothing_found">Nothing Found.</string>
 </resources>

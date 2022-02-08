@@ -63,6 +63,7 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
     }
 
     private fun setAdapter(it: MutableList<PoliciesAndProceduresItem>) {
+        showNoDataIfListIsEmpty(it)
         adapter = this.context?.let { it1 -> PoliciesAndProceduresAdapter(it1, it, this) }
         binding.policiesAndProceduresList.layoutManager = object : LinearLayoutManager(this.activity) {
             override fun isAutoMeasureEnabled(): Boolean {
@@ -93,14 +94,27 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
     }
 
     override fun onPoliciesAndProcedureItemClickedEvent(policiesAndProceduresItem: PoliciesAndProceduresItem?) {
-        if(!viewModel.isDocument(policiesAndProceduresItem)){
-            val childElementsList = viewModel.getChildElementsList(policiesAndProceduresItem?.fields?.eTag)
+        if (!viewModel.isDocument(policiesAndProceduresItem)) {
+            val childElementsList =
+                viewModel.getChildElementsList(policiesAndProceduresItem?.fields?.eTag)
             addToPageStack()
+            showNoDataIfListIsEmpty(childElementsList)
             adapter?.clearAndUpdateList(childElementsList)
         } else {
             policiesAndProceduresItem?.webUrl?.let { openBrowser(it) }
         }
+    }
 
+    private fun showNoDataIfListIsEmpty(childElementsList: MutableList<PoliciesAndProceduresItem>?) {
+        if (childElementsList?.isEmpty() == true) {
+            binding.textViewNothingFound.visibility = View.VISIBLE
+            binding.policiesAndProceduresList.visibility = View.GONE
+            binding.materialCardViewSearchBar.visibility = View.GONE
+        } else {
+            binding.textViewNothingFound.visibility = View.GONE
+            binding.policiesAndProceduresList.visibility = View.VISIBLE
+            binding.materialCardViewSearchBar.visibility = View.VISIBLE
+        }
     }
 
     private fun addToPageStack() {
@@ -118,7 +132,9 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
         override fun handleOnBackPressed() {
             Log.d(TAG, "***handleOnBackPressed called")
             if(viewModel.mapOfListByPageNumber.isNotEmpty()) {
-                adapter?.clearAndUpdateList(viewModel.mapOfListByPageNumber[viewModel.mapOfListByPageNumber.size])
+                val previousList = viewModel.mapOfListByPageNumber[viewModel.mapOfListByPageNumber.size]
+                showNoDataIfListIsEmpty(previousList)
+                adapter?.clearAndUpdateList(previousList)
                 removeFromPageStack()
             } else {
                 this.isEnabled = false
@@ -141,7 +157,9 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
         binding.editTextSearch.doOnTextChanged { text, _, _, _ ->
             val query = text.toString().trim().lowercase()
             toggleClearTextImageView(query)
-            adapter?.clearAndUpdateList(viewModel.filterDataFromList(query))
+            val filteredList = viewModel.filterDataFromList(query)
+            showNoDataIfListIsEmpty(filteredList)
+            adapter?.clearAndUpdateList(filteredList)
         }
     }
 

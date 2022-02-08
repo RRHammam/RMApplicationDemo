@@ -36,9 +36,9 @@ class PoliciesAndProceduresAdapter(
             val policiesAndProceduresDetails = policiesAndProcedures?.fields
             (policiesAndProceduresDetails?.LinkFilename?.trim()).also { binding.textViewListItem.text = it }
             if(policiesAndProcedures?.fields?.ContentType == "Document"){
-                binding.textViewListItem.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mail, 0, 0,0)
+                binding.textViewListItem.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_doc_image, 0, 0,0)
             } else {
-                binding.textViewListItem.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_call,0, 0,0)
+                binding.textViewListItem.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_folder_image,0, 0,0)
             }
         }
     }

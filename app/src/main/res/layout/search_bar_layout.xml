@@ -51,6 +51,7 @@
                 android:inputType="text"
                 android:textSize="@dimen/_16sp"
                 android:textAlignment="center"
+                android:imeOptions="actionDone"
                 app:layout_constraintTop_toTopOf="@id/imageView_searchImage"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_searchImage"
                 app:layout_constraintEnd_toStartOf="@id/imageView_clearSearchImage"

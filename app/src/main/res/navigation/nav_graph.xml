@@ -35,7 +35,11 @@
     <fragment
         android:id="@+id/userSettingsFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.UserSettingsFragment"
-        android:label="UserSettingsFragment" />
+        android:label="UserSettingsFragment" >
+        <action
+            android:id="@+id/action_userSettingsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/corporateDirectoryFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.CorporateDirectoryFragment"

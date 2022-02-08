@@ -8,6 +8,7 @@ import com.robinsmorton.rmappandroid.authentication.AuthenticationHelper
 import com.robinsmorton.rmappandroid.authentication.GraphHelper
 import com.microsoft.graph.models.User
 import com.microsoft.identity.client.IAuthenticationResult
+import com.microsoft.identity.client.ISingleAccountPublicClientApplication
 import java.util.concurrent.CompletableFuture
 
 
@@ -42,5 +43,9 @@ class LoginRepository constructor(private val app: Application) {
     fun getUserFromGraphApi(): CompletableFuture<User>? {
         val graphHelper: GraphHelper = GraphHelper.getInstance(mAuthHelper)
         return graphHelper.getUser()
+    }
+
+    fun doSignOut(signOutCallback: ISingleAccountPublicClientApplication.SignOutCallback) {
+        mAuthHelper.signOut(signOutCallback)
     }
 }
