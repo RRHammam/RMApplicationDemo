@@ -109,13 +109,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_user_name" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="30dp"
-            android:background="@drawable/button_border"
             android:text="@string/logout"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -123,7 +122,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_user_name"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView_user_name"
+            app:strokeColor="@color/black"
+            app:strokeWidth="@dimen/_1dp"
+            app:cornerRadius="@dimen/_12dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

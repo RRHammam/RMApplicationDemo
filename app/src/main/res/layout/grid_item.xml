@@ -9,6 +9,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView_lobbyItem"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_gravity="center"

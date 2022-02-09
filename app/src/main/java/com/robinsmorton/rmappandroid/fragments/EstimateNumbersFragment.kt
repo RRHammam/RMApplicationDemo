@@ -47,8 +47,8 @@ class EstimateNumbersFragment: BaseFragment() {
     private fun init() {
         subscribeToEventCommands()
         subscribeToEstimateNumberListLiveData()
-        binding.searchBarEstimateNumberr.imageViewClearSearchImage.setOnClickListener {
-            binding.searchBarEstimateNumberr.editTextSearch.setText("")
+        binding.searchBarEstimateNumber.imageViewClearSearchImage.setOnClickListener {
+            binding.searchBarEstimateNumber.editTextSearch.setText("")
         }
     }
 
@@ -67,7 +67,7 @@ class EstimateNumbersFragment: BaseFragment() {
         setDropDownAdapter()
     }
 
-    fun setDropDownAdapter() {
+    private fun setDropDownAdapter() {
         val arrayAdapter = this.activity?.applicationContext?.let {
             ArrayAdapter(it, R.layout.dropdown_item, R.id.textView, resources.getStringArray(R.array.estimate_numbers))
         }
@@ -79,16 +79,16 @@ class EstimateNumbersFragment: BaseFragment() {
             override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
                 selectedItemForSearchType = char.toString()
                 binding.textInputLayoutEstimateNumber.endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
-                binding.searchBarEstimateNumberr.constraintLayoutParentSearchBarLayout.visibility = View.VISIBLE
+                binding.searchBarEstimateNumber.constraintLayoutParentSearchBarLayout.visibility = View.VISIBLE
                 binding.autoCompleteTextViewEstimateNumber.clearFocus()
-                binding.searchBarEstimateNumberr.constraintLayoutParentSearchBarLayout.requestFocus()
+                binding.searchBarEstimateNumber.constraintLayoutParentSearchBarLayout.requestFocus()
             }
 
             override fun afterTextChanged(p0: Editable?) {
             }
 
         })
-        binding.searchBarEstimateNumberr.constraintLayoutParentSearchBarLayout.visibility = View.GONE
+        binding.searchBarEstimateNumber.constraintLayoutParentSearchBarLayout.visibility = View.GONE
     }
 
     private fun filterDataFromList(query: String): MutableList<Item>? {
@@ -113,7 +113,7 @@ class EstimateNumbersFragment: BaseFragment() {
     }
 
     private fun setOnTextChangedForSearchBar() {
-        binding.searchBarEstimateNumberr.editTextSearch.doOnTextChanged { text, _, _, _ ->
+        binding.searchBarEstimateNumber.editTextSearch.doOnTextChanged { text, _, _, _ ->
             val query = text.toString().trim().lowercase()
             toggleClearTextImageView(query)
             adapter?.clearAndUpdateList(filterDataFromList(query))
@@ -122,13 +122,13 @@ class EstimateNumbersFragment: BaseFragment() {
 
     private fun toggleClearTextImageView(query: String) {
         if (query.isNotEmpty()) {
-            binding.searchBarEstimateNumberr.imageViewClearSearchImage.visibility = View.VISIBLE
+            binding.searchBarEstimateNumber.imageViewClearSearchImage.visibility = View.VISIBLE
         } else {
-            binding.searchBarEstimateNumberr.imageViewClearSearchImage.visibility = View.GONE
+            binding.searchBarEstimateNumber.imageViewClearSearchImage.visibility = View.GONE
         }
     }
 
-    fun subscribeToEventCommands() {
+    private fun subscribeToEventCommands() {
         viewModel.eventCommand.observe(viewLifecycleOwner,{
             when(it) {
                 CorporateDirectoryViewModel.cmd_show_loading_sign -> showProgressBar()
@@ -138,13 +138,13 @@ class EstimateNumbersFragment: BaseFragment() {
         })
     }
 
-    fun showProgressBar() {
+    private fun showProgressBar() {
         binding.progressBar.bringToFront()
         binding.progressBar.loading_spinner.visibility = View.VISIBLE
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
+    private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
     }
 

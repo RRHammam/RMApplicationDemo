@@ -23,13 +23,11 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     private val corporateDirectoryRepository = CorporateDirectoryRepository(app)
     var corporateUsersListLiveData = MutableLiveData<MutableList<CorporateUser>>()
     var corporateUsersNextLinkListLiveData = MutableLiveData<MutableList<CorporateUser>>()
-    var isLoading = ObservableBoolean(false)
     private val compositeDisposable = CompositeDisposable()
     var eventCommand = SingleLiveEvent<Int>()
 
     fun getCorporateDirectoryList() {
         showLoading()
-        isLoading.set(true)
         corporateDirectoryRepository.getCorporateDirectoryList(SessionManager.access_token)
             .observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
@@ -38,19 +36,16 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
                     filterCorporateUsersList(corporateDirectoryResponse)
                 if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
                     getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
-                } else {
-                    hideLoading()
-                    isLoading.set(false)
                 }
+                hideLoading()
             }, {
                 hideLoading()
-                isLoading.set(false)
                 Toast.makeText(getApplication(), "Error getting Corporate directory list", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
             })?.let { compositeDisposable.add(it) }
     }
 
-    fun getCorporateDirectoryListUsingNextLink(nextLink: String) {
+    private fun getCorporateDirectoryListUsingNextLink(nextLink: String) {
         if (!nextLink.isNullOrEmpty()) {
             corporateDirectoryRepository.getCorporateDirectoryListUsingNextLink(SessionManager.access_token, nextLink)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,12 +56,10 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
                         getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
                     } else {
                         hideLoading()
-                        isLoading.set(false)
                         corporateUsersNextLinkListLiveData.value = mutableListOf()
                     }
                 }, {
                     hideLoading()
-                    isLoading.set(false)
                     Toast.makeText(getApplication(), "Error getting next link Corporate directory list", Toast.LENGTH_SHORT).show()
                     it.message?.let { it1 -> Log.e(TAG, it1) }
                 })?.let { compositeDisposable.add(it) }
@@ -87,11 +80,11 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
         compositeDisposable.clear()
     }
 
-    fun showLoading(){
+    private fun showLoading(){
         eventCommand.value = cmd_show_loading_sign
     }
 
-    fun hideLoading(){
+    private fun hideLoading(){
         eventCommand.value = cmd_hide_loading_sign
     }
 

@@ -54,11 +54,13 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
 
         fun bindGridItem(lobbyItem: Item?, context: Context) {
             this.lobbyItem = lobbyItem
-            val buttonImageUrl = lobbyItem?.fields?.buttonimage?.let { getButtonImageUrl(it) }
+            lobbyItem?.fields?.buttonimage?.let { getButtonImageUrl(it) }
             setItemDetails(lobbyItem?.fields?.Title, context)
         }
 
         private fun setItemDetails(displayName: String?, context: Context) {
+            binding.constraintLayoutParentLayout.setBackgroundColor(context.resources.getColor(R.color.white, context.theme))
+            binding.materialCardViewLobbyItem.setBackgroundColor(context.resources.getColor(R.color.white, context.theme))
             if (displayName?.trim() == context.getString(R.string.hub)) {
                 binding.textViewGridItem.text = lobbyItem?.fields?.Title
                 Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.rminfotech))
@@ -100,6 +102,8 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                     .load(ContextCompat.getDrawable( context, R.drawable.rmbudget))
                     .into(binding.imageViewGridItem)
             } else if (displayName?.trim() == context.getString(R.string.training_schedule)) {
+                binding.materialCardViewLobbyItem.setBackgroundColor(context.resources.getColor(R.color.gray, context.theme))
+                binding.constraintLayoutParentLayout.setBackgroundColor(context.resources.getColor(R.color.gray, context.theme))
                 binding.textViewGridItem.text = context.getString(R.string.training_schedule_text)
                 Glide.with(context)
                     .load(ContextCompat.getDrawable( context, R.drawable.ic_training_schedules))
@@ -137,7 +141,7 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
             }
         }
 
-        private fun getButtonImageUrl(jsonStringWithEscapeChars: String): String? {
+        private fun getButtonImageUrl(jsonStringWithEscapeChars: String): String {
             val jsonString = JSONTokener(jsonStringWithEscapeChars).nextValue().toString()
             val buttonImage: ButtonImage? = Gson().fromJson(jsonString, ButtonImage::class.java)
 

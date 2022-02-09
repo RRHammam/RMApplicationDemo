@@ -73,7 +73,7 @@ class JobRequestFragment: BaseFragment() {
         setDropDownAdapter()
     }
 
-    fun setDropDownAdapter() {
+    private fun setDropDownAdapter() {
         val arrayAdapter = this.activity?.applicationContext?.let {
             ArrayAdapter(it, R.layout.dropdown_item,  R.id.textView, resources.getStringArray(R.array.job_numbers))
         }
@@ -86,6 +86,8 @@ class JobRequestFragment: BaseFragment() {
                 selectedItemForSearchType = char.toString()
                 binding.textInputLayoutJobNumber.endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
                 binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.visibility = View.VISIBLE
+                binding.autoCompleteTextViewJobNumber.clearFocus()
+                binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.requestFocus()
             }
 
             override fun afterTextChanged(p0: Editable?) {

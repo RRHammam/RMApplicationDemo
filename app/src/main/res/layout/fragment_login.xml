@@ -57,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView_rmLogo"
-                app:layout_constraintVertical_bias="0.24"
+                app:layout_constraintVertical_bias="0.25"
                 app:strokeColor="@color/black"
                 app:strokeWidth="@dimen/_1dp"
                 app:cornerRadius="@dimen/_12dp"
