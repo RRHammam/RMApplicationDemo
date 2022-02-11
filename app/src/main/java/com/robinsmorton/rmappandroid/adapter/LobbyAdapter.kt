@@ -102,8 +102,8 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                     .load(ContextCompat.getDrawable( context, R.drawable.rmbudget))
                     .into(binding.imageViewGridItem)
             } else if (displayName?.trim() == context.getString(R.string.training_schedule)) {
-                binding.materialCardViewLobbyItem.setBackgroundColor(context.resources.getColor(R.color.gray, context.theme))
-                binding.constraintLayoutParentLayout.setBackgroundColor(context.resources.getColor(R.color.gray, context.theme))
+                binding.materialCardViewLobbyItem.setBackgroundColor(context.resources.getColor(R.color.light_gray, context.theme))
+                binding.constraintLayoutParentLayout.setBackgroundColor(context.resources.getColor(R.color.light_gray, context.theme))
                 binding.textViewGridItem.text = context.getString(R.string.training_schedule_text)
                 Glide.with(context)
                     .load(ContextCompat.getDrawable( context, R.drawable.ic_training_schedules))

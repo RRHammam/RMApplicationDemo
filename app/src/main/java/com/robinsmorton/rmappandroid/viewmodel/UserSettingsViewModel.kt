@@ -4,8 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.AndroidViewModel
+import com.google.gson.Gson
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication
 import com.microsoft.identity.client.exception.MsalException
+import com.robinsmorton.rmappandroid.constants.Constants
 import com.robinsmorton.rmappandroid.repository.LoginRepository
 import com.robinsmorton.rmappandroid.util.SingleLiveEvent
 
@@ -34,6 +36,20 @@ class UserSettingsViewModel (
                 eventCommand.value = CMD_LOGOUT_FAILURE
             }
         })
+    }
+
+    fun getUserProfilePic(){
+        loginRepository.getUserProfilePic()
+            ?.thenAccept { user ->
+                isLoading.set(false)
+                Log.e(TAG, "***User profile picture fetched successful - "+ Gson().toJson(user))
+                user.photo
+            }
+            ?.exceptionally { exception ->
+                isLoading.set(false)
+                Log.e(TAG, "***Error getting profile picture", exception)
+                null
+            }
     }
 
     companion object{

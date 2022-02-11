@@ -34,4 +34,7 @@ interface ApiService {
 
     @GET("v1.0/sites/root/lists/2ad98e52-cf1c-4240-ac4d-839d3d41728d/?expand=items")
     fun getAppList(@Header("Authorization") token: String): Observable<EstimateNumberResponse>
+
+    @GET("v1.0/me/photo")
+    fun getUserPicture(@Header("Authorization") token: String)
 }

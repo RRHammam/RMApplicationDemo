@@ -31,6 +31,13 @@ class GraphHelper private constructor(private val authProvider: AuthenticationHe
             ?.async
     }
 
+    fun getUserProfilePic(): CompletableFuture<User>? {
+        return this.mClient?.me()?.buildRequest()
+            ?.select("photo")
+            ?.async
+    }
+
+
     //select("displayName,mail,mailboxSettings,userPrincipalName,photo")
     // ?.select("displayName, mail, photo")
 }

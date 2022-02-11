@@ -9,6 +9,7 @@ import com.robinsmorton.rmappandroid.authentication.GraphHelper
 import com.microsoft.graph.models.User
 import com.microsoft.identity.client.IAuthenticationResult
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication
+import com.robinsmorton.rmappandroid.apiserviceprovider.ApiServiceClient
 import java.util.concurrent.CompletableFuture
 
 
@@ -16,13 +17,13 @@ class LoginRepository constructor(private val app: Application) {
 
     private val TAG = "LoginRepository"
     private lateinit var mAuthHelper: AuthenticationHelper
-    var isAuthenticationSuccessful = ObservableBoolean(false)
-    var currentAccessToken: String? = null
     var currentUser: User? = null
+    private lateinit var graphHelper: GraphHelper
 
     init {
         AuthenticationHelper.getInstance(app).thenAccept { authHelper ->
             mAuthHelper = authHelper
+            graphHelper = GraphHelper.getInstance(mAuthHelper)
         }.exceptionally { exception ->
             Log.e(TAG, "Error creating auth helper", exception)
             null
@@ -41,11 +42,16 @@ class LoginRepository constructor(private val app: Application) {
     }
 
     fun getUserFromGraphApi(): CompletableFuture<User>? {
-        val graphHelper: GraphHelper = GraphHelper.getInstance(mAuthHelper)
         return graphHelper.getUser()
     }
 
     fun doSignOut(signOutCallback: ISingleAccountPublicClientApplication.SignOutCallback) {
         mAuthHelper.signOut(signOutCallback)
+    }
+
+    fun getUserProfilePic(accessToken: String = ""): CompletableFuture<User>? {
+        return graphHelper.getUserProfilePic()
+        /*Log.d("LobbyRepository", "getRmAppList: accessToken $accessToken")
+        return ApiServiceClient.getApiService().getUserPicture(token = "Bearer $accessToken")*/
     }
 }

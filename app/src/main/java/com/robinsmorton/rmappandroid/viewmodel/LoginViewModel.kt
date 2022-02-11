@@ -80,8 +80,9 @@ class LoginViewModel (
     private fun handleSignInSuccess(authenticationResult: IAuthenticationResult) {
         isLoading.set(false)
         currentAccessToken = authenticationResult.accessToken
+        Log.d(TAG, "*** token - $currentAccessToken")
         SessionManager.access_token = currentAccessToken
-        eventCommand.value = CMD_LOGIN_SUCCESS
+        //eventCommand.value = CMD_LOGIN_SUCCESS
         getUser()
     }
 
@@ -90,30 +91,34 @@ class LoginViewModel (
         loginRepository.getUserFromGraphApi()
             ?.thenAccept { user ->
                 isLoading.set(false)
-                Log.e(TAG, "User fetched successful - "+Gson().toJson(user))
+                Log.e(TAG, "***User data fetched successful - "+Gson().toJson(user))
                 currentUser = user
                 Constants.userDetails = user
-                //eventCommand.value = CMD_LOGIN_SUCCESS
+                eventCommand.postValue(CMD_LOGIN_SUCCESS)
             }
             ?.exceptionally { exception ->
                 isLoading.set(false)
-                Log.e(TAG, "Error getting /me", exception)
-                //eventCommand.value = CMD_LOGIN_FAILURE
+                Log.e(TAG, "***Error getting user data", exception)
+                eventCommand.postValue(CMD_LOGIN_FAILURE)
                 null
             }
     }
 
     private fun handleSignInFailure(exception: Throwable?) {
         isLoading.set(false)
-        if (exception is MsalServiceException) {
-            // Exception when communicating with the auth server, likely config issue
-            Log.e(TAG, "Service error authenticating", exception)
-        } else if (exception is MsalClientException) {
-            // Exception inside MSAL, more info inside MsalError.java
-            Log.e(TAG, "Client error authenticating", exception)
-        } else {
-            Log.e(TAG, "Unhandled exception authenticating", exception)
-            exception?.printStackTrace()
+        when (exception) {
+            is MsalServiceException -> {
+                // Exception when communicating with the auth server, likely config issue
+                Log.e(TAG, "Service error authenticating", exception)
+            }
+            is MsalClientException -> {
+                // Exception inside MSAL, more info inside MsalError.java
+                Log.e(TAG, "Client error authenticating", exception)
+            }
+            else -> {
+                Log.e(TAG, "Unhandled exception authenticating", exception)
+                exception?.printStackTrace()
+            }
         }
         eventCommand.value = CMD_LOGIN_FAILURE
     }

@@ -42,6 +42,7 @@ class UserSettingsFragment : BaseFragment(), UserSettingsPageEventListener{
     private fun initialize() {
         binding.textViewUserName.text = Constants.userDetails?.displayName
         binding.textViewJobTitle.text = Constants.userDetails?.jobTitle
+        viewModel.getUserProfilePic()
         if (Constants.userDetails?.photo != null) {
             Glide.with(this).load(Constants.userDetails?.photo).into(binding.circleImageViewUser)
         } else {
