@@ -19,4 +19,10 @@
         <item name="colorOnSecondary">@color/black</item>
 
     </style>
+
+    <style name="SpinnerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rounded_spinner</item>
+    </style>
 </resources>

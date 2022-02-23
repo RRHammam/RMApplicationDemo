@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.robinsmorton.rmappandroid.R
@@ -56,61 +57,64 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
 
 
     private fun setDropDownAdapter() {
+
         val arrayAdapter = this.activity?.applicationContext?.let {
-            ArrayAdapter(it, R.layout.dropdown_item, R.id.textView,categories )
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.application_categories,
+                android.R.layout.simple_spinner_item
+            )
         }
-        binding.autoCompleteTextViewCategories.setAdapter(arrayAdapter)
-        binding.autoCompleteTextViewCategories.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(char: CharSequence?, start: Int, count: Int, after: Int) {
+        arrayAdapter?.setDropDownViewResource(R.layout.dropdown_item)
+        binding.spinnerApplication.adapter = arrayAdapter
+
+        binding.spinnerApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if(position != 0) {
+                    selectedItemForSearchType = categories[position]
+                    setupAppList()
+                }
             }
 
-            override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-                selectedItemForSearchType = char.toString()
-                resetSearchBarEndIcon()
-                setupAppList()
+            override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-        })
-    }
-
-    private fun resetSearchBarEndIcon() {
-        binding.textInputLayoutCategories.endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
-        binding.autoCompleteTextViewCategories.clearFocus()
+        }
     }
 
     private fun setupAppList() {
         when (selectedItemForSearchType) {
             categories[0] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.shopping_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.all_apps).toMutableList())
             }
             categories[1] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.payroll_and_time_entry_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.shopping_applications).toMutableList())
             }
             categories[2] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.data_storage_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.payroll_and_time_entry_applications).toMutableList())
             }
             categories[3] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.construction_management_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.data_storage_applications).toMutableList())
             }
             categories[4] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.finance_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.construction_management_applications).toMutableList())
             }
             categories[5] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.medical_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.finance_applications).toMutableList())
             }
             categories[6] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.communication_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.medical_applications).toMutableList())
             }
             categories[7] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.social_media_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.communication_applications).toMutableList())
             }
             categories[8] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.authentication_applications).toMutableList())
+                adapter?.setAppList(resources.getStringArray(R.array.social_media_applications).toMutableList())
             }
             categories[9] -> {
+                adapter?.setAppList(resources.getStringArray(R.array.authentication_applications).toMutableList())
+            }
+            categories[10] -> {
                 adapter?.setAppList(resources.getStringArray(R.array.expense_reports_applications).toMutableList())
             }
         }

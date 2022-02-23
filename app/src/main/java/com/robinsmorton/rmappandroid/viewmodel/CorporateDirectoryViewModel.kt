@@ -25,6 +25,7 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     var corporateUsersNextLinkListLiveData = MutableLiveData<MutableList<CorporateUser>>()
     private val compositeDisposable = CompositeDisposable()
     var eventCommand = SingleLiveEvent<Int>()
+    val isLoading = ObservableBoolean(false)
 
     fun getCorporateDirectoryList() {
         showLoading()
@@ -56,6 +57,7 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
                         getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
                     } else {
                         hideLoading()
+                        hideLoadingOnSearchBar()
                         corporateUsersNextLinkListLiveData.value = mutableListOf()
                     }
                 }, {
@@ -82,16 +84,26 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
 
     private fun showLoading(){
         eventCommand.value = cmd_show_loading_sign
+        isLoading.set(true)
+        eventCommand.value = cmd_show_loading_sign_on_search_bar
+
     }
 
     private fun hideLoading(){
         eventCommand.value = cmd_hide_loading_sign
     }
 
+    private fun hideLoadingOnSearchBar() {
+        isLoading.set(false)
+        eventCommand.value = cmd_hide_loading_sign_on_search_bar
+    }
+
 
     companion object {
         const val cmd_show_loading_sign = 0
         const val cmd_hide_loading_sign = 1
+        const val cmd_hide_loading_sign_on_search_bar = 2
+        const val cmd_show_loading_sign_on_search_bar = 3
     }
 
 }

@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -26,6 +27,7 @@ class JobRequestFragment: BaseFragment() {
     private lateinit var viewModel: JobRequestViewModel
     private var adapter: JobRequestAdapter? = null
     private var selectedItemForSearchType = ""
+    private lateinit var listForSearchItem: Array<String>
 
 
     override fun onCreateView(
@@ -48,7 +50,7 @@ class JobRequestFragment: BaseFragment() {
         viewModel.getJobRequestList()
     }
 
-    fun subscribeToCorporateDirectoryListLiveData() {
+    private fun subscribeToCorporateDirectoryListLiveData() {
         viewModel.jobRequestListLiveData.observe(viewLifecycleOwner, {
             setAdapter(it)
             setOnTextChangedForSearchBar()
@@ -59,6 +61,7 @@ class JobRequestFragment: BaseFragment() {
         binding.searchBarJobNumber.imageViewClearSearchImage.setOnClickListener {
             binding.searchBarJobNumber.editTextSearch.setText("")
         }
+        listForSearchItem = resources.getStringArray(R.array.job_numbers)
     }
 
 
@@ -75,25 +78,29 @@ class JobRequestFragment: BaseFragment() {
 
     private fun setDropDownAdapter() {
         val arrayAdapter = this.activity?.applicationContext?.let {
-            ArrayAdapter(it, R.layout.dropdown_item,  R.id.textView, resources.getStringArray(R.array.job_numbers))
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.job_numbers,
+                android.R.layout.simple_spinner_item
+            )
         }
-        binding.autoCompleteTextViewJobNumber.setAdapter(arrayAdapter)
-        binding.autoCompleteTextViewJobNumber.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(char: CharSequence?, start: Int, count: Int, after: Int) {
+        arrayAdapter?.setDropDownViewResource(R.layout.dropdown_item)
+        binding.spinnerJobNumber.adapter = arrayAdapter
+        binding.spinnerJobNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedItemForSearchType = listForSearchItem[position]
+                if(position != 0) {
+                    binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.visibility = View.VISIBLE
+                } else {
+                    binding.searchBarJobNumber.editTextSearch.setText("")
+                    binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.visibility = View.GONE
+                }
             }
 
-            override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-                selectedItemForSearchType = char.toString()
-                binding.textInputLayoutJobNumber.endIconMode = TextInputLayout.END_ICON_DROPDOWN_MENU
-                binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.visibility = View.VISIBLE
-                binding.autoCompleteTextViewJobNumber.clearFocus()
-                binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.requestFocus()
+            override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-        })
+        }
         binding.searchBarJobNumber.constraintLayoutParentSearchBarLayout.visibility = View.GONE
     }
 
@@ -101,14 +108,18 @@ class JobRequestFragment: BaseFragment() {
         val filteredList = mutableListOf<JobRequestValue>()
         val filterByList = resources.getStringArray(R.array.job_numbers)
         return if (query.isNotEmpty()) {
-            viewModel.mainJobRequestList.forEach {
-                if (selectedItemForSearchType.trim() == filterByList[0]) {
-                    if (it.fields.Job_x0020_Number.trim().lowercase().contains(query)) {
-                        filteredList.add(it)
-                    }
-                } else {
-                    if (it.fields.Title.trim().lowercase().contains(query)) {
-                        filteredList.add(it)
+            if (selectedItemForSearchType.trim() == filterByList[0]) {
+                filteredList.addAll(viewModel.mainJobRequestList)
+            } else {
+                viewModel.mainJobRequestList.forEach {
+                    if (selectedItemForSearchType.trim() == filterByList[1]) {
+                        if (it.fields.Job_x0020_Number.trim().lowercase().contains(query)) {
+                            filteredList.add(it)
+                        }
+                    } else {
+                        if (it.fields.Title.trim().lowercase().contains(query)) {
+                            filteredList.add(it)
+                        }
                     }
                 }
             }

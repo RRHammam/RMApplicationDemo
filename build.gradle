@@ -33,7 +33,7 @@ task clean(type: Delete) {
 
 ext {
     sdkVersion = 30
-    minSdkVersion = 24
+    minSdkVersion = 30
     buildToolsVersion = '30.0.3'
     daggerVersion = "2.35.1"
     annotationVersion = "10.0-b28"

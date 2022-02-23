@@ -15,7 +15,9 @@ import com.robinsmorton.rmappandroid.databinding.FragmentCorporateDirectoryBindi
 import com.robinsmorton.rmappandroid.model.CorporateUser
 import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel
 import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel.Companion.cmd_hide_loading_sign
+import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel.Companion.cmd_hide_loading_sign_on_search_bar
 import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel.Companion.cmd_show_loading_sign
+import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel.Companion.cmd_show_loading_sign_on_search_bar
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class CorporateDirectoryFragment : BaseFragment() {
@@ -90,7 +92,6 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     private fun init() {
-        binding.editTextSearch.hint = getString(R.string.search_name)
         binding.imageViewClearSearchImage.setOnClickListener {
             binding.editTextSearch.setText("")
         }
@@ -125,6 +126,10 @@ class CorporateDirectoryFragment : BaseFragment() {
                 cmd_show_loading_sign -> showProgressBar()
 
                 cmd_hide_loading_sign -> hideProgressBar()
+
+                cmd_show_loading_sign_on_search_bar -> showLoadingSignOnSearchBar()
+
+                cmd_hide_loading_sign_on_search_bar -> hideLoadingSignOnSearchBar()
             }
         })
     }
@@ -139,5 +144,16 @@ class CorporateDirectoryFragment : BaseFragment() {
         binding.progressBar.visibility = View.GONE
     }
 
+    private fun showLoadingSignOnSearchBar() {
+        binding.textViewListIsLoading.visibility = View.VISIBLE
+        binding.loadingSpinnerSearchBar.visibility = View.VISIBLE
+        binding.editTextSearch.isEnabled = false
+    }
 
+    private fun hideLoadingSignOnSearchBar() {
+        binding.textViewListIsLoading.visibility = View.GONE
+        binding.loadingSpinnerSearchBar.visibility = View.GONE
+        binding.editTextSearch.isEnabled = true
+        binding.editTextSearch.hint = getString(R.string.search_name)
+    }
 }

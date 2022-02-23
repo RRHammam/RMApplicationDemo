@@ -18,33 +18,35 @@
         <include
             android:id="@+id/progressBar"
             layout="@layout/item_loading_spinner"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView_rm_logo"
-            android:layout_width="382dp"
-            android:layout_height="38dp"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_38dp"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/rmlogo"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <!-- <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_EstimateNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
             android:layout_marginVertical="@dimen/_5dp"
             android:layout_marginHorizontal="@dimen/_10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_rm_logo">
+            app:layout_constraintTop_toBottomOf="@id/imageView_rm_logo"
+            android:background="@drawable/rounded_button">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView_EstimateNumber"
@@ -53,26 +55,56 @@
                 android:layout_weight="1"
                 android:inputType="none"
                 android:text="Select"/>
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_estimateNumber_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView_rm_logo"
+            android:layout_marginHorizontal="@dimen/_10dp"
+            android:layout_marginVertical="@dimen/_5dp">
+
+            <Spinner
+                android:id="@+id/spinner_estimateNumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="@dimen/_5dp"
+                android:spinnerMode="dropdown"
+                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                android:background="@drawable/rounded_button"/>
+
+            <ImageView
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_15dp"
+                android:layout_marginTop="@dimen/_15dp"
+                android:layout_marginBottom="@dimen/_15dp"
+                android:src="@drawable/big_drop_down_arrow"/>
+
+        </RelativeLayout>
 
         <include
             android:id="@+id/searchBar_EstimateNumber"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
             layout="@layout/search_bar_layout"
-            android:layout_marginVertical="@dimen/_5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10dp"
+            android:layout_marginVertical="@dimen/_5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayout_EstimateNumber"/>
+            app:layout_constraintTop_toBottomOf="@id/relativeLayout_estimateNumber_spinner" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_estimateNumberList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="@dimen/_3dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchBar_EstimateNumber"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchBar_EstimateNumber" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

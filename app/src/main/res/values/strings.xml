@@ -53,11 +53,13 @@
     <string name="under_construction">Under Construction</string>
 
     <string-array name="job_numbers">
+        <item>Select Search Category</item>
         <item>Job Number</item>
         <item>Title</item>
     </string-array>
 
     <string-array name="estimate_numbers">
+        <item>Select Search Category</item>
         <item>Estimate Number</item>
         <item>Title</item>
     </string-array>
@@ -68,6 +70,7 @@
     <string name="categories">Categories</string>
 
     <string-array name="application_categories">
+        <item>Select Application Category</item>
         <item>Shopping</item>
         <item>Payroll and Time Entry</item>
         <item>Data Storage</item>
@@ -111,7 +114,7 @@
     </string-array>
 
     <string-array name="social_media_applications">
-        <item>R&amp; M Ambassadors</item>
+        <item>R &amp; M Ambassadors</item>
     </string-array>
 
     <string-array name="authentication_applications">
@@ -132,7 +135,7 @@
         <item>Alabama Blue</item>
         <item>StarLeaf</item>
         <item>RingCentral</item>
-        <item>R&amp; M Ambassadors</item>
+        <item>R &amp; M Ambassadors</item>
         <item>Authy</item>
         <item>SAP Concur</item>
     </string-array>
@@ -146,8 +149,9 @@
     <string name="alabam_blue">Alabama Blue</string>
     <string name="starleaf">StarLeaf</string>
     <string name="ring_central">RingCentral</string>
-    <string name="rm_ambassify">R&amp; M Ambassadors</string>
+    <string name="rm_ambassify">R &amp; M Ambassadors</string>
     <string name="authy">Authy</string>
     <string name="sap_concur">SAP Concur</string>
     <string name="nothing_found">Nothing Found.</string>
+    <string name="please_wait_list_is_loading">Please wait list is loading.</string>
 </resources>
