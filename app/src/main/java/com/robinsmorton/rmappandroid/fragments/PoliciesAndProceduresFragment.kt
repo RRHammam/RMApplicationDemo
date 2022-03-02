@@ -45,6 +45,10 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
         binding.imageViewClearSearchImage.setOnClickListener {
             binding.editTextSearch.setText("")
         }
+
+        binding.titleBar.imageViewBackButton.setOnClickListener {
+            navigateUp()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,8 +1,6 @@
 package com.robinsmorton.rmappandroid.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +16,6 @@ import com.robinsmorton.rmappandroid.databinding.FragmentJobRequestBinding
 import com.robinsmorton.rmappandroid.model.jobrequest.JobRequestValue
 import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel
 import com.robinsmorton.rmappandroid.viewmodel.JobRequestViewModel
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class JobRequestFragment: BaseFragment() {
@@ -62,6 +59,10 @@ class JobRequestFragment: BaseFragment() {
             binding.searchBarJobNumber.editTextSearch.setText("")
         }
         listForSearchItem = resources.getStringArray(R.array.job_numbers)
+
+        binding.titleBar.imageViewBackButton.setOnClickListener {
+            navigateUp()
+        }
     }
 
 

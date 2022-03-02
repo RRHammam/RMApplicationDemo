@@ -49,7 +49,7 @@ class UserSettingsFragment : BaseFragment(), UserSettingsPageEventListener{
             binding.textViewUserInitials.visibility = View.VISIBLE
             binding.textViewUserInitials.text = getUserInitials()
         }
-        binding.imageViewBackButton.setOnClickListener {
+        binding.titleBar.imageViewBackButton.setOnClickListener {
             (activity as MainActivity).getBottomNavView()?.selectedItemId = R.id.lobbyFragment
         }
         binding.buttonLogout.setOnClickListener {

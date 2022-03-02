@@ -4,8 +4,6 @@ import android.content.Intent
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +15,6 @@ import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.adapter.ApplicationsAdapter
 import com.robinsmorton.rmappandroid.constants.Constants
 import com.robinsmorton.rmappandroid.databinding.FragmentApplicationsBinding
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
@@ -48,6 +45,9 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
         setDropDownAdapter()
         setApplicationsListAdapter(resources.getStringArray(R.array.all_apps).toMutableList())
         hideProgressBar()
+        binding.titleBar.imageViewBackButton.setOnClickListener {
+            navigateUp()
+        }
     }
 
     private fun setApplicationsListAdapter(arrayOfApps: MutableList<String>) {

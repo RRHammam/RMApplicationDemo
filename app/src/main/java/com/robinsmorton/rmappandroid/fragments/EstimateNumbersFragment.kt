@@ -1,8 +1,6 @@
 package com.robinsmorton.rmappandroid.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.textfield.TextInputLayout
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.adapter.EstimateNumberAdapter
 import com.robinsmorton.rmappandroid.databinding.EstimateNumberLayoutBinding
@@ -20,7 +17,6 @@ import com.robinsmorton.rmappandroid.model.estimatenumber.Item
 import com.robinsmorton.rmappandroid.viewmodel.EstimateNumberViewModel
 import com.robinsmorton.rmappandroid.viewmodel.EstimateNumberViewModel.Companion.cmd_hide_loading_sign
 import com.robinsmorton.rmappandroid.viewmodel.EstimateNumberViewModel.Companion.cmd_show_loading_sign
-import com.sun.jna.StringArray
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class EstimateNumbersFragment: BaseFragment() {
@@ -55,6 +51,10 @@ class EstimateNumbersFragment: BaseFragment() {
             binding.searchBarEstimateNumber.editTextSearch.setText("")
         }
         listForSearchItem = resources.getStringArray(R.array.estimate_numbers)
+
+        binding.titleBar.imageViewBackButton.setOnClickListener {
+            navigateUp()
+        }
     }
 
 

@@ -33,8 +33,7 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
             .observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ corporateDirectoryResponse ->
-                corporateUsersListLiveData.value =
-                    filterCorporateUsersList(corporateDirectoryResponse)
+                corporateUsersListLiveData.value = filterCorporateUsersList(corporateDirectoryResponse)
                 if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
                     getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
                 }

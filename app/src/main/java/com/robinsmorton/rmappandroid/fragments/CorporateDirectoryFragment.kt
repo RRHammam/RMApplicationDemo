@@ -95,6 +95,10 @@ class CorporateDirectoryFragment : BaseFragment() {
         binding.imageViewClearSearchImage.setOnClickListener {
             binding.editTextSearch.setText("")
         }
+
+        binding.titleBar.imageViewBackButton.setOnClickListener {
+            navigateUp()
+        }
     }
 
 

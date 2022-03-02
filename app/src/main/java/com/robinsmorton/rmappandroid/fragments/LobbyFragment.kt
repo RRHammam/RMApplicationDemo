@@ -52,6 +52,17 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         (activity as MainActivity).getBottomNavView()?.visibility = View.VISIBLE
     }
 
+    override fun onResume() {
+        super.onResume()
+        handleActivityViews()
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(true)
+        }
+    }
+
     private fun subscribeToRmAppListLiveData() {
         viewModel.rmAppListLiveData.observe(viewLifecycleOwner, {
             adapter = this.context?.let { it1 -> LobbyAdapter(it1, it, this) }
@@ -101,7 +112,7 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
             ?.let { startActivity(browserIntent) }
     }
 
-    fun subscribeToEventCommands() {
+    private fun subscribeToEventCommands() {
         viewModel.eventCommand.observe(viewLifecycleOwner,{
             when(it) {
                 CorporateDirectoryViewModel.cmd_show_loading_sign -> showProgressBar()
@@ -111,15 +122,13 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         })
     }
 
-    fun showProgressBar() {
-        Log.d(TAG, "***showProgressBar()")
+    private fun showProgressBar() {
         binding.progressBar.bringToFront()
         binding.progressBar.loading_spinner.visibility = View.VISIBLE
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
-        Log.d(TAG, "***hideProgressBar()")
+    private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
     }
 }

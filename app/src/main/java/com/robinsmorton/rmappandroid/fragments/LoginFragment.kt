@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,12 +22,18 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         return with(binding){
             eventListener = this@LoginFragment
             root
+        }
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
         }
     }
 
@@ -38,6 +45,7 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
 
     override fun onResume() {
         super.onResume()
+        handleActivityViews()
         hideProgressBar()
     }
 

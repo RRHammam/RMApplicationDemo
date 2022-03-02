@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
         <import type = "android.view.View"/>
@@ -23,39 +24,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView_rm_logo"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="@dimen/_38dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/rmlogo"
-            app:layout_constraintEnd_toEndOf="parent"
+        <include
+            android:id="@+id/titleBar"
+            layout="@layout/title_bar_layout"
+            bind:title="@{@string/estimated_numbers}"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout_EstimateNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-            android:layout_marginVertical="@dimen/_5dp"
-            android:layout_marginHorizontal="@dimen/_10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_rm_logo"
-            android:background="@drawable/rounded_button">
-
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView_EstimateNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="Select"/>
-        </com.google.android.material.textfield.TextInputLayout>-->
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <RelativeLayout
             android:id="@+id/relativeLayout_estimateNumber_spinner"
@@ -63,7 +38,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_rm_logo"
+            app:layout_constraintTop_toBottomOf="@id/titleBar"
             android:layout_marginHorizontal="@dimen/_10dp"
             android:layout_marginVertical="@dimen/_5dp">
 

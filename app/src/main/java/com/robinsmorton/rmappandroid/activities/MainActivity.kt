@@ -4,19 +4,24 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.robinsmorton.rmappandroid.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.robinsmorton.rmappandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 
 class MainActivity : BaseActivity() {
+    private var titleBarImageView: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        titleBarImageView = findViewById(R.id.imageView_rm_logo_titleBar)
         printAppHashKeyInLogs()
         setupNavigation()
     }
@@ -28,7 +33,7 @@ class MainActivity : BaseActivity() {
 
     }
 
-    public fun getBottomNavView(): BottomNavigationView? {
+    fun getBottomNavView(): BottomNavigationView? {
         return bottom_navView
     }
 
@@ -43,8 +48,7 @@ class MainActivity : BaseActivity() {
                 md = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
                 val something = String(Base64.encode(md.digest(), 0))
-                //String something = new String(Base64.encodeBytes(md.digest()));
-                Log.e("***hash key", something)
+                //Log.e("***hash key", something)
             }
         } catch (e1: PackageManager.NameNotFoundException) {
             Log.e("name not found", e1.toString())
@@ -55,7 +59,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    /*override fun onBackPressed() {
-        //Do nothing
-    }*/
+    fun showAppBar(flag: Boolean) {
+        titleBarImageView?.visibility = if(flag) View.VISIBLE else View.GONE
+    }
 }
