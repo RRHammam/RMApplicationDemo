@@ -48,7 +48,7 @@ class MainActivity : BaseActivity() {
                 md = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
                 val something = String(Base64.encode(md.digest(), 0))
-                //Log.e("***hash key", something)
+                Log.e("***hash key", something)
             }
         } catch (e1: PackageManager.NameNotFoundException) {
             Log.e("name not found", e1.toString())

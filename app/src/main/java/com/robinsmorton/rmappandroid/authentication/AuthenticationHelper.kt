@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture
 
 class AuthenticationHelper private constructor(val app: Application, val listener: IAuthenticationHelperCreatedListener) :
     BaseAuthenticationProvider(){
-
+    private val TAG = "AuthenticationHelper"
     private lateinit var mPCA: ISingleAccountPublicClientApplication
     private val mScopes = arrayOf("User.Read", "MailboxSettings.Read", "Calendars.ReadWrite")
 
@@ -83,20 +83,30 @@ class AuthenticationHelper private constructor(val app: Application, val listene
     private fun getAuthenticationCallback(future: CompletableFuture<IAuthenticationResult>): AuthenticationCallback {
         return object : AuthenticationCallback {
             override fun onCancel() {
-                future.cancel(true)
+                try {
+                    future.cancel(true)
+                } catch (e: Exception) {
+                    Log.e(TAG, e.localizedMessage)
+                }
             }
 
             override fun onSuccess(authenticationResult: IAuthenticationResult?) {
-                future.complete(authenticationResult)
+                try {
+                    future.complete(authenticationResult)
+                }  catch (e: Exception) {
+                    Log.e(TAG, e.localizedMessage)
+                }
             }
 
             override fun onError(exception: MsalException?) {
-                future.completeExceptionally(exception)
+                try {
+                    future.completeExceptionally(exception)
+                }  catch (e: Exception) {
+                    Log.e(TAG, e.localizedMessage)
+                }
             }
         }
     }
-
-
 
     override fun getAuthorizationTokenAsync(requestUrl: URL): CompletableFuture<String> {
         return if (shouldAuthenticateRequestWithUrl(requestUrl)) {

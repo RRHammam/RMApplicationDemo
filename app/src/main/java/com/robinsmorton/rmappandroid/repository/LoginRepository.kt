@@ -33,12 +33,20 @@ class LoginRepository constructor(private val app: Application) {
     // Silently sign in - used if there is already a
     // user account in the MSAL cache
     fun doSilentSignIn(): CompletableFuture<IAuthenticationResult>{
-        return mAuthHelper.acquireTokenSilently()
+        return if (this::mAuthHelper.isInitialized) {
+            mAuthHelper.acquireTokenSilently()
+        } else {
+            CompletableFuture.completedFuture(null)
+        }
     }
 
     // Prompt the user to sign in
     fun doInteractiveSignIn(activity: Activity): CompletableFuture<IAuthenticationResult> {
-        return mAuthHelper.acquireTokenInteractively(activity)
+        return if (this::mAuthHelper.isInitialized) {
+            mAuthHelper.acquireTokenInteractively(activity)
+        } else {
+            CompletableFuture.completedFuture(null)
+        }
     }
 
     fun getUserFromGraphApi(): CompletableFuture<User>? {

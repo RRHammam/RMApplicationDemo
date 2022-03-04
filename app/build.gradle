@@ -9,13 +9,13 @@ apply plugin: 'kotlin-android'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\rhammam\\AndroidStudioProjects\\RMApplicationClientDemo\\app\\keystore\\newKey.jks')
+            storeFile file("../keystore/newKey.jks")
             storePassword '123456'
             keyAlias 'key'
             keyPassword '123456'
         }
         release {
-            storeFile file('C:\\Users\\rhammam\\AndroidStudioProjects\\RMApplicationClientDemo\\app\\keystore\\newKey.jks')
+            storeFile file("../keystore/newKey.jks")
             storePassword '123456'
             keyAlias 'key'
             keyPassword '123456'

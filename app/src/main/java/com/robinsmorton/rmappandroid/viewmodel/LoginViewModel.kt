@@ -80,9 +80,7 @@ class LoginViewModel (
     private fun handleSignInSuccess(authenticationResult: IAuthenticationResult) {
         isLoading.set(false)
         currentAccessToken = authenticationResult.accessToken
-        Log.d(TAG, "*** token - $currentAccessToken")
         SessionManager.access_token = currentAccessToken
-        //eventCommand.value = CMD_LOGIN_SUCCESS
         getUser()
     }
 
@@ -91,14 +89,14 @@ class LoginViewModel (
         loginRepository.getUserFromGraphApi()
             ?.thenAccept { user ->
                 isLoading.set(false)
-                Log.e(TAG, "***User data fetched successful - "+Gson().toJson(user))
+                Log.e(TAG, "User data fetched successful")
                 currentUser = user
                 Constants.userDetails = user
                 eventCommand.postValue(CMD_LOGIN_SUCCESS)
             }
             ?.exceptionally { exception ->
                 isLoading.set(false)
-                Log.e(TAG, "***Error getting user data", exception)
+                Log.e(TAG, "Error getting user data", exception)
                 eventCommand.postValue(CMD_LOGIN_FAILURE)
                 null
             }
@@ -116,7 +114,7 @@ class LoginViewModel (
                 Log.e(TAG, "Client error authenticating", exception)
             }
             else -> {
-                Log.e(TAG, "Unhandled exception authenticating", exception)
+                Log.e(TAG, "Unknown exception authenticating", exception)
                 exception?.printStackTrace()
             }
         }

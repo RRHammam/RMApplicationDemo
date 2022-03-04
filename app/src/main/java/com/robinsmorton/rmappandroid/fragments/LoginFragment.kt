@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -73,10 +73,18 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
                     findNavController().navigate(R.id.action_loginFragment_to_lobbyFragment)
                 }
                 CMD_LOGIN_FAILURE -> {
-
+                    showFailureToast()
                 }
             }
         })
+    }
+
+    private fun showFailureToast() {
+        Toast.makeText(
+            activity,
+            "Login Failed.",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
 
