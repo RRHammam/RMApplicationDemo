@@ -64,9 +64,6 @@ class JobRequestFragment: BaseFragment() {
                 adapter?.addDataInList(it)
             }
             viewModel.addToMainList(it)
-            viewModel.mainJobRequestList.forEach {
-                Log.d(TAG, "*** Job number - ${it.fields.Job_x0020_Number}")
-            }
         })
     }
 
