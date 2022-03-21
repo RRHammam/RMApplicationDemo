@@ -16,7 +16,7 @@ data class Fields(
     val AuthorLookupId: String,
     val City: String,
     val Completion_x0020_Date: String,
-    val Construction_x0020_Cost: Int,
+    val Construction_x0020_Cost: String,
     val ContentType: String,
     val Created: String,
     val CurrentUser: String,

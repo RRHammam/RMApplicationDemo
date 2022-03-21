@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.databinding.JobRequestItemBinding
+import com.robinsmorton.rmappandroid.model.CorporateUser
 import com.robinsmorton.rmappandroid.model.jobrequest.JobRequestValue
 
 class JobRequestAdapter(val context: Context, private val jobRequestList: MutableList<JobRequestValue>) :
@@ -57,5 +58,10 @@ class JobRequestAdapter(val context: Context, private val jobRequestList: Mutabl
             jobRequestList.addAll(it)
             notifyDataSetChanged()
         }
+    }
+
+    fun addDataInList(nextList: MutableList<JobRequestValue>){
+        jobRequestList.addAll(nextList)
+        notifyDataSetChanged()
     }
 }

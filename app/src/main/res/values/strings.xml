@@ -17,7 +17,7 @@
     <string name="lead_estimator_abcd_efgh">Lead Estimator: Abcd Efgh</string>
     <string name="department">Department</string>
     <string name="send_email">Send email</string>
-    <string name="search_name">Search Name</string>
+    <string name="search_name">Search</string>
 
     <string name="safety_information">Safety Information</string>
     <string name="waste_management">Waste Management</string>
@@ -44,7 +44,7 @@
     <string name="policies_and_procedures_text">Policies &amp; \n Procedures</string>
     <string name="job_numbers_text">Project \n Numbers</string>
     <string name="job_numbers_text_single_line">Project Numbers</string>
-    <string name="estimated_numbers_text">Estimated \n Numbers</string>
+    <string name="estimated_numbers_text">Estimate \n Numbers</string>
     <string name="training_schedule_text">Under \n Construction</string>
     <string name="corporate_directory_text">Corporate \n Directory</string>
     <string name="hr_information_text">HR \n Information</string>
@@ -52,18 +52,6 @@
 
     <string name="user_details_not_found">User details not found.</string>
     <string name="under_construction">Under Construction</string>
-
-    <string-array name="job_numbers">
-        <item>Select Search Category</item>
-        <item>Job Number</item>
-        <item>Title</item>
-    </string-array>
-
-    <string-array name="estimate_numbers">
-        <item>Select Search Category</item>
-        <item>Estimate Number</item>
-        <item>Title</item>
-    </string-array>
 
     <string name="arial">fonts/arial.ttf</string>
     <string name="migraine_serif">fonts/migraine_serif.ttf</string>

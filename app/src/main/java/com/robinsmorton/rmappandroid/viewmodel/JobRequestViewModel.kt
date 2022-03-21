@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.robinsmorton.rmappandroid.model.jobrequest.JobRequestResponse
 import com.robinsmorton.rmappandroid.model.jobrequest.JobRequestValue
 import com.robinsmorton.rmappandroid.repository.JobRequestRepository
 import com.robinsmorton.rmappandroid.util.SessionManager
@@ -17,7 +18,6 @@ import io.reactivex.schedulers.Schedulers
 class JobRequestViewModel(val app: Application) : AndroidViewModel(app) {
 
     val TAG = "JobRequestViewModel"
-
     private val jobRequestRepository = JobRequestRepository(app)
     var jobRequestListLiveData = MutableLiveData<MutableList<JobRequestValue>>()
     var isLoading = ObservableBoolean(false)
@@ -25,25 +25,40 @@ class JobRequestViewModel(val app: Application) : AndroidViewModel(app) {
     var mainJobRequestList = mutableListOf<JobRequestValue>()
     var eventCommand = SingleLiveEvent<Int>()
 
-    fun getJobRequestList(){
-        showLoading()
-        if (jobRequestListLiveData.value.isNullOrEmpty()) {
-            isLoading.set(true)
+    fun getJobRequestList(url: String = ""){
+        if (url.isEmpty()) {
+            showLoading()
         }
-        jobRequestRepository.getJobRequestList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
+        jobRequestRepository.getJobRequestList(SessionManager.access_token, url).observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ jobRequestResponse ->
-                hideLoading()
-                isLoading.set(false)
-                mainJobRequestList.addAll(jobRequestResponse.value)
                 jobRequestListLiveData.value = jobRequestResponse.value
-            }, {
+                if (!jobRequestResponse.nextLink.isNullOrEmpty()) {
+                   getJobRequestList(jobRequestResponse.nextLink)
+                } else {
+                    Log.d(TAG, "Total job numbers - ${mainJobRequestList.lastIndex}")
+                    hideLoadingOnSearchBar()
+                }
                 hideLoading()
-                isLoading.set(false)
+            }, {
+                Log.d(TAG, "Total job numbers - ${mainJobRequestList.lastIndex}")
+                hideLoadingOnSearchBar()
                 Toast.makeText(getApplication(), "Error getting Job Request list", Toast.LENGTH_SHORT).show()
-                it.message?.let { it1 -> Log.e(TAG, it1) }
-
+                it.localizedMessage?.let { it1 -> Log.e(TAG, it1) }
+                it.printStackTrace()
             })?.let { compositeDisposable.add(it) }
+    }
+
+    fun addToMainList(list: MutableList<JobRequestValue>) {
+        mainJobRequestList.addAll(list)
+    }
+
+    fun clearMainJobRequestList() {
+        mainJobRequestList.clear()
+    }
+
+    fun isMainJobRequestListEmpty(): Boolean {
+        return mainJobRequestList.isEmpty()
     }
 
     override fun onCleared() {
@@ -51,18 +66,49 @@ class JobRequestViewModel(val app: Application) : AndroidViewModel(app) {
         compositeDisposable.clear()
     }
 
-    fun showLoading(){
+    private fun showLoading(){
         eventCommand.value = cmd_show_loading_sign
+        isLoading.set(true)
+        eventCommand.value = cmd_show_loading_sign_on_search_bar
     }
 
-    fun hideLoading(){
+    private fun hideLoading(){
         eventCommand.value = cmd_hide_loading_sign
     }
 
+    private fun hideLoadingOnSearchBar() {
+        isLoading.set(false)
+        eventCommand.value = cmd_hide_loading_sign_on_search_bar
+    }
+
+    fun filterDataFromList(query: String): MutableList<JobRequestValue>? {
+        val filteredList = mutableListOf<JobRequestValue>()
+        return if (query.isNotEmpty()) {
+            mainJobRequestList.forEach {
+                if (isMatchingJobNumber(it, query) || isMatchingTitle(it, query)) {
+                    filteredList.add(it)
+                }
+            }
+            filteredList
+        } else {
+            mainJobRequestList
+        }
+    }
+
+    private fun isMatchingTitle(
+        it: JobRequestValue,
+        query: String
+    ) = !it.fields.Title.isNullOrEmpty() && it.fields.Title.trim().lowercase().contains(query)
+
+    private fun isMatchingJobNumber(it: JobRequestValue, query: String) =
+        !it.fields.Job_x0020_Number.isNullOrEmpty() && it.fields.Job_x0020_Number.trim().lowercase()
+            .contains(query)
 
     companion object {
         const val cmd_show_loading_sign = 0
         const val cmd_hide_loading_sign = 1
+        const val cmd_hide_loading_sign_on_search_bar = 2
+        const val cmd_show_loading_sign_on_search_bar = 3
     }
 
 }

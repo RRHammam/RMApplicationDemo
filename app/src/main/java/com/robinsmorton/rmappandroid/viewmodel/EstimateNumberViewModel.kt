@@ -29,10 +29,12 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ estimateNumberResponse ->
                 hideLoading()
+                hideLoadingOnSearchBar()
                 mainEstimateNumberList.addAll(estimateNumberResponse.items)
                 estimateNumberListLiveData.value = estimateNumberResponse.items
             }, {
                 hideLoading()
+                hideLoadingOnSearchBar()
                 Toast.makeText(getApplication(), "Error getting Estimate numbers list", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
             })?.let { compositeDisposable.add(it) }
@@ -43,18 +45,43 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
         compositeDisposable.clear()
     }
 
-    fun showLoading(){
+    private fun showLoading(){
         eventCommand.value = cmd_show_loading_sign
+        eventCommand.value = cmd_show_loading_sign_on_search_bar
     }
 
-    fun hideLoading(){
+    private fun hideLoading(){
         eventCommand.value = cmd_hide_loading_sign
     }
 
+    private fun hideLoadingOnSearchBar() {
+        eventCommand.value = cmd_hide_loading_sign_on_search_bar
+    }
+
+    fun filterDataFromList(query: String): MutableList<Item>? {
+        val filteredList = mutableListOf<Item>()
+        return if (query.isNotEmpty()) {
+            mainEstimateNumberList.forEach {
+                if (isEstimateNumberMatching(it, query) || isTitleMatching(it, query)) {
+                    filteredList.add(it)
+                }
+            }
+            filteredList
+        } else {
+            mainEstimateNumberList
+        }
+    }
+
+    private fun isTitleMatching(it: Item, query: String) = !it.fields.Title.isNullOrEmpty() && it.fields.Title.trim().lowercase().contains(query)
+
+    private fun isEstimateNumberMatching(it: Item, query: String) =
+        !it.fields.Estimate_x0020_Number.isNullOrEmpty() && it.fields.Estimate_x0020_Number.trim().lowercase().contains(query)
 
     companion object {
         const val cmd_show_loading_sign = 0
         const val cmd_hide_loading_sign = 1
+        const val cmd_hide_loading_sign_on_search_bar = 2
+        const val cmd_show_loading_sign_on_search_bar = 3
     }
 
 }

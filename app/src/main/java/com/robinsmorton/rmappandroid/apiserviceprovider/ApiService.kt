@@ -23,8 +23,11 @@ interface ApiService {
     @GET
     fun getCorporateDirectoryWithNextLink(@Header("Authorization") token: String, @Url url: String): Observable<CorporateDirectoryResponse>
 
-    @GET("v1.0/sites/8763719b-ae4a-4f3a-a469-f2812ec4934e/sites/6c1aed69-ca48-4759-88ae-805162a32512/lists/1537664d-c92b-4441-b3dd-a0432c4a536c/items?expand=columns,items(expand=fields)")
+    @GET("v1.0/sites/root/sites/6c1aed69-ca48-4759-88ae-805162a32512/lists/1537664d-c92b-4441-b3dd-a0432c4a536c/items/?expand=item")
     fun getJobRequest(@Header("Authorization") token: String): Observable<JobRequestResponse>
+
+    @GET
+    fun getJobRequestUsingNextLink(@Header("Authorization") token: String, @Url url: String): Observable<JobRequestResponse>
 
     @GET("v1.0/sites/8763719b-ae4a-4f3a-a469-f2812ec4934e/sites/6c1aed69-ca48-4759-88ae-805162a32512/lists/1537664d-c92b-4441-b3dd-a0432c4a536c/items?expand=columns,items(expand=fields)")
     fun getEstimateNumber(@Header("Authorization") token: String): Observable<EstimateNumberResponse>

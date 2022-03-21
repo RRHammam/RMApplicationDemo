@@ -33,10 +33,10 @@
 
             <ImageView
                 android:id="@+id/imageView_rmLogo"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="176dp"
-                android:src="@drawable/rmlogo"
+                android:src="@drawable/ic_appbar_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.551"
                 app:layout_constraintStart_toStartOf="parent"

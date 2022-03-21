@@ -32,36 +32,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout_estimateNumber_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleBar"
-            android:layout_marginHorizontal="@dimen/_10dp"
-            android:layout_marginVertical="@dimen/_5dp">
-
-            <Spinner
-                android:id="@+id/spinner_estimateNumber"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:padding="@dimen/_5dp"
-                android:spinnerMode="dropdown"
-                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-                android:background="@drawable/rounded_button"/>
-
-            <ImageView
-                android:layout_width="@dimen/_20dp"
-                android:layout_height="@dimen/_16dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_15dp"
-                android:layout_marginTop="@dimen/_15dp"
-                android:layout_marginBottom="@dimen/_15dp"
-                android:src="@drawable/big_drop_down_arrow"/>
-
-        </RelativeLayout>
-
         <include
             android:id="@+id/searchBar_EstimateNumber"
             layout="@layout/search_bar_layout"
@@ -70,7 +40,7 @@
             android:layout_marginHorizontal="@dimen/_10dp"
             android:layout_marginVertical="@dimen/_5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/relativeLayout_estimateNumber_spinner" />
+            app:layout_constraintTop_toBottomOf="@id/titleBar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_estimateNumberList"
