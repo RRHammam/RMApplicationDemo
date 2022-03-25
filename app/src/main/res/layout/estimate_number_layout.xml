@@ -27,7 +27,7 @@
         <include
             android:id="@+id/titleBar"
             layout="@layout/title_bar_layout"
-            bind:title="@{@string/estimated_numbers}"
+            bind:title="@{@string/estimate_numbers}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

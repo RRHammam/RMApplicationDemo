@@ -8,9 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.databinding.ItemEstimateNumberBinding
-import com.robinsmorton.rmappandroid.model.estimatenumber.Item
+import com.robinsmorton.rmappandroid.model.estimatenumber.Value
 
-class EstimateNumberAdapter(val context: Context, private val estimateNumberList: MutableList<Item>) :
+class EstimateNumberAdapter(val context: Context, private val estimateNumberList: MutableList<Value>) :
     RecyclerView.Adapter<EstimateNumberAdapter.EstimateNumberItemHolder>() {
 
     private val TAG = "EstimateNumberAdapter"
@@ -20,7 +20,7 @@ class EstimateNumberAdapter(val context: Context, private val estimateNumberList
     inner class EstimateNumberItemHolder(val binding: ItemEstimateNumberBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindListItem(item: Item?) {
+        fun bindListItem(item: Value?) {
             val estimateNumberDetails = item?.fields
             ("Title: "+estimateNumberDetails?.Title).also { binding.textViewTitle.text = it }
             ("Estimate Number: "+estimateNumberDetails?.Estimate_x0020_Number).also { binding.textViewEstimateNumber.text = it }
@@ -50,12 +50,17 @@ class EstimateNumberAdapter(val context: Context, private val estimateNumberList
         return estimateNumberList.size
     }
 
-    fun clearAndUpdateList(updatedList: MutableList<Item>?) {
+    fun clearAndUpdateList(updatedList: MutableList<Value>?) {
         updatedList?.let {
             estimateNumberList.clear()
             estimateNumberList.addAll(it)
             notifyDataSetChanged()
         }
+    }
+
+    fun addDataInList(nextList: MutableList<Value>){
+        estimateNumberList.addAll(nextList)
+        notifyDataSetChanged()
     }
 }
 

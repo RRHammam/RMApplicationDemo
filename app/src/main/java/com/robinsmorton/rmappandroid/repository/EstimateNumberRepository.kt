@@ -2,23 +2,25 @@ package com.robinsmorton.rmappandroid.repository
 
 import android.app.Application
 import android.util.Log
-import com.robinsmorton.rmappandroid.model.estimatenumber.EstimateNumberResponse
-import com.robinsmorton.rmappandroid.util.JsonData
+import com.robinsmorton.rmappandroid.apiserviceprovider.ApiServiceClient
+import com.robinsmorton.rmappandroid.model.estimatenumber.EstimateNumbersResponse
 import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 
 
 class EstimateNumberRepository(val app: Application) {
 
-    fun getEstimateNumbersList(accessToken: String?): Observable<EstimateNumberResponse> {
+    fun getEstimateNumbersList(accessToken: String?, nextLink: String): Observable<EstimateNumbersResponse> {
         Log.d("getEstimateNumberList", "getEstimateNumberList: accessToken $accessToken")
-        /*return GraphApiServiceClient.getGraphApiService()
-            .getEstimateNumber(token = "Bearer $accessToken")*/
+        return if(!nextLink.isNullOrEmpty()) {
+            ApiServiceClient.getApiService().getEstimateNumberUsingNextLink(token = "Bearer $accessToken", nextLink)
+        } else {
+            ApiServiceClient.getApiService().getEstimateNumber(token = "Bearer $accessToken")
+        }
 
-        val estimateNumberResponse = JsonData.getEstimateNumbers(app.applicationContext)
+        /*val estimateNumberResponse = JsonData.getEstimateNumbers(app.applicationContext)
         return Observable.create(ObservableOnSubscribe<EstimateNumberResponse> { emitter ->
             estimateNumberResponse?.let { emitter.onNext(it) }
             emitter.onComplete()
-        })
+        })*/
     }
 }

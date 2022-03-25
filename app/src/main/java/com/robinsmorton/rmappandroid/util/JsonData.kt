@@ -1,7 +1,7 @@
 package com.robinsmorton.rmappandroid.util
 
 import android.content.Context
-import com.robinsmorton.rmappandroid.model.estimatenumber.EstimateNumberResponse
+import com.robinsmorton.rmappandroid.model.estimatenumber.EstimateNumbersResponse
 import com.robinsmorton.rmappandroid.model.SitesResponse
 import com.robinsmorton.rmappandroid.model.jobrequest.JobRequestResponse
 import com.google.gson.Gson
@@ -42,9 +42,9 @@ object JsonData {
         }
     }
 
-    fun getEstimateNumbers(context: Context): EstimateNumberResponse? {
+    fun getEstimateNumbers(context: Context): EstimateNumbersResponse? {
         return try {
-            Gson().fromJson(getJsonFromAssets(context, "estimatenumberresponse.json"), EstimateNumberResponse::class.java)
+            Gson().fromJson(getJsonFromAssets(context, "estimatenumberresponse.json"), EstimateNumbersResponse::class.java)
         } catch(e: Exception) {
             e.printStackTrace()
             return null

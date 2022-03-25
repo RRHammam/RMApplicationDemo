@@ -76,10 +76,10 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
             getString(R.string.corporate_directory) -> {
                 findNavController().navigate(R.id.action_lobbyFragment_to_corporateDirectoryFragment)
             }
-            getString(R.string.job_numbers) -> {
+            getString(R.string.project_numbers) -> {
                 findNavController().navigate(R.id.action_lobbyFragment_to_jobRequestFragment)
             }
-            getString(R.string.estimated_numbers) -> {
+            getString(R.string.estimate_numbers) -> {
                 findNavController().navigate(R.id.action_lobbyFragment_to_estimateNumbersFragment)
             }
             getString(R.string.sustainability) -> {
@@ -91,7 +91,7 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
             getString(R.string.building_forward) -> {
                 openBrowser(Constants.BUILDING_FORWARD_LINK)
             }
-            getString(R.string.hr_information) -> {
+            getString(R.string.time_entry_paystubs) -> {
                 openBrowser(Constants.HR_INFORMATION_LINK)
             }
             getString(R.string.safety_information) -> {
@@ -102,6 +102,12 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
             }
             getString(R.string.policies_and_procedures) -> {
                 findNavController().navigate(R.id.action_lobbyFragment_to_policiesAndProceduresFragment)
+            }
+            getString(R.string.it_support) -> {
+                openBrowser(Constants.IT_SUPPORT_LINK)
+            }
+            getString(R.string.rm_web) -> {
+                openBrowser(Constants.RM_WEB_HOME_LINK)
             }
         }
     }

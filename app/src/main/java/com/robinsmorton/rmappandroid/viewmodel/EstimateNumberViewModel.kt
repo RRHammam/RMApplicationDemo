@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.robinsmorton.rmappandroid.model.estimatenumber.Item
+import com.robinsmorton.rmappandroid.model.estimatenumber.Value
 import com.robinsmorton.rmappandroid.repository.EstimateNumberRepository
 import com.robinsmorton.rmappandroid.util.SessionManager
 import com.robinsmorton.rmappandroid.util.SingleLiveEvent
@@ -18,20 +18,26 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
     val TAG = "CorporateDirectoryViewModel"
 
     private val estimateNumberRepository = EstimateNumberRepository(app)
-    var estimateNumberListLiveData = MutableLiveData<MutableList<Item>>()
+    var estimateNumberListLiveData = MutableLiveData<MutableList<Value>>()
     private val compositeDisposable = CompositeDisposable()
-    var mainEstimateNumberList = mutableListOf<Item>()
+    var mainEstimateNumberList = mutableListOf<Value>()
     var eventCommand = SingleLiveEvent<Int>()
 
-    fun getEstimateNumbersList(){
-        showLoading()
-        estimateNumberRepository.getEstimateNumbersList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
+    fun getEstimateNumbersList(url: String = ""){
+        if (url.isEmpty()) {
+            showLoading()
+        }
+        estimateNumberRepository.getEstimateNumbersList(SessionManager.access_token, url).observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ estimateNumberResponse ->
+                estimateNumberListLiveData.value = estimateNumberResponse.value
+                if (!estimateNumberResponse.nextLink.isNullOrEmpty()) {
+                    getEstimateNumbersList(estimateNumberResponse.nextLink)
+                } else {
+                    Log.d(TAG, "Total job numbers - ${mainEstimateNumberList.lastIndex}")
+                    hideLoadingOnSearchBar()
+                }
                 hideLoading()
-                hideLoadingOnSearchBar()
-                mainEstimateNumberList.addAll(estimateNumberResponse.items)
-                estimateNumberListLiveData.value = estimateNumberResponse.items
             }, {
                 hideLoading()
                 hideLoadingOnSearchBar()
@@ -58,8 +64,8 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
         eventCommand.value = cmd_hide_loading_sign_on_search_bar
     }
 
-    fun filterDataFromList(query: String): MutableList<Item>? {
-        val filteredList = mutableListOf<Item>()
+    fun filterDataFromList(query: String): MutableList<Value>? {
+        val filteredList = mutableListOf<Value>()
         return if (query.isNotEmpty()) {
             mainEstimateNumberList.forEach {
                 if (isEstimateNumberMatching(it, query) || isTitleMatching(it, query)) {
@@ -72,10 +78,22 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun isTitleMatching(it: Item, query: String) = !it.fields.Title.isNullOrEmpty() && it.fields.Title.trim().lowercase().contains(query)
+    private fun isTitleMatching(it: Value, query: String) = !it.fields.Title.isNullOrEmpty() && it.fields.Title.trim().lowercase().contains(query)
 
-    private fun isEstimateNumberMatching(it: Item, query: String) =
+    private fun isEstimateNumberMatching(it: Value, query: String) =
         !it.fields.Estimate_x0020_Number.isNullOrEmpty() && it.fields.Estimate_x0020_Number.trim().lowercase().contains(query)
+
+    fun clearMainEstimateNumberList() {
+        mainEstimateNumberList.clear()
+    }
+
+    fun isMainEstimateNumberListEmpty(): Boolean {
+        return mainEstimateNumberList.isEmpty()
+    }
+
+    fun addToMainList(list: MutableList<Value>) {
+        mainEstimateNumberList.addAll(list)
+    }
 
     companion object {
         const val cmd_show_loading_sign = 0

@@ -172,6 +172,9 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
             resources.getString(R.string.alabam_blue) -> {
                 doOnAppClickAction(appName, Constants.ALABAMA_BLUE_LINK)
             }
+            resources.getString(R.string.unanet_crm) -> {
+                doOnAppClickAction(appName, Constants.UNANET_CRM_LINK)
+            }
         }
     }
 

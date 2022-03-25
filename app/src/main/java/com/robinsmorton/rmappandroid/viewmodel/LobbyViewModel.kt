@@ -54,7 +54,6 @@ class LobbyViewModel (
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ rmAppListResponse ->
                 rmAppListLiveData.value = orderList(rmAppListResponse.items)
-                //rmAppListLiveData.value = reOrderList(rmAppListResponse.items)
                 hideLoading()
             }, {
                 hideLoading()
@@ -73,39 +72,55 @@ class LobbyViewModel (
         val reOrderedList = mutableListOf<Item>()
         reOrderedList.addAll(list)
         list.forEach {
-            if(it.fields?.AppOrder == 1) {
-                reOrderedList.remove(it)
-                reOrderedList.add(0, it)
-            } else if(it.fields?.AppOrder == 2) {
-                reOrderedList.remove(it)
-                reOrderedList.add(1, it)
-            } else if(it.fields?.AppOrder == 3) {
-                reOrderedList.remove(it)
-                reOrderedList.add(2, it)
-            } else if(it.fields?.AppOrder == 4) {
-                reOrderedList.remove(it)
-                reOrderedList.add(3, it)
-            } else if(it.fields?.AppOrder == 5) {
-                reOrderedList.remove(it)
-                reOrderedList.add(4, it)
-            } else if(it.fields?.AppOrder == 6) {
-                reOrderedList.remove(it)
-                reOrderedList.add(5, it)
-            } else if(it.fields?.AppOrder == 7) {
-                reOrderedList.remove(it)
-                reOrderedList.add(6, it)
-            } else if(it.fields?.AppOrder == 8) {
-                reOrderedList.remove(it)
-                reOrderedList.add(10, it)
-            } else if(it.fields?.AppOrder == 9) {
-                reOrderedList.remove(it)
-                reOrderedList.add(8, it)
-            } else if(it.fields?.AppOrder == 10) {
-                reOrderedList.remove(it)
-                reOrderedList.add(9, it)
-            } else if(it.fields?.AppOrder == 11) {
-                reOrderedList.remove(it)
-                reOrderedList.add(7, it)
+            when (it.fields?.AppOrder) {
+                1 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(0, it)
+                }
+                2 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(1, it)
+                }
+                3 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(2, it)
+                }
+                4 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(3, it)
+                }
+                5 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(4, it)
+                }
+                6 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(5, it)
+                }
+                7 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(6, it)
+                }
+                8 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(7, it)
+                }
+                9 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(8, it)
+                }
+                10 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(9, it)
+                }
+                11 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(10, it)
+                }
+                12 -> {
+                    reOrderedList.remove(it)
+                    reOrderedList.add(11, it)
+                }
             }
         }
         return reOrderedList

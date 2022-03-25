@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">RM Mobile</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lobby">Lobby</string>
     <string name="usersettings">UserSettings</string>
@@ -22,19 +21,15 @@
     <string name="safety_information">Safety Information</string>
     <string name="waste_management">Waste Management</string>
     <string name="building_forward">Building Forward</string>
-    <string name="hub">HUB</string>
-    <string name="job_request">Job Request</string>
-    <string name="preconstruction">Preconstruction</string>
-    <string name="human_resources">Human Resources</string>
     <string name="sustainability">Sustainability</string>
-    <string name="administration">Administration</string>
     <string name="policies_and_procedures">Policies and Procedures</string>
-    <string name="job_numbers">Job Numbers</string>
-    <string name="estimated_numbers">Estimated Numbers</string>
+    <string name="project_numbers">Project Numbers</string>
+    <string name="estimate_numbers">Estimate Numbers</string>
     <string name="training_schedule">Training Schedule</string>
     <string name="corporate_directory">Corporate Directory</string>
     <string name="applications">Applications</string>
-    <string name="hr_information">HR Information</string>
+    <string name="it_support">IT Support</string>
+    <string name="rm_web">RM Web</string>
 
     <string name="safety_information_text">Safety \n Information</string>
     <string name="waste_management_text">Waste \n Management</string>
@@ -47,8 +42,8 @@
     <string name="estimated_numbers_text">Estimate \n Numbers</string>
     <string name="training_schedule_text">Under \n Construction</string>
     <string name="corporate_directory_text">Corporate \n Directory</string>
-    <string name="hr_information_text">HR \n Information</string>
-    <string name="time_entry_paystubs">Time Entry/\nPaystubs</string>
+    <string name="time_entry_paystubs_text">Time Entry/\nPaystubs</string>
+    <string name="time_entry_paystubs">Time Entry/Paystubs</string>
 
     <string name="user_details_not_found">User details not found.</string>
     <string name="under_construction">Under Construction</string>
@@ -86,6 +81,7 @@
 
     <string-array name="construction_management_applications">
         <item>Procore</item>
+        <item>Unanet CRM</item>
     </string-array>
 
     <string-array name="finance_applications">
@@ -127,6 +123,7 @@
         <item>R &amp; M Ambassadors</item>
         <item>Authy</item>
         <item>SAP Concur</item>
+        <item>Unanet CRM</item>
     </string-array>
 
     <string name="ers_construction_products">Ers Construction</string>
@@ -141,6 +138,7 @@
     <string name="rm_ambassify">R &amp; M Ambassadors</string>
     <string name="authy">Authy</string>
     <string name="sap_concur">SAP Concur</string>
+    <string name="unanet_crm">Unanet CRM</string>
     <string name="nothing_found">Nothing Found.</string>
     <string name="please_wait_list_is_loading">Please wait list is loading.</string>
 </resources>

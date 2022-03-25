@@ -62,37 +62,15 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
             binding.constraintLayoutParentLayout.setBackgroundColor(context.resources.getColor(R.color.white, context.theme))
             binding.materialCardViewLobbyItem.setBackgroundColor(context.resources.getColor(R.color.white, context.theme))
             when {
-                displayName?.trim() == context.getString(R.string.hub) -> {
-                    binding.textViewGridItem.text = lobbyItem?.fields?.Title
-                    Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.rminfotech))
-                        .into(binding.imageViewGridItem)
-                }
-                displayName?.trim() == context.getString(R.string.job_request) -> {
+                displayName?.trim() == context.getString(R.string.project_numbers) -> {
                     binding.textViewGridItem.text = context.getString(R.string.job_numbers_text)
                     Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.ic_jobnumbers))
                         .into(binding.imageViewGridItem)
                 }
-                displayName?.trim() == context.getString(R.string.preconstruction) -> {
-                    binding.textViewGridItem.text = lobbyItem?.fields?.Title
-                    Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.rmiconsafety))
-                        .into(binding.imageViewGridItem)
-                }
-                displayName?.trim() == context.getString(R.string.human_resources) -> {
-                    binding.textViewGridItem.text = context.getString(R.string.human_resources_text)
-                    Glide.with(context)
-                        .load(ContextCompat.getDrawable( context, R.drawable.rm_learning_culture))
-                        .into(binding.imageViewGridItem)
-                }
                 displayName?.trim() == context.getString(R.string.sustainability) -> {
-                    binding.textViewGridItem.text = lobbyItem?.fields?.Title
+                    binding.textViewGridItem.text = context.getString(R.string.sustainability)
                     Glide.with(context)
                         .load(ContextCompat.getDrawable( context, R.drawable.rm_sustainability))
-                        .into(binding.imageViewGridItem)
-                }
-                displayName?.trim() == context.getString(R.string.administration) -> {
-                    binding.textViewGridItem.text = lobbyItem?.fields?.Title
-                    Glide.with(context)
-                        .load(ContextCompat.getDrawable(context, R.drawable.rminfotech))
                         .into(binding.imageViewGridItem)
                 }
                 displayName?.trim() == context.getString(R.string.policies_and_procedures) -> {
@@ -100,27 +78,13 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                     Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.rmpolicypro))
                         .into(binding.imageViewGridItem)
                 }
-                displayName?.trim() == context.getString(R.string.job_numbers) -> {
-                    binding.textViewGridItem.text = context.getString(R.string.job_numbers_text)
-                    Glide.with(context).load(ContextCompat.getDrawable(context,R.drawable.rmworkforce))
-                        .into(binding.imageViewGridItem)
-                }
-                displayName?.trim() == context.getString(R.string.estimated_numbers) -> {
+                displayName?.trim() == context.getString(R.string.estimate_numbers) -> {
                     binding.textViewGridItem.text = context.getString(R.string.estimated_numbers_text)
-                    Glide.with(context)
-                        .load(ContextCompat.getDrawable( context, R.drawable.rmbudget))
+                    Glide.with(context).load(ContextCompat.getDrawable( context, R.drawable.rmbudget))
                         .into(binding.imageViewGridItem)
                 }
-                displayName?.trim() == context.getString(R.string.training_schedule) -> {
-                    binding.materialCardViewLobbyItem.setBackgroundColor(context.resources.getColor(R.color.light_gray, context.theme))
-                    binding.constraintLayoutParentLayout.setBackgroundColor(context.resources.getColor(R.color.light_gray, context.theme))
-                    binding.textViewGridItem.text = context.getString(R.string.training_schedule_text)
-                    Glide.with(context)
-                        .load(ContextCompat.getDrawable( context, R.drawable.ic_training_schedules))
-                        .into(binding.imageViewGridItem)
-                }
-                displayName?.trim() == context.getString(R.string.hr_information) -> {
-                    binding.textViewGridItem.text = context.getString(R.string.time_entry_paystubs)
+                displayName?.trim() == context.getString(R.string.time_entry_paystubs) -> {
+                    binding.textViewGridItem.text = context.getString(R.string.time_entry_paystubs_text)
                     Glide.with(context)
                         .load(ContextCompat.getDrawable( context, R.drawable.rmcollab))
                         .into(binding.imageViewGridItem)
@@ -138,7 +102,7 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                         .into(binding.imageViewGridItem)
                 }
                 displayName?.trim() == context.getString(R.string.applications) -> {
-                    binding.textViewGridItem.text = lobbyItem?.fields?.Title
+                    binding.textViewGridItem.text = context.getString(R.string.applications)
                     Glide.with(context)
                         .load(ContextCompat.getDrawable( context, R.drawable.rminfotech))
                         .into(binding.imageViewGridItem)
@@ -153,6 +117,18 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                     binding.textViewGridItem.text = context.getString(R.string.building_forward_text)
                     Glide.with(context)
                         .load(ContextCompat.getDrawable( context, R.drawable.ic_bf_icon))
+                        .into(binding.imageViewGridItem)
+                }
+                displayName?.trim() == context.resources.getString(R.string.it_support) -> {
+                    binding.textViewGridItem.text = context.getString(R.string.it_support)
+                    Glide.with(context)
+                        .load(ContextCompat.getDrawable( context, R.drawable.ic_it_support))
+                        .into(binding.imageViewGridItem)
+                }
+                displayName?.trim() == context.resources.getString(R.string.rm_web) -> {
+                    binding.textViewGridItem.text = context.getString(R.string.rm_web)
+                    Glide.with(context)
+                        .load(ContextCompat.getDrawable( context, R.drawable.ic_home_rm))
                         .into(binding.imageViewGridItem)
                 }
             }
