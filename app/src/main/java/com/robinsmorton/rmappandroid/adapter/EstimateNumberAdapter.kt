@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.databinding.ItemEstimateNumberBinding
-import com.robinsmorton.rmappandroid.model.estimatenumber.Value
+import com.robinsmorton.rmappandroid.model.Value
 
 class EstimateNumberAdapter(val context: Context, private val estimateNumberList: MutableList<Value>) :
     RecyclerView.Adapter<EstimateNumberAdapter.EstimateNumberItemHolder>() {

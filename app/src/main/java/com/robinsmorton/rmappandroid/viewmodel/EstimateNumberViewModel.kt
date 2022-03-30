@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.robinsmorton.rmappandroid.model.estimatenumber.Value
+import com.robinsmorton.rmappandroid.model.Value
 import com.robinsmorton.rmappandroid.repository.EstimateNumberRepository
 import com.robinsmorton.rmappandroid.util.SessionManager
 import com.robinsmorton.rmappandroid.util.SingleLiveEvent
@@ -68,7 +68,8 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
         val filteredList = mutableListOf<Value>()
         return if (query.isNotEmpty()) {
             mainEstimateNumberList.forEach {
-                if (isEstimateNumberMatching(it, query) || isTitleMatching(it, query)) {
+                if (isEstimateNumberMatching(it, query) || isTitleMatching(it, query) || isStatusMatching(it, query) || isDateMatching(it, query) ||
+                        isLeadEstimatorMatching(it, query) || isOperationsManagerMatching(it, query)) {
                     filteredList.add(it)
                 }
             }
@@ -82,6 +83,14 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
 
     private fun isEstimateNumberMatching(it: Value, query: String) =
         !it.fields.Estimate_x0020_Number.isNullOrEmpty() && it.fields.Estimate_x0020_Number.trim().lowercase().contains(query)
+
+    private fun isStatusMatching(it: Value, query: String) = !it.fields.Status.isNullOrEmpty() && it.fields.Status.trim().lowercase().contains(query)
+
+    private fun isDateMatching(it: Value, query: String) = !it.fields.Date.isNullOrEmpty() && it.fields.Date.trim().lowercase().contains(query)
+
+    private fun isLeadEstimatorMatching(it: Value, query: String) = !it.fields.Lead_x0020_Estimator.isNullOrEmpty() && it.fields.Lead_x0020_Estimator.trim().lowercase().contains(query)
+
+    private fun isOperationsManagerMatching(it: Value, query: String) = !it.fields.Operations_x0020_Manager.isNullOrEmpty() && it.fields.Operations_x0020_Manager.trim().lowercase().contains(query)
 
     fun clearMainEstimateNumberList() {
         mainEstimateNumberList.clear()

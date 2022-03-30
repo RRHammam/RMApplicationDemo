@@ -1,4 +1,4 @@
-package com.robinsmorton.rmappandroid.model.estimatenumber
+package com.robinsmorton.rmappandroid.model
 
 data class Application(
     val displayName: String,

@@ -12,9 +12,10 @@ import com.bumptech.glide.Glide
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.databinding.ApplicationsGridItemBinding
 import com.robinsmorton.rmappandroid.fragments.ApplicationsFragmentEventListener
+import com.robinsmorton.rmappandroid.model.Value
 
-class ApplicationsAdapter(private val ctx: Context, private var applicationsList: MutableList<String>, val eventListener: ApplicationsFragmentEventListener) :
-    ArrayAdapter<String>(ctx, 0, applicationsList) {
+class ApplicationsAdapter(private val ctx: Context, private var applicationsList: MutableList<Value>, val eventListener: ApplicationsFragmentEventListener) :
+    ArrayAdapter<Value>(ctx, 0, applicationsList) {
 
     val TAG = "ApplicationsAdapter"
     private lateinit var binding: ApplicationsGridItemBinding
@@ -33,7 +34,7 @@ class ApplicationsAdapter(private val ctx: Context, private var applicationsList
         } else {
             viewHolder = convertView.tag as ApplicationHolder
         }
-        viewHolder.bindGridItem(getItem(position), context)
+        viewHolder.bindGridItem(getItem(position)?.fields?.Title)
         return viewHolder.itemView
     }
 
@@ -41,7 +42,7 @@ class ApplicationsAdapter(private val ctx: Context, private var applicationsList
         return applicationsList.count()
     }
 
-    fun setAppList(appList: MutableList<String>) {
+    fun setAppList(appList: MutableList<Value>) {
         applicationsList.clear()
         applicationsList.addAll(appList)
         notifyDataSetChanged()
@@ -58,12 +59,12 @@ class ApplicationsAdapter(private val ctx: Context, private var applicationsList
             }
         }
 
-        fun bindGridItem(application: String?, context: Context) {
+        fun bindGridItem(application: String?) {
             this.appName = application
-            application?.let { setItemDetails(it, context) }
+            application?.let { setItemDetails(it) }
         }
 
-        private fun setItemDetails(displayName: String, context: Context) {
+        private fun setItemDetails(displayName: String) {
             binding.textViewGridItem.text = displayName
             setImage(displayName)
         }

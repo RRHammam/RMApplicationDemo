@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.adapter.EstimateNumberAdapter
 import com.robinsmorton.rmappandroid.databinding.EstimateNumberLayoutBinding
-import com.robinsmorton.rmappandroid.model.estimatenumber.Value
+import com.robinsmorton.rmappandroid.model.Value
 import com.robinsmorton.rmappandroid.viewmodel.EstimateNumberViewModel
 import com.robinsmorton.rmappandroid.viewmodel.EstimateNumberViewModel.Companion.cmd_hide_loading_sign
 import com.robinsmorton.rmappandroid.viewmodel.EstimateNumberViewModel.Companion.cmd_hide_loading_sign_on_search_bar

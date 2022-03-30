@@ -11,10 +11,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.adapter.ApplicationsAdapter
 import com.robinsmorton.rmappandroid.constants.Constants
 import com.robinsmorton.rmappandroid.databinding.FragmentApplicationsBinding
+import com.robinsmorton.rmappandroid.model.Value
+import com.robinsmorton.rmappandroid.viewmodel.ApplicationsViewModel
+import com.robinsmorton.rmappandroid.viewmodel.ApplicationsViewModel.Companion.cmd_hide_loading_sign
+import com.robinsmorton.rmappandroid.viewmodel.ApplicationsViewModel.Companion.cmd_show_loading_sign
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
@@ -22,7 +27,8 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
     private lateinit var binding: FragmentApplicationsBinding
     private var adapter: ApplicationsAdapter? = null
     private var selectedItemForSearchType = ""
-    private lateinit var categories: Array<String>
+    private lateinit var categories: MutableList<String>
+    private lateinit var viewModel: ApplicationsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +36,7 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_applications, container, false)
+        viewModel = ViewModelProvider(this).get(ApplicationsViewModel::class.java)
         return with(binding){
             root
         }
@@ -41,29 +48,33 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
     }
 
     private fun init() {
-        categories = resources.getStringArray(R.array.application_categories)
-        setDropDownAdapter()
-        setApplicationsListAdapter(resources.getStringArray(R.array.all_apps).toMutableList())
-        hideProgressBar()
+        subscribeToEstimateNumberListLiveData()
+        subscribeToEventCommands()
+        viewModel.getListOfApplications()
         binding.titleBar.imageViewBackButton.setOnClickListener {
             navigateUp()
         }
     }
 
-    private fun setApplicationsListAdapter(arrayOfApps: MutableList<String>) {
-        adapter = this.context?.let { it1 -> ApplicationsAdapter(it1, arrayOfApps, this) }
+    private fun subscribeToEstimateNumberListLiveData() {
+        viewModel.applicationsListLiveData.observe(viewLifecycleOwner, {
+            setApplicationsListAdapter(it)
+            categories = viewModel.getCategoriesFromMainList()
+            categories.add(0,"Select Application Category")
+            setDropDownAdapter()
+        })
+    }
+
+
+    private fun setApplicationsListAdapter(appList: MutableList<Value>) {
+        adapter = this.context?.let { it1 -> ApplicationsAdapter(it1, appList, this) }
         binding.gridViewApplications.adapter = adapter
     }
 
 
     private fun setDropDownAdapter() {
-
         val arrayAdapter = this.activity?.applicationContext?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.application_categories,
-                android.R.layout.simple_spinner_item
-            )
+            ArrayAdapter(it, android.R.layout.simple_spinner_item, categories)
         }
         arrayAdapter?.setDropDownViewResource(R.layout.dropdown_item)
         binding.spinnerApplication.adapter = arrayAdapter
@@ -83,41 +94,17 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
     }
 
     private fun setupAppList() {
-        when (selectedItemForSearchType) {
-            categories[0] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.all_apps).toMutableList())
+        adapter?.setAppList(viewModel.getApplicationListForSelectedCategory(selectedItemForSearchType))
+    }
+
+    private fun subscribeToEventCommands() {
+        viewModel.eventCommand.observe(viewLifecycleOwner,{
+            when(it) {
+                cmd_show_loading_sign -> showProgressBar()
+
+                cmd_hide_loading_sign -> hideProgressBar()
             }
-            categories[1] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.shopping_applications).toMutableList())
-            }
-            categories[2] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.payroll_and_time_entry_applications).toMutableList())
-            }
-            categories[3] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.data_storage_applications).toMutableList())
-            }
-            categories[4] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.construction_management_applications).toMutableList())
-            }
-            categories[5] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.finance_applications).toMutableList())
-            }
-            categories[6] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.medical_applications).toMutableList())
-            }
-            categories[7] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.communication_applications).toMutableList())
-            }
-            categories[8] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.social_media_applications).toMutableList())
-            }
-            categories[9] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.authentication_applications).toMutableList())
-            }
-            categories[10] -> {
-                adapter?.setAppList(resources.getStringArray(R.array.expense_reports_applications).toMutableList())
-            }
-        }
+        })
     }
 
     private fun showProgressBar() {

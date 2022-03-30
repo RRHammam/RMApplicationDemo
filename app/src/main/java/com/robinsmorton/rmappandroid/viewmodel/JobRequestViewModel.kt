@@ -85,7 +85,8 @@ class JobRequestViewModel(val app: Application) : AndroidViewModel(app) {
         val filteredList = mutableListOf<JobRequestValue>()
         return if (query.isNotEmpty()) {
             mainJobRequestList.forEach {
-                if (isMatchingJobNumber(it, query) || isMatchingTitle(it, query)) {
+                if (isMatchingJobNumber(it, query) || isMatchingTitle(it, query) || isMatchingEstimateNumber(it, query) || isMatchingApproval(it, query)
+                    || isMatchingStartDate(it, query) || isMatchingSuperintendent(it, query) || isMatchingProjectManager(it, query)) {
                     filteredList.add(it)
                 }
             }
@@ -103,6 +104,32 @@ class JobRequestViewModel(val app: Application) : AndroidViewModel(app) {
     private fun isMatchingJobNumber(it: JobRequestValue, query: String) =
         !it.fields.Job_x0020_Number.isNullOrEmpty() && it.fields.Job_x0020_Number.trim().lowercase()
             .contains(query)
+
+    private fun isMatchingEstimateNumber(
+        it: JobRequestValue,
+        query: String
+    ) = !it.fields.Estimate_x0020_Number.isNullOrEmpty() && it.fields.Estimate_x0020_Number.trim().lowercase().contains(query)
+
+    private fun isMatchingStartDate(
+        it: JobRequestValue,
+        query: String
+    ) = !it.fields.Start_x0020_Date.isNullOrEmpty() && it.fields.Start_x0020_Date.trim().lowercase().contains(query)
+
+    private fun isMatchingSuperintendent(
+        it: JobRequestValue,
+        query: String
+    ) = !it.fields.Superintendent.isNullOrEmpty() && it.fields.Superintendent.trim().lowercase().contains(query)
+
+    private fun isMatchingApproval(
+        it: JobRequestValue,
+        query: String
+    ) = !it.fields.Approve.isNullOrEmpty() && it.fields.Approve.trim().lowercase().contains(query)
+
+
+    private fun isMatchingProjectManager(
+        it: JobRequestValue,
+        query: String
+    ) = !it.fields.Sr_x002e__x0020_Project_x0020_Ma.isNullOrEmpty() && it.fields.Sr_x002e__x0020_Project_x0020_Ma.trim().lowercase().contains(query)
 
     companion object {
         const val cmd_show_loading_sign = 0

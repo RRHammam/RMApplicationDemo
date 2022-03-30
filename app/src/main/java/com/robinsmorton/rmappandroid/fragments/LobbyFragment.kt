@@ -3,7 +3,6 @@ package com.robinsmorton.rmappandroid.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,9 @@ import com.robinsmorton.rmappandroid.adapter.LobbyAdapter
 import com.robinsmorton.rmappandroid.constants.Constants
 import com.robinsmorton.rmappandroid.databinding.FragmentLobbyBinding
 import com.robinsmorton.rmappandroid.model.Item
-import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel
 import com.robinsmorton.rmappandroid.viewmodel.LobbyViewModel
+import com.robinsmorton.rmappandroid.viewmodel.LobbyViewModel.Companion.cmd_hide_loading_sign
+import com.robinsmorton.rmappandroid.viewmodel.LobbyViewModel.Companion.cmd_show_loading_sign
 import kotlinx.android.synthetic.main.item_loading_spinner.view.*
 
 
@@ -121,9 +121,9 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
     private fun subscribeToEventCommands() {
         viewModel.eventCommand.observe(viewLifecycleOwner,{
             when(it) {
-                CorporateDirectoryViewModel.cmd_show_loading_sign -> showProgressBar()
+                cmd_show_loading_sign -> showProgressBar()
 
-                CorporateDirectoryViewModel.cmd_hide_loading_sign -> hideProgressBar()
+                cmd_hide_loading_sign -> hideProgressBar()
             }
         })
     }
