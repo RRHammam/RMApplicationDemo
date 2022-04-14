@@ -25,15 +25,26 @@
             android:text="@{title}"
             android:textColor="@color/black"
             android:textSize="@dimen/_18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView_back_button"
             android:layout_width="@dimen/_56dp"
             android:layout_height="@dimen/_56dp"
-            android:src="@drawable/ic_back_button"
             android:padding="@dimen/_12dp"
+            android:src="@drawable/ic_back_button"
             tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imageView_close_button"
+            android:layout_width="@dimen/_56dp"
+            android:layout_height="@dimen/_56dp"
+            android:padding="@dimen/_12dp"
+            android:src="@drawable/ic_close"
+            tools:ignore="ContentDescription"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"/>
+
 
     </RelativeLayout>
 

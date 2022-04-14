@@ -128,7 +128,7 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                 displayName?.trim() == context.resources.getString(R.string.rm_web) -> {
                     binding.textViewGridItem.text = context.getString(R.string.rm_web)
                     Glide.with(context)
-                        .load(ContextCompat.getDrawable( context, R.drawable.ic_home_rm))
+                        .load(ContextCompat.getDrawable( context, R.drawable.ic_rm_web))
                         .into(binding.imageViewGridItem)
                 }
             }

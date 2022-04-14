@@ -120,7 +120,7 @@ class ApplicationsAdapter(private val ctx: Context, private var applicationsList
                         .into(binding.imageViewGridItem)
                 }
                 ctx.resources.getString(R.string.unanet_crm) -> {
-                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_unanet_crm))
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_unanet))
                         .into(binding.imageViewGridItem)
                 }
             }

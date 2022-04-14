@@ -1,5 +1,9 @@
 package com.robinsmorton.rmappandroid.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class CorporateUser(
     val businessPhones: List<String?>,
     val displayName: String,
@@ -12,4 +16,4 @@ data class CorporateUser(
     val preferredLanguage: String?,
     val surname: String?,
     val userPrincipalName: String?
-)
+): Parcelable

@@ -22,7 +22,7 @@ import com.robinsmorton.rmappandroid.databinding.CorporateUserItemBinding
 import com.robinsmorton.rmappandroid.model.CorporateUser
 import com.robinsmorton.rmappandroid.util.SessionManager
 
-class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList: MutableList<CorporateUser>) :
+class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList: MutableList<CorporateUser>, val itemClickListener: (CorporateUser) -> Unit) :
     RecyclerView.Adapter<CorporateDirectoryAdapter.CorporateUserItemHolder>() {
 
     private val TAG = "CorporateDirectoryAdapter"
@@ -36,40 +36,14 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
         fun bindListItem(user: CorporateUser?) {
             binding.textViewCorporateUserName.text = user?.displayName
             binding.textViewCorporateUserDesignation.text = user?.jobTitle
-            if(!user?.mail.isNullOrEmpty()) {
-                binding.textViewCorporateUserEmail.text = user?.mail
-                binding.textViewCorporateUserEmail.setOnClickListener {
-                    val emailText = binding.textViewCorporateUserEmail.text.toString()
-                    val emailIntent = Intent(Intent.ACTION_SEND)
-                    emailIntent.type = "plain/text"
-                    emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailText))
-                    context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)))
-                }
-            } else {
-                binding.textViewCorporateUserEmail.visibility = View.GONE
-            }
 
-            if(!user?.mobilePhone.isNullOrEmpty()) {
-                binding.textViewCorporateUserPhoneNumber.text = user?.mobilePhone
-                binding.textViewCorporateUserPhoneNumber.setOnClickListener {
-                    val callingIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", binding.textViewCorporateUserPhoneNumber.text.toString(), null))
-                    context.startActivity(callingIntent)
-                }
-            } else {
-                binding.textViewCorporateUserPhoneNumber.visibility = View.GONE
-            }
+            binding.textViewCorporateUserEmail.visibility = View.GONE
+            binding.textViewCorporateUserPhoneNumber.visibility = View.GONE
 
             val urlString = url1+user?.id+url2
             Log.d(TAG, "Profile image url - $urlString")
             LazyHeaders.Builder().addHeader("Authorization", "Bearer ${SessionManager.access_token}")
-            Glide.with(context).load(
-                GlideUrl(
-                    urlString,
-                    LazyHeaders.Builder()
-                        .addHeader("Authorization", "Bearer ${SessionManager.access_token}")
-                        .build()
-                )
-            )
+            Glide.with(context).load(GlideUrl(urlString, LazyHeaders.Builder().addHeader("Authorization", "Bearer ${SessionManager.access_token}").build()))
                 .placeholder(R.drawable.rmlogo)
                 .listener(object : RequestListener<Drawable> {
                     override fun onResourceReady(
@@ -94,6 +68,10 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
                     }
                 })
                 .into(binding.imageViewCorporateUser)
+
+            binding.cardViewCorporateUser.setOnClickListener {
+                user?.let { it1 -> itemClickListener.invoke(it1) }
+            }
         }
     }
 
@@ -127,4 +105,5 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
             notifyDataSetChanged()
         }
     }
+
 }

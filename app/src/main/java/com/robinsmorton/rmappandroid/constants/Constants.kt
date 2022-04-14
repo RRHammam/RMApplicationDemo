@@ -28,4 +28,5 @@ object Constants {
     const val IT_SUPPORT_LINK = "https://help.robinsmorton.net/"
     const val RM_WEB_HOME_LINK = "https://www.robinsmorton.com/"
     const val UNANET_CRM_LINK = "https://play.google.com/store/apps/details?id=com.unanet.cosentialformobile"
+    const val SELECTED_CORPORATE_USER = "SELECTED_CORPORATE_USER"
 }

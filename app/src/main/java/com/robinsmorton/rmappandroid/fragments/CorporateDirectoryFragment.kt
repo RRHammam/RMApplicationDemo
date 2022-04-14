@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.activities.MainActivity
 import com.robinsmorton.rmappandroid.adapter.CorporateDirectoryAdapter
+import com.robinsmorton.rmappandroid.constants.Constants.SELECTED_CORPORATE_USER
 import com.robinsmorton.rmappandroid.databinding.FragmentCorporateDirectoryBinding
 import com.robinsmorton.rmappandroid.model.CorporateUser
 import com.robinsmorton.rmappandroid.viewmodel.CorporateDirectoryViewModel
@@ -73,7 +75,7 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     private fun setAdapter(it: MutableList<CorporateUser>) {
-        adapter = this.requireContext().let { it1 -> CorporateDirectoryAdapter(it1, it) }
+        adapter = this.requireContext().let { it1 -> CorporateDirectoryAdapter(it1, it, :: corporateDirectoryItemSelectedListener) }
         binding.recyclerViewCorporateUsers.layoutManager =
             object : LinearLayoutManager(this.activity) {
                 override fun isAutoMeasureEnabled(): Boolean {
@@ -81,6 +83,12 @@ class CorporateDirectoryFragment : BaseFragment() {
                 }
             }
         binding.recyclerViewCorporateUsers.adapter = adapter
+    }
+
+    private fun corporateDirectoryItemSelectedListener(corporateUser: CorporateUser) {
+        val bundle = Bundle()
+        bundle.putParcelable(SELECTED_CORPORATE_USER, corporateUser)
+        findNavController().navigate(R.id.action_corporateDirectoryFragment_to_corporateDirectoryProfileFragment, bundle)
     }
 
     private fun setOnTextChangedForSearchBar() {

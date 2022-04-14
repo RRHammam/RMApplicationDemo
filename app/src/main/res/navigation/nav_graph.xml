@@ -43,7 +43,11 @@
     <fragment
         android:id="@+id/corporateDirectoryFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.CorporateDirectoryFragment"
-        android:label="CorporateDirectoryFragment" />
+        android:label="CorporateDirectoryFragment" >
+        <action
+            android:id="@+id/action_corporateDirectoryFragment_to_corporateDirectoryProfileFragment"
+            app:destination="@id/corporateDirectoryProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/jobRequestFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.JobRequestFragment"
@@ -60,4 +64,8 @@
         android:id="@+id/policiesAndProceduresFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.PoliciesAndProceduresFragment"
         android:label="PoliciesAndProceduresFragment" />
+    <fragment
+        android:id="@+id/corporateDirectoryProfileFragment"
+        android:name="com.robinsmorton.rmappandroid.fragments.CorporateDirectoryProfileFragment"
+        android:label="CorporateDirectoryProfileFragment" />
 </navigation>
