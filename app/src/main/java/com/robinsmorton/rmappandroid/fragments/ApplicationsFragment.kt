@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.robinsmorton.rmappandroid.R
+import com.robinsmorton.rmappandroid.activities.MainActivity
 import com.robinsmorton.rmappandroid.adapter.ApplicationsAdapter
 import com.robinsmorton.rmappandroid.constants.Constants
 import com.robinsmorton.rmappandroid.databinding.FragmentApplicationsBinding
@@ -48,11 +49,18 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
     }
 
     private fun init() {
+        handleActivityViews()
         subscribeToEstimateNumberListLiveData()
         subscribeToEventCommands()
         viewModel.getListOfApplications()
         binding.titleBar.imageViewBackButton.setOnClickListener {
             navigateUp()
+        }
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
         }
     }
 

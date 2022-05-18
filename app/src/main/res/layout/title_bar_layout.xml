@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/textView_settings"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/_45dp"
             android:background="@color/white"
             android:gravity="center"
             android:paddingHorizontal="40dp"
@@ -30,7 +30,7 @@
         <ImageView
             android:id="@+id/imageView_back_button"
             android:layout_width="@dimen/_56dp"
-            android:layout_height="@dimen/_56dp"
+            android:layout_height="@dimen/_45dp"
             android:padding="@dimen/_12dp"
             android:src="@drawable/ic_back_button"
             tools:ignore="ContentDescription" />
@@ -38,7 +38,7 @@
         <ImageView
             android:id="@+id/imageView_close_button"
             android:layout_width="@dimen/_56dp"
-            android:layout_height="@dimen/_56dp"
+            android:layout_height="@dimen/_45dp"
             android:padding="@dimen/_12dp"
             android:src="@drawable/ic_close"
             tools:ignore="ContentDescription"

@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -51,6 +53,8 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         unpackBundle()
         (activity as MainActivity).getBottomNavView()?.visibility = View.VISIBLE
+        handleActivityViews()
+        setupBackPress()
         initData()
     }
 
@@ -61,10 +65,9 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
     }
 
     private fun initData() {
-        binding.titleBar.imageViewCloseButton.visibility = View.VISIBLE
         binding.titleBar.imageViewBackButton.visibility = View.GONE
-        binding.titleBar.imageViewCloseButton.setOnClickListener {
-            activity?.onBackPressed()
+        binding.imageViewCloseButton.setOnClickListener {
+            findNavController().navigateUp()
         }
         binding.textViewCorporateUserName.text = selectedCorporateUser?.displayName
         binding.textViewJobTitle.text = selectedCorporateUser?.jobTitle
@@ -76,6 +79,12 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
         initMobileNumberData()
         initBusinessVersionData()
         initProfileImage()
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
+        }
     }
 
     private fun initProfileImage() {
@@ -189,6 +198,17 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
         } else {
             binding.layoutEmail.materialCardView.visibility = View.GONE
         }
+    }
+
+    fun setupBackPress() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigateUp()
+                }
+
+            }
+        )
     }
 
 }

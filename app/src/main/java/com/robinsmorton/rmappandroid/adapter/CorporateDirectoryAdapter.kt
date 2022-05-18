@@ -37,9 +37,6 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
             binding.textViewCorporateUserName.text = user?.displayName
             binding.textViewCorporateUserDesignation.text = user?.jobTitle
 
-            binding.textViewCorporateUserEmail.visibility = View.GONE
-            binding.textViewCorporateUserPhoneNumber.visibility = View.GONE
-
             val urlString = url1+user?.id+url2
             Log.d(TAG, "Profile image url - $urlString")
             LazyHeaders.Builder().addHeader("Authorization", "Bearer ${SessionManager.access_token}")
@@ -96,14 +93,25 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
     fun addDataInList(updatedList: MutableList<CorporateUser>){
         corporateDirectoryList.addAll(updatedList)
         notifyDataSetChanged()
+        Log.d(TAG,"***CorporateDirectoryAdapter addDataInList corporateDirectoryList size - ${corporateDirectoryList.size}")
     }
 
     fun clearAndUpdateList(updatedList: MutableList<CorporateUser>?) {
+        Log.d(TAG,"***CorporateDirectoryAdapter clearAndUpdateList corporateDirectoryList size - ${corporateDirectoryList.size}")
         updatedList?.let {
-            corporateDirectoryList.clear()
-            corporateDirectoryList.addAll(it)
-            notifyDataSetChanged()
+            clearList()
+            updateList(it)
         }
+    }
+
+    private fun updateList(it: MutableList<CorporateUser>) {
+        corporateDirectoryList.addAll(it)
+        notifyDataSetChanged()
+    }
+
+    private fun clearList() {
+        corporateDirectoryList.clear()
+        notifyDataSetChanged()
     }
 
 }

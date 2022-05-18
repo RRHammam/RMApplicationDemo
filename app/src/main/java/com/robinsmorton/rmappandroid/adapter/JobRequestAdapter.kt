@@ -29,7 +29,7 @@ class JobRequestAdapter(val context: Context, private val jobRequestList: Mutabl
             ("Start Date: "+jobRequestDetails?.Start_x0020_Date).also { binding.startDate.text = it }
             ("Approval: "+jobRequestDetails?.Approve).also { binding.approve.text = it }
             ("Project Manager : "+jobRequestDetails?.Sr_x002e__x0020_Project_x0020_Ma).also { binding.projectManager.text = it }
-            ("Super Intendent : "+jobRequestDetails?.Superintendent).also { binding.superIntendent.text = it }
+            ("Superintendent : "+jobRequestDetails?.Superintendent).also { binding.superIntendent.text = it }
         }
     }
 

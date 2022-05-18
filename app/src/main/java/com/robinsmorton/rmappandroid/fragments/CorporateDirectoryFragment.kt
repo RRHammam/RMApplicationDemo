@@ -1,6 +1,7 @@
 package com.robinsmorton.rmappandroid.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,6 @@ class CorporateDirectoryFragment : BaseFragment() {
     private lateinit var binding: FragmentCorporateDirectoryBinding
     private lateinit var viewModel: CorporateDirectoryViewModel
     private var adapter: CorporateDirectoryAdapter? = null
-    private var corporateDirectoryMainList = mutableListOf<CorporateUser>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +47,9 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG, "***onViewCreated called")
         super.onViewCreated(view, savedInstanceState)
+        viewModel.corporateDirectoryMainList?.clear()
         subscribeToCorporateDirectoryListLiveData()
         subscribeToCorporateDirectoryListNextLinkLiveData()
         subscribeToEventCommands()
@@ -59,7 +61,9 @@ class CorporateDirectoryFragment : BaseFragment() {
     private fun subscribeToCorporateDirectoryListLiveData() {
         viewModel.corporateUsersListLiveData.observe(viewLifecycleOwner, {
             setAdapter(it)
-            corporateDirectoryMainList.addAll(it)
+            viewModel.corporateDirectoryMainList = mutableListOf()
+            viewModel.corporateDirectoryMainList?.addAll(it)
+            Log.d(TAG,"***CorporateDirectoryFragment subscribeToCorporateDirectoryListLiveData corporateDirectoryMainList size - ${viewModel.corporateDirectoryMainList?.size}")
         })
     }
 
@@ -67,15 +71,16 @@ class CorporateDirectoryFragment : BaseFragment() {
         viewModel.corporateUsersNextLinkListLiveData.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 adapter?.addDataInList(it)
-                corporateDirectoryMainList.addAll(it)
+                viewModel.corporateDirectoryMainList?.addAll(it)
+                Log.d(TAG,"***CorporateDirectoryFragment subscribeToCorporateDirectoryListNextLinkLiveData corporateDirectoryMainList size - ${viewModel.corporateDirectoryMainList?.size}")
             } else {
                 setOnTextChangedForSearchBar()
             }
         })
     }
 
-    private fun setAdapter(it: MutableList<CorporateUser>) {
-        adapter = this.requireContext().let { it1 -> CorporateDirectoryAdapter(it1, it, :: corporateDirectoryItemSelectedListener) }
+    private fun setAdapter(corporateDirectoryList: MutableList<CorporateUser>) {
+        adapter = this.requireContext().let { it1 -> CorporateDirectoryAdapter(it1, corporateDirectoryList, :: corporateDirectoryItemSelectedListener) }
         binding.recyclerViewCorporateUsers.layoutManager =
             object : LinearLayoutManager(this.activity) {
                 override fun isAutoMeasureEnabled(): Boolean {
@@ -100,6 +105,7 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     private fun init() {
+        handleActivityViews()
         binding.imageViewClearSearchImage.setOnClickListener {
             binding.editTextSearch.setText("")
         }
@@ -109,18 +115,24 @@ class CorporateDirectoryFragment : BaseFragment() {
         }
     }
 
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
+        }
+    }
+
 
     private fun filterDataFromList(query: String): MutableList<CorporateUser>? {
         val filteredList = mutableListOf<CorporateUser>()
         return if (query.isNotEmpty()) {
-            corporateDirectoryMainList.forEach {
+            viewModel.corporateDirectoryMainList?.forEach {
                 if (it.displayName.trim().lowercase().contains(query)) {
                     filteredList.add(it)
                 }
             }
             filteredList
         } else {
-            corporateDirectoryMainList
+            viewModel.corporateDirectoryMainList
         }
     }
 
@@ -167,5 +179,16 @@ class CorporateDirectoryFragment : BaseFragment() {
         binding.loadingSpinnerSearchBar.visibility = View.GONE
         binding.editTextSearch.isEnabled = true
         binding.editTextSearch.hint = getString(R.string.search_name)
+    }
+
+    override fun onDestroyView() {
+        Log.d(TAG,"***onDestroyView called")
+        if(this::viewModel.isInitialized) {
+            viewModel.corporateUsersListLiveData.removeObservers(viewLifecycleOwner)
+            viewModel.corporateUsersNextLinkListLiveData.removeObservers(viewLifecycleOwner)
+            viewModel.eventCommand.removeObservers(viewLifecycleOwner)
+            viewModel.corporateDirectoryMainList?.clear()
+        }
+        super.onDestroyView()
     }
 }

@@ -37,9 +37,9 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
             ?.subscribe({ policiesAndProceduresResponse ->
                 hideLoading()
                 isLoading.set(false)
-                policiesAndProcedures.addAll(policiesAndProceduresResponse.items)
+                policiesAndProcedures.addAll(policiesAndProceduresResponse.value)
                 updateEtag()
-                policiesAndProceduresListLiveData.value = policiesAndProceduresResponse.items
+                policiesAndProceduresListLiveData.value = policiesAndProceduresResponse.value
             }, {
                 hideLoading()
                 isLoading.set(false)
@@ -94,9 +94,13 @@ class PoliciesAndProceduresViewModel(val app: Application) : AndroidViewModel(ap
 
     fun getChildElementsList(parentEtag: String?): MutableList<PoliciesAndProceduresItem> {
         val childElementsList = mutableListOf<PoliciesAndProceduresItem>()
-        policiesAndProcedures.forEach {
-            if (parentEtag ==  it.parentReference.id) {
-                childElementsList.add(it)
+        policiesAndProcedures.forEach { item ->
+            parentEtag?.replace("\"", "")
+            val parentEtagArray = parentEtag?.split(",")
+            parentEtagArray?.let {
+                if (it[0] == item.parentReference.id) {
+                    childElementsList.add(item)
+                }
             }
         }
         return childElementsList

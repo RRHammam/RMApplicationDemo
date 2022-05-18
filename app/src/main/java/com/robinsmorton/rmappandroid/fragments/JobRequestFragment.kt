@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.robinsmorton.rmappandroid.R
+import com.robinsmorton.rmappandroid.activities.MainActivity
 import com.robinsmorton.rmappandroid.adapter.JobRequestAdapter
 import com.robinsmorton.rmappandroid.databinding.FragmentJobRequestBinding
 import com.robinsmorton.rmappandroid.model.jobrequest.JobRequestValue
@@ -68,12 +69,19 @@ class JobRequestFragment: BaseFragment() {
     }
 
     private fun init() {
+        handleActivityViews()
         binding.searchBarJobNumber.imageViewClearSearchImage.setOnClickListener {
             binding.searchBarJobNumber.editTextSearch.setText("")
         }
 
         binding.titleBar.imageViewBackButton.setOnClickListener {
             navigateUp()
+        }
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
         }
     }
 

@@ -35,7 +35,8 @@ interface ApiService {
     @GET
     fun getEstimateNumberUsingNextLink(@Header("Authorization") token: String, @Url url: String): Observable<EstimateNumbersResponse>
 
-    @GET("v1.0/sites/8763719b-ae4a-4f3a-a469-f2812ec4934e/sites/85e41298-eba9-4c30-a9be-a31a8ae402ed/lists/7b074de8-0544-4850-a2f4-66a52687177d?expand=Items/children")
+    //@GET("v1.0/sites/8763719b-ae4a-4f3a-a469-f2812ec4934e/sites/85e41298-eba9-4c30-a9be-a31a8ae402ed/lists/7b074de8-0544-4850-a2f4-66a52687177d?expand=Items/children")
+    @GET("v1.0/sites/8763719b-ae4a-4f3a-a469-f2812ec4934e/sites/85e41298-eba9-4c30-a9be-a31a8ae402ed/lists/7b074de8-0544-4850-a2f4-66a52687177d/items/?expand=fields&top=99999")
     fun getPoliciesAndProcedures(@Header("Authorization") token: String): Observable<PoliciesAndProceduresResponse>
 
     @GET("v1.0/me/photo")

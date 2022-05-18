@@ -26,13 +26,16 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     private val compositeDisposable = CompositeDisposable()
     var eventCommand = SingleLiveEvent<Int>()
     val isLoading = ObservableBoolean(false)
+    var corporateDirectoryMainList: MutableList<CorporateUser>? = null
 
     fun getCorporateDirectoryList() {
+        Log.d(TAG, "***getCorporateDirectoryList called")
         showLoading()
         corporateDirectoryRepository.getCorporateDirectoryList(SessionManager.access_token)
             .observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ corporateDirectoryResponse ->
+                Log.d(TAG, "***getCorporateDirectoryList success")
                 corporateUsersListLiveData.value = filterCorporateUsersList(corporateDirectoryResponse)
                 if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
                     getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)
@@ -46,11 +49,13 @@ class CorporateDirectoryViewModel(val app: Application) : AndroidViewModel(app) 
     }
 
     private fun getCorporateDirectoryListUsingNextLink(nextLink: String) {
+        Log.d(TAG, "***getCorporateDirectoryListUsingNextLink called")
         if (!nextLink.isNullOrEmpty()) {
             corporateDirectoryRepository.getCorporateDirectoryListUsingNextLink(SessionManager.access_token, nextLink)
                 .observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribe({ corporateDirectoryResponse ->
+                    Log.d(TAG, "***getCorporateDirectoryListUsingNextLink success")
                     corporateUsersNextLinkListLiveData.value = filterCorporateUsersList(corporateDirectoryResponse)
                     if (!corporateDirectoryResponse.nextUsersUrl.isNullOrEmpty()) {
                         getCorporateDirectoryListUsingNextLink(corporateDirectoryResponse.nextUsersUrl)

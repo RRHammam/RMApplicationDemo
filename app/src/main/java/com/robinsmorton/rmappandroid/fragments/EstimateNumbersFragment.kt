@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.robinsmorton.rmappandroid.R
+import com.robinsmorton.rmappandroid.activities.MainActivity
 import com.robinsmorton.rmappandroid.adapter.EstimateNumberAdapter
 import com.robinsmorton.rmappandroid.databinding.EstimateNumberLayoutBinding
 import com.robinsmorton.rmappandroid.model.Value
@@ -48,6 +49,7 @@ class EstimateNumbersFragment: BaseFragment() {
     }
 
     private fun init() {
+        handleActivityViews()
         subscribeToEventCommands()
         subscribeToEstimateNumberListLiveData()
         binding.searchBarEstimateNumber.imageViewClearSearchImage.setOnClickListener {
@@ -55,6 +57,12 @@ class EstimateNumbersFragment: BaseFragment() {
         }
         binding.titleBar.imageViewBackButton.setOnClickListener {
             navigateUp()
+        }
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
         }
     }
 

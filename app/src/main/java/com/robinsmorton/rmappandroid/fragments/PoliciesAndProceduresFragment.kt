@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.robinsmorton.rmappandroid.R
+import com.robinsmorton.rmappandroid.activities.MainActivity
 import com.robinsmorton.rmappandroid.adapter.PoliciesAndProceduresAdapter
 import com.robinsmorton.rmappandroid.databinding.FragmentPoliciesProceduresBinding
 import com.robinsmorton.rmappandroid.model.policiesandprocedures.PoliciesAndProceduresItem
@@ -53,9 +54,16 @@ class PoliciesAndProceduresFragment: BaseFragment(), PoliciesAndProcedureEventLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        handleActivityViews()
         subscribeToEventCommands()
         subscribeToPoliciesAndProceduresListLiveData()
         viewModel.getPoliciesAndProcedures()
+    }
+
+    private fun handleActivityViews() {
+        activity?.let {
+            (it as MainActivity).showAppBar(false)
+        }
     }
 
     private fun subscribeToPoliciesAndProceduresListLiveData() {
