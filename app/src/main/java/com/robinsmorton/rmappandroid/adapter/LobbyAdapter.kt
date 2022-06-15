@@ -1,6 +1,7 @@
 package com.robinsmorton.rmappandroid.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,29 +18,11 @@ import com.robinsmorton.rmappandroid.model.Item
 import com.google.gson.Gson
 import org.json.JSONTokener
 
-class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListener: LobbyFragmentEventListener) :
-    ArrayAdapter<Item>(ctx, 0, directoryList) {
+class LobbyAdapter(val ctx: Context, val lobbyList: MutableList<Item>, val eventListener: LobbyFragmentEventListener) :
+    RecyclerView.Adapter<LobbyAdapter.LobbyItemHolder>() {
 
     val TAG = "LobbyAdapter"
     private lateinit var binding: GridItemBinding
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        lateinit var viewHolder: LobbyItemHolder
-        if (convertView == null) {
-            binding = DataBindingUtil.inflate(
-                LayoutInflater.from(context),
-                R.layout.grid_item,
-                parent,
-                false
-            )
-            viewHolder = LobbyItemHolder(binding)
-            viewHolder.itemView.tag = viewHolder
-        } else {
-            viewHolder = convertView.tag as LobbyItemHolder
-        }
-        viewHolder.bindGridItem(getItem(position), context)
-        return viewHolder.itemView
-    }
 
     inner class LobbyItemHolder(val binding: GridItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -126,9 +109,9 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
                         .into(binding.imageViewGridItem)
                 }
                 displayName?.trim() == context.resources.getString(R.string.rm_web) -> {
-                    binding.textViewGridItem.text = context.getString(R.string.rm_web)
+                    binding.textViewGridItem.text = context.getString(R.string.training_excellence)
                     Glide.with(context)
-                        .load(ContextCompat.getDrawable( context, R.drawable.ic_rm_web))
+                        .load(ContextCompat.getDrawable( context, R.drawable.ic_training_excellence))
                         .into(binding.imageViewGridItem)
                 }
             }
@@ -140,5 +123,30 @@ class LobbyAdapter(val ctx: Context, directoryList: List<Item>, val eventListene
 
             return ""+buttonImage?.serverUrl?.trim()+buttonImage?.serverRelativeUrl?.trim()
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LobbyItemHolder {
+        binding = DataBindingUtil.inflate(
+                LayoutInflater.from(ctx),
+                R.layout.grid_item,
+                parent,
+                false
+            )
+        return LobbyItemHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: LobbyItemHolder, position: Int) {
+        val listItem = lobbyList[position]
+        holder.bindGridItem(listItem, ctx)
+    }
+
+    override fun getItemCount(): Int {
+        return lobbyList.size
+    }
+
+    fun moveItem(from: Int, to: Int) {
+        val fromEntry = lobbyList[from]
+        lobbyList.removeAt(from)
+        lobbyList.add(to, fromEntry)
     }
 }

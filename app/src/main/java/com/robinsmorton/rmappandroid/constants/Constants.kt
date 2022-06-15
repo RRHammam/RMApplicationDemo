@@ -28,5 +28,13 @@ object Constants {
     const val IT_SUPPORT_LINK = "https://help.robinsmorton.net/"
     const val RM_WEB_HOME_LINK = "https://www.robinsmorton.com/"
     const val UNANET_CRM_LINK = "https://play.google.com/store/apps/details?id=com.unanet.cosentialformobile"
+    const val SAP_SUCCESS_FACTORS_LINK = "https://play.google.com/store/apps/details?id=com.successfactors.successfactors"
+    const val RICKY_KALMON_LINK = "https://play.google.com/store/apps/details?id=com.neotericai.rk"
     const val SELECTED_CORPORATE_USER = "SELECTED_CORPORATE_USER"
+    const val TRAINING_EXCELLENCE_LINK = "https://robinsandmorton.litmos.com/"
+    const val SELECTED_APPLICATION_NAME = "SELECTED_APPLICATION_NAME"
+    const val ABOUT_US_LINK = "https://www.robinsmorton.com/about/"
+    const val GUEST_BUILDING_FORWARD_LINK = "https://www.robinsmorton.com/about/#building-forward"
+    const val JOIN_OUR_TEAM_LINK = "https://www.robinsmorton.com/join-our-team/"
+    const val CONTACT_US_LINK = "https://www.robinsmorton.com/contact-us/"
 }

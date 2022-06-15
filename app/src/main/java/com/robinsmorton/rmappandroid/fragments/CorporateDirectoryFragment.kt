@@ -47,7 +47,6 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "***onViewCreated called")
         super.onViewCreated(view, savedInstanceState)
         viewModel.corporateDirectoryMainList?.clear()
         subscribeToCorporateDirectoryListLiveData()
@@ -63,7 +62,6 @@ class CorporateDirectoryFragment : BaseFragment() {
             setAdapter(it)
             viewModel.corporateDirectoryMainList = mutableListOf()
             viewModel.corporateDirectoryMainList?.addAll(it)
-            Log.d(TAG,"***CorporateDirectoryFragment subscribeToCorporateDirectoryListLiveData corporateDirectoryMainList size - ${viewModel.corporateDirectoryMainList?.size}")
         })
     }
 
@@ -72,7 +70,6 @@ class CorporateDirectoryFragment : BaseFragment() {
             if (it.isNotEmpty()) {
                 adapter?.addDataInList(it)
                 viewModel.corporateDirectoryMainList?.addAll(it)
-                Log.d(TAG,"***CorporateDirectoryFragment subscribeToCorporateDirectoryListNextLinkLiveData corporateDirectoryMainList size - ${viewModel.corporateDirectoryMainList?.size}")
             } else {
                 setOnTextChangedForSearchBar()
             }
@@ -182,7 +179,6 @@ class CorporateDirectoryFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        Log.d(TAG,"***onDestroyView called")
         if(this::viewModel.isInitialized) {
             viewModel.corporateUsersListLiveData.removeObservers(viewLifecycleOwner)
             viewModel.corporateUsersNextLinkListLiveData.removeObservers(viewLifecycleOwner)

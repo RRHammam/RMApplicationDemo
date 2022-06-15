@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.activities.MainActivity
 import com.robinsmorton.rmappandroid.adapter.ApplicationsAdapter
@@ -169,6 +170,16 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
             }
             resources.getString(R.string.unanet_crm) -> {
                 doOnAppClickAction(appName, Constants.UNANET_CRM_LINK)
+            }
+            resources.getString(R.string.sap_success_factor) -> {
+                val bundle = Bundle()
+                bundle.putString(Constants.SELECTED_APPLICATION_NAME,  resources.getString(R.string.sap_success_factor))
+                findNavController().navigate(R.id.action_applicationsFragment_to_applicationInfoFragment, bundle)
+            }
+            resources.getString(R.string.ricky_kalmon) -> {
+                val bundle = Bundle()
+                bundle.putString(Constants.SELECTED_APPLICATION_NAME, resources.getString(R.string.ricky_kalmon))
+                findNavController().navigate(R.id.action_applicationsFragment_to_applicationInfoFragment, bundle)
             }
         }
     }

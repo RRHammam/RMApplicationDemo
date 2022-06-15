@@ -123,6 +123,14 @@ class ApplicationsAdapter(private val ctx: Context, private var applicationsList
                     Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_unanet))
                         .into(binding.imageViewGridItem)
                 }
+                ctx.resources.getString(R.string.sap_success_factor) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_sap_successfactor))
+                        .into(binding.imageViewGridItem)
+                }
+                ctx.resources.getString(R.string.ricky_kalmon) -> {
+                    Glide.with(context).load(ContextCompat.getDrawable(context, R.drawable.ic_rickykalmon))
+                        .into(binding.imageViewGridItem)
+                }
             }
         }
     }

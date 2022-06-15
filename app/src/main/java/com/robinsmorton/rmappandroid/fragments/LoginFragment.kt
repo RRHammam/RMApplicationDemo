@@ -57,6 +57,10 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
         viewModel.doSilentSignIn(true, requireActivity())
     }
 
+    override fun onGuestLoginClicked() {
+        findNavController().navigate(R.id.action_loginFragment_to_guestLobbyFragment)
+    }
+
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
         binding.progressBar.bringToFront()
@@ -90,4 +94,5 @@ class LoginFragment : BaseFragment(), LoginPageEventListener {
 
 interface LoginPageEventListener {
     fun onLoginClicked()
+    fun onGuestLoginClicked()
 }

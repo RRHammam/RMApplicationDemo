@@ -53,7 +53,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="@dimen/_16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/textView_guestLogin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView_rmLogo"
@@ -62,6 +62,21 @@
                 app:strokeWidth="@dimen/_1dp"
                 app:cornerRadius="@dimen/_12dp"
                 />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView_guestLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign in as Guest"
+                android:textStyle="bold"
+                android:textColor="@color/red"
+                android:textSize="@dimen/_24sp"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:padding="@dimen/_5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{(view) -> eventListener.onGuestLoginClicked()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

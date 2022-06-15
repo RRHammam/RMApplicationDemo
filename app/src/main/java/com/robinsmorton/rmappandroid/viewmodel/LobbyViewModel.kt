@@ -27,33 +27,17 @@ class LobbyViewModel (
 
     private val lobbyRepository = LobbyRepository(app)
     var eventCommand = SingleLiveEvent<Int>()
-    var directoryListLiveData = MutableLiveData<List<Site>>()
-    var rmAppListLiveData = MutableLiveData<List<Item>>()
+    var rmAppLobbyListLiveData = SingleLiveEvent<MutableList<Item>>()
     var isLoading = ObservableBoolean(false)
     private val compositeDisposable = CompositeDisposable()
 
-    fun getListOfDirectories() {
-        if (directoryListLiveData.value.isNullOrEmpty()) {
-            isLoading.set(true)
-        }
-        lobbyRepository.getActiveDirectoryList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribe({ siteResponse ->
-                isLoading.set(false)
-                directoryListLiveData.value = siteResponse.value
-            }, {
-                Toast.makeText(getApplication(), "Error getting site list", Toast.LENGTH_SHORT).show()
-                it.message?.let { it1 -> Log.e(TAG, it1) }
-
-            })?.let { compositeDisposable.add(it) }
-    }
 
     fun getRmAppList() {
         showLoading()
         lobbyRepository.getRmAppList(SessionManager.access_token).observeOn(AndroidSchedulers.mainThread())
             ?.subscribeOn(Schedulers.io())
             ?.subscribe({ rmAppListResponse ->
-                rmAppListLiveData.value = orderList(rmAppListResponse.items)
+                rmAppLobbyListLiveData.value = orderList(rmAppListResponse.items)
                 hideLoading()
             }, {
                 hideLoading()

@@ -1,9 +1,11 @@
 package com.robinsmorton.rmappandroid.fragments
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -18,14 +21,19 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.robinsmorton.rmappandroid.R
 import com.robinsmorton.rmappandroid.activities.MainActivity
+import com.robinsmorton.rmappandroid.adapter.BottomSheetListDialogAdapter
 import com.robinsmorton.rmappandroid.constants.Constants.SELECTED_CORPORATE_USER
 import com.robinsmorton.rmappandroid.databinding.FragmentCorporateDirectoryProfileBinding
 import com.robinsmorton.rmappandroid.model.CorporateUser
 import com.robinsmorton.rmappandroid.util.SessionManager
+import kotlinx.android.synthetic.main.bottom_sheet_dialog_list.*
+import kotlinx.android.synthetic.main.bottom_sheet_dialog_list.view.*
 
 class CorporateDirectoryProfileFragment : BaseFragment() {
+    private var bottomSheetListDialog: BottomSheetDialog? = null
     val TAG = "CorporateDirectoryFragment"
     private lateinit var binding: FragmentCorporateDirectoryProfileBinding
     private var selectedCorporateUser: CorporateUser? = null
@@ -160,19 +168,73 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
             binding.layoutMobileNumber.imageViewIcon.visibility = View.VISIBLE
             binding.layoutMobileNumber.imageViewArrow.visibility = View.VISIBLE
             binding.layoutMobileNumber.materialCardView.setOnClickListener {
-                val callingIntent = Intent(
-                    Intent.ACTION_DIAL,
-                    Uri.fromParts(
-                        "tel",
-                        binding.layoutMobileNumber.textViewField.text.toString(),
-                        null
-                    )
-                )
-                requireContext().startActivity(callingIntent)
+                if (bottomSheetListDialog?.isShowing == true) {
+                    return@setOnClickListener
+                }
+                bottomSheetListDialog = createDialog()
+                bottomSheetListDialog?.setCancelable(true)
+                bottomSheetListDialog?.show()
             }
         } else {
             binding.layoutMobileNumber.materialCardView.visibility = View.GONE
         }
+    }
+
+    private fun openPhoneDialer() {
+        val callingIntent = Intent(
+            Intent.ACTION_DIAL,
+            Uri.fromParts(
+                "tel",
+                binding.layoutMobileNumber.textViewField.text.toString(),
+                null
+            )
+        )
+        requireContext().startActivity(callingIntent)
+    }
+
+    private fun openSmsApp() {
+        val uri = Uri.parse(String.format("smsto:%s", binding.layoutMobileNumber.textViewField.text.toString()))
+        val smsIntent = Intent(Intent.ACTION_SENDTO, uri)
+        /*smsIntent.setPackage("com.google.android.apps.messaging")
+        if(activity?.packageManager?.let { smsIntent.resolveActivity(it) } != null) {
+            startActivityForResult(smsIntent, OPEN_SMS)
+        }*/
+        startActivity(smsIntent)
+    }
+
+    private fun addToContacts() {
+        val addContactIntent = Intent(Intent.ACTION_INSERT)
+        addContactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE)
+        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, binding.layoutMobileNumber.textViewField.text.toString())
+        activity?.startActivity(addContactIntent)
+    }
+
+    fun createDialog(): BottomSheetDialog? {
+        activity?.let {
+            val dialog = BottomSheetDialog(it)
+            val dialogView = LayoutInflater.from(it).inflate(R.layout.bottom_sheet_dialog_list, null)
+            dialog.setContentView(dialogView)
+            dialogView.recyclerView_dialogItemList.layoutManager = LinearLayoutManager(it)
+
+            val items: MutableMap<String, () -> Unit?> = mutableMapOf(
+                getString(R.string.add_to_contacts) to {addToContacts()},
+                getString(R.string.call) to {openPhoneDialer()},
+                getString(R.string.text) to {openSmsApp()}
+            )
+
+            for (key in items.keys) {
+                val func = items[key]
+                items[key] = {
+                    func?.invoke()
+                    dialog.dismiss()
+                }
+            }
+
+            val adapter = BottomSheetListDialogAdapter(it, items as LinkedHashMap<String, () -> Unit>)
+            dialogView.recyclerView_dialogItemList.adapter = adapter
+            return dialog
+        }
+        return null
     }
 
     private fun initMailData() {

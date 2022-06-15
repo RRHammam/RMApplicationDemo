@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_loginFragment_to_lobbyFragment"
             app:destination="@id/lobbyFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_guestLobbyFragment"
+            app:destination="@id/guestLobbyFragment" />
     </fragment>
     <fragment
         android:id="@+id/lobbyFragment"
@@ -18,7 +21,7 @@
         android:label="LobbyFragment" >
         <action
             android:id="@+id/action_lobbyFragment_to_corporateDirectoryFragment"
-            app:destination="@id/corporateDirectoryFragment" />
+            app:destination="@id/corporateDirectoryFragment"/>
         <action
             android:id="@+id/action_lobbyFragment_to_jobRequestFragment"
             app:destination="@id/jobRequestFragment" />
@@ -59,7 +62,11 @@
     <fragment
         android:id="@+id/applicationsFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.ApplicationsFragment"
-        android:label="ApplicationsFragment" />
+        android:label="ApplicationsFragment" >
+        <action
+            android:id="@+id/action_applicationsFragment_to_applicationInfoFragment"
+            app:destination="@id/applicationInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/policiesAndProceduresFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.PoliciesAndProceduresFragment"
@@ -68,4 +75,12 @@
         android:id="@+id/corporateDirectoryProfileFragment"
         android:name="com.robinsmorton.rmappandroid.fragments.CorporateDirectoryProfileFragment"
         android:label="CorporateDirectoryProfileFragment" />
+    <fragment
+        android:id="@+id/applicationInfoFragment"
+        android:name="com.robinsmorton.rmappandroid.fragments.ApplicationInfoFragment"
+        android:label="ApplicationInfoFragment" />
+    <fragment
+        android:id="@+id/guestLobbyFragment"
+        android:name="com.robinsmorton.rmappandroid.fragments.GuestLobbyFragment"
+        android:label="GuestLobbyFragment" />
 </navigation>
