@@ -17,6 +17,10 @@
     <string name="lead_estimator_abcd_efgh">Lead Estimator: Abcd Efgh</string>
     <string name="department">Department</string>
     <string name="send_email">Send email</string>
+    <string name="email">Email</string>
+    <string name="it_support_email">email@email.com</string>
+    <string name="support_number">Support Number</string>
+    <string name="it_support_number">0123456789</string>
     <string name="search_name">Search</string>
 
     <string name="safety_information">Safety Information</string>
@@ -30,6 +34,7 @@
     <string name="corporate_directory">Corporate Directory</string>
     <string name="applications">Applications</string>
     <string name="it_support">IT Support</string>
+    <string name="it_support_page">IT Support Page</string>
     <string name="rm_web">RM Web</string>
     <string name="training_excellence">Training for Excellence</string>
 

@@ -24,7 +24,8 @@
 
         <activity
             android:name="com.robinsmorton.rmappandroid.activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,7 +34,8 @@
         <activity
             android:name="com.robinsmorton.rmappandroid.activities.MainActivity"
             android:exported="true" />
-        <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
+        <activity android:name="com.microsoft.identity.client.BrowserTabActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

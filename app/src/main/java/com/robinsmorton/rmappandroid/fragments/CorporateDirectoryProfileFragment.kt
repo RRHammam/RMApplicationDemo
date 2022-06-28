@@ -74,6 +74,10 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
 
     private fun initData() {
         binding.titleBar.imageViewBackButton.visibility = View.GONE
+        binding.titleBar.imageViewCloseButton.setImageResource(R.drawable.ic_plus)
+        binding.titleBar.imageViewCloseButton.setOnClickListener {
+            addToContacts()
+        }
         binding.imageViewCloseButton.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -161,6 +165,7 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
 
     private fun initMobileNumberData() {
         if (!selectedCorporateUser?.mobilePhone.isNullOrEmpty()) {
+            binding.titleBar.imageViewCloseButton.visibility = View.VISIBLE
             binding.layoutMobileNumber.textViewTitle.text = "Mobile Phone"
             binding.layoutMobileNumber.textViewField.text = selectedCorporateUser?.mobilePhone
             binding.layoutMobileNumber.imageViewIcon.setImageResource(R.drawable.ic_call)
@@ -177,6 +182,7 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
             }
         } else {
             binding.layoutMobileNumber.materialCardView.visibility = View.GONE
+            binding.titleBar.imageViewCloseButton.visibility = View.GONE
         }
     }
 
@@ -195,10 +201,6 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
     private fun openSmsApp() {
         val uri = Uri.parse(String.format("smsto:%s", binding.layoutMobileNumber.textViewField.text.toString()))
         val smsIntent = Intent(Intent.ACTION_SENDTO, uri)
-        /*smsIntent.setPackage("com.google.android.apps.messaging")
-        if(activity?.packageManager?.let { smsIntent.resolveActivity(it) } != null) {
-            startActivityForResult(smsIntent, OPEN_SMS)
-        }*/
         startActivity(smsIntent)
     }
 
@@ -217,7 +219,7 @@ class CorporateDirectoryProfileFragment : BaseFragment() {
             dialogView.recyclerView_dialogItemList.layoutManager = LinearLayoutManager(it)
 
             val items: MutableMap<String, () -> Unit?> = mutableMapOf(
-                getString(R.string.add_to_contacts) to {addToContacts()},
+               /* getString(R.string.add_to_contacts) to {addToContacts()},*/
                 getString(R.string.call) to {openPhoneDialer()},
                 getString(R.string.text) to {openSmsApp()}
             )

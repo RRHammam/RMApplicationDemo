@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.robinsmorton.rmappandroid.R
+import com.robinsmorton.rmappandroid.model.Fields
 import com.robinsmorton.rmappandroid.model.Value
 import com.robinsmorton.rmappandroid.repository.ApplicationsRepository
 import com.robinsmorton.rmappandroid.util.SessionManager
@@ -41,7 +43,9 @@ class ApplicationsViewModel (
             ?.subscribe({ apllicationsListResponse ->
                 hideLoading()
                 apllicationsListResponse.value?.let { mainApplicationsList.addAll(it) }
-                applicationsListLiveData.value = apllicationsListResponse.value
+                mainApplicationsList.add(Value(fields = Fields(Title = app.resources.getString(R.string.sap_success_factor), field_1 = "")))
+                mainApplicationsList.add(Value(fields = Fields(Title = app.resources.getString(R.string.ricky_kalmon), field_1 = "")))
+                applicationsListLiveData.value = mainApplicationsList
             }, {
                 Toast.makeText(getApplication(), "Error getting site list", Toast.LENGTH_SHORT).show()
                 it.message?.let { it1 -> Log.e(TAG, it1) }
@@ -65,9 +69,12 @@ class ApplicationsViewModel (
     fun getCategoriesFromMainList(): MutableList<String> {
         val categoryList = mutableListOf<String>()
         mainApplicationsList.forEach{
-            if(!categoryList.contains(it.fields.field_1)) {
-                categoryList.add(it.fields.field_1)
+            it.fields?.field_1?.let { category ->
+                if(!categoryList.contains(category)) {
+                       categoryList.add(category)
+                }
             }
+
         }
         return categoryList
     }
@@ -75,7 +82,7 @@ class ApplicationsViewModel (
     fun getApplicationListForSelectedCategory (selectedCategory: String): MutableList<Value> {
         val appList = mutableListOf<Value>()
         mainApplicationsList.forEach {
-            if (it.fields.field_1 == selectedCategory)
+            if (it.fields?.field_1 == selectedCategory)
                 appList.add(it)
         }
         return appList

@@ -16,7 +16,7 @@ data class RmAppListResponse(
     val displayName: String,
     val eTag: String,
     val id: String,
-    val items: List<Item>,
+    val items: MutableList<Item>,
     @SerializedName("items@odata.context")
     val itemsUrl: String,
     val columns: List<Column>,

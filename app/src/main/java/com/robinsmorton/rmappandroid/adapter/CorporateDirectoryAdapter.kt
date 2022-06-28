@@ -38,7 +38,6 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
             binding.textViewCorporateUserDesignation.text = user?.jobTitle
 
             val urlString = url1+user?.id+url2
-            Log.d(TAG, "Profile image url - $urlString")
             LazyHeaders.Builder().addHeader("Authorization", "Bearer ${SessionManager.access_token}")
             Glide.with(context).load(GlideUrl(urlString, LazyHeaders.Builder().addHeader("Authorization", "Bearer ${SessionManager.access_token}").build()))
                 .placeholder(R.drawable.rmlogo)
@@ -93,11 +92,9 @@ class CorporateDirectoryAdapter(val context: Context, var corporateDirectoryList
     fun addDataInList(updatedList: MutableList<CorporateUser>){
         corporateDirectoryList.addAll(updatedList)
         notifyDataSetChanged()
-        Log.d(TAG,"***CorporateDirectoryAdapter addDataInList corporateDirectoryList size - ${corporateDirectoryList.size}")
     }
 
     fun clearAndUpdateList(updatedList: MutableList<CorporateUser>?) {
-        Log.d(TAG,"***CorporateDirectoryAdapter clearAndUpdateList corporateDirectoryList size - ${corporateDirectoryList.size}")
         updatedList?.let {
             clearList()
             updateList(it)

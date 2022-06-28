@@ -51,7 +51,7 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
 
     private fun init() {
         handleActivityViews()
-        subscribeToEstimateNumberListLiveData()
+        subscribeToApplicationsListLiveData()
         subscribeToEventCommands()
         viewModel.getListOfApplications()
         binding.titleBar.imageViewBackButton.setOnClickListener {
@@ -65,13 +65,13 @@ class ApplicationsFragment: BaseFragment(), ApplicationsFragmentEventListener {
         }
     }
 
-    private fun subscribeToEstimateNumberListLiveData() {
-        viewModel.applicationsListLiveData.observe(viewLifecycleOwner, {
+    private fun subscribeToApplicationsListLiveData() {
+        viewModel.applicationsListLiveData.observe(viewLifecycleOwner) {
             setApplicationsListAdapter(it)
             categories = viewModel.getCategoriesFromMainList()
-            categories.add(0,"Select Application Category")
+            categories.add(0, "Select Application Category")
             setDropDownAdapter()
-        })
+        }
     }
 
 

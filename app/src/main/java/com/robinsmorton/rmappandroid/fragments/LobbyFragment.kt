@@ -50,13 +50,13 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
                 val from = viewHolder.adapterPosition
                 val to = target.adapterPosition
 
-                adapter.moveItem(from, to)
+                viewModel.rmAppList = adapter.moveItem(from, to)
                 adapter.notifyItemMoved(from, to)
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                TODO("Not yet implemented")
+                //Not required.
             }
         }
         ItemTouchHelper(simpleItemTouchCallback)
@@ -77,8 +77,18 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
         super.onViewCreated(view, savedInstanceState)
         subscribeToRmAppListLiveData()
         subscribeToEventCommands()
-        viewModel.getRmAppList()
+        Log.d(TAG, "***onViewCreated viewModel.rmAppList ${viewModel.rmAppList}")
+        getAppList()
         (activity as MainActivity).getBottomNavView()?.visibility = View.VISIBLE
+    }
+
+    private fun getAppList() {
+        if (viewModel.rmAppList == null) {
+            viewModel.getRmAppList()
+        } else {
+            setListAdapter(viewModel.rmAppList!!)
+            hideProgressBar()
+        }
     }
 
     override fun onResume() {
@@ -93,16 +103,20 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
     }
 
     private fun subscribeToRmAppListLiveData() {
-        viewModel.rmAppLobbyListLiveData.observe(viewLifecycleOwner, {
-            activity?.let { activity ->
-                binding.recyclerViewGridLobby.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-                binding.recyclerViewGridLobby.addItemDecoration(ItemOffsetDecoration(activity, R.dimen._10dp))
-            }
-            adapter = this.context?.let { it1 -> LobbyAdapter(it1, it, this) }
+        viewModel.rmAppLobbyListLiveData.observe(viewLifecycleOwner, { list ->
+            setListAdapter(list)
+        })
+    }
+
+    private fun setListAdapter(list: MutableList<Item>) {
+        context?.let { context ->
+            binding.recyclerViewGridLobby.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            binding.recyclerViewGridLobby.addItemDecoration(ItemOffsetDecoration(context, R.dimen._10dp))
+            adapter = LobbyAdapter(context, list, this)
             itemTouchHelper.attachToRecyclerView(binding.recyclerViewGridLobby)
             binding.recyclerViewGridLobby.adapter = adapter
             adapter?.notifyDataSetChanged()
-        })
+        }
     }
 
     override fun onLobbyGridItemClickedEvent(lobbyGridItem: Item?) {
@@ -138,7 +152,8 @@ class LobbyFragment : BaseFragment(), LobbyFragmentEventListener {
                 findNavController().navigate(R.id.action_lobbyFragment_to_policiesAndProceduresFragment)
             }
             getString(R.string.it_support) -> {
-                openBrowser(Constants.IT_SUPPORT_LINK)
+                //openBrowser(Constants.IT_SUPPORT_LINK)
+                findNavController().navigate(R.id.action_lobbyFragment_to_ITSupportInfoFragment)
             }
             getString(R.string.rm_web) -> {
                 openBrowser(Constants.TRAINING_EXCELLENCE_LINK)

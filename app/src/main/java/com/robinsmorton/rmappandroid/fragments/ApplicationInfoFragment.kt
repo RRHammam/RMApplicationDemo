@@ -83,7 +83,7 @@ class ApplicationInfoFragment : BaseFragment() {
     }
 
     private fun initSapSuccessFactor() {
-        binding.circleImageViewApp.setImageResource(R.drawable.ic_sap_successfactor)
+        binding.circleImageViewApp.setImageResource(R.drawable.ic_sap_success_factor)
         binding.textViewAppTitle.text = selectedAppName
         binding.textViewAppSubTitle.text = ""
         binding.layoutPlaystore.imageViewIcon.visibility = View.GONE
@@ -98,7 +98,7 @@ class ApplicationInfoFragment : BaseFragment() {
     }
 
     private fun initRickyKalmon() {
-        binding.circleImageViewApp.setImageResource(R.drawable.ic_rickykalmon)
+        binding.circleImageViewApp.setImageResource(R.drawable.ic_sap_success_factor)
         binding.textViewAppTitle.text = selectedAppName
         binding.textViewAppSubTitle.text = "Meditation and Mindfulness"
         binding.layoutPlaystore.imageViewIcon.visibility = View.GONE

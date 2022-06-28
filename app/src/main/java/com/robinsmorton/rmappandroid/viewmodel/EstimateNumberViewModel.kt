@@ -79,18 +79,18 @@ class EstimateNumberViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun isTitleMatching(it: Value, query: String) = !it.fields.Title.isNullOrEmpty() && it.fields.Title.trim().lowercase().contains(query)
+    private fun isTitleMatching(it: Value, query: String) = !it.fields?.Title.isNullOrEmpty() && it.fields?.Title?.trim()?.lowercase()?.contains(query) == true
 
     private fun isEstimateNumberMatching(it: Value, query: String) =
-        !it.fields.Estimate_x0020_Number.isNullOrEmpty() && it.fields.Estimate_x0020_Number.trim().lowercase().contains(query)
+        !it.fields?.Estimate_x0020_Number.isNullOrEmpty() && it.fields?.Estimate_x0020_Number?.trim()?.lowercase()?.contains(query) == true
 
-    private fun isStatusMatching(it: Value, query: String) = !it.fields.Status.isNullOrEmpty() && it.fields.Status.trim().lowercase().contains(query)
+    private fun isStatusMatching(it: Value, query: String) = !it.fields?.Status.isNullOrEmpty() && it.fields?.Status?.trim()?.lowercase()?.contains(query) == true
 
-    private fun isDateMatching(it: Value, query: String) = !it.fields.Date.isNullOrEmpty() && it.fields.Date.trim().lowercase().contains(query)
+    private fun isDateMatching(it: Value, query: String) = !it.fields?.Date.isNullOrEmpty() && it.fields?.Date?.trim()?.lowercase()?.contains(query) == true
 
-    private fun isLeadEstimatorMatching(it: Value, query: String) = !it.fields.Lead_x0020_Estimator.isNullOrEmpty() && it.fields.Lead_x0020_Estimator.trim().lowercase().contains(query)
+    private fun isLeadEstimatorMatching(it: Value, query: String) = !it.fields?.Lead_x0020_Estimator.isNullOrEmpty() && it.fields?.Lead_x0020_Estimator?.trim()?.lowercase()?.contains(query) == true
 
-    private fun isOperationsManagerMatching(it: Value, query: String) = !it.fields.Operations_x0020_Manager.isNullOrEmpty() && it.fields.Operations_x0020_Manager.trim().lowercase().contains(query)
+    private fun isOperationsManagerMatching(it: Value, query: String) = !it.fields?.Operations_x0020_Manager.isNullOrEmpty() && it.fields?.Operations_x0020_Manager?.trim()?.lowercase()?.contains(query) == true
 
     fun clearMainEstimateNumberList() {
         mainEstimateNumberList.clear()

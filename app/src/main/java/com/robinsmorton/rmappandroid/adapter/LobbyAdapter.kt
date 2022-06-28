@@ -144,9 +144,10 @@ class LobbyAdapter(val ctx: Context, val lobbyList: MutableList<Item>, val event
         return lobbyList.size
     }
 
-    fun moveItem(from: Int, to: Int) {
+    fun moveItem(from: Int, to: Int): MutableList<Item> {
         val fromEntry = lobbyList[from]
         lobbyList.removeAt(from)
         lobbyList.add(to, fromEntry)
+        return lobbyList
     }
 }
